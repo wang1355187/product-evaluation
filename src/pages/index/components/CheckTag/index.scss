@@ -1,0 +1,34 @@
+.search-mg-top {
+  
+}
+.search_title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin:20px 0;
+  padding: 0 30px;
+  height: 48px;
+  font-size: 34px;
+  font-weight: bold;
+  color: #333;
+}
+.cont {
+  padding: 0 30px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  &-item {
+    font-size: 26px;
+    color: #333;
+    padding: 8px 18px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    background: #f5f6f7;
+    transition: all 0.3s; 
+    &.check {
+      color: #fff;
+      background: #6190E8;
+    }
+  }
+}

@@ -1,0 +1,22 @@
+.u-footer {
+  padding-top: 15px;
+  font-size: 28px;
+  color: #fff;
+  text-align: center;
+  background: linear-gradient(165deg,rgba(111,174,255,1),rgba(64,133,222,1));
+  &-img {
+    width: 212px;
+    height: 66px;
+  }
+  &-desc {
+    padding-bottom: 15px;
+    font-size: 24px;
+    color: #fff;
+  }
+  &-copyright {
+    font-size: 18px;
+    opacity: 0.48;
+    padding: 5px 0;
+    background: #4489e1;
+  }
+}
