@@ -146,9 +146,29 @@ const SideBar = function(props) {
   }
 
   //改变险种个性化筛选
-  function handleConditionChange() {
+  const handleConditionChange = useCallback(
+    (type, newVal) => {
+      // console.log('type:'+type)
+      // console.log('newVal:'+newVal)
+      // const hasUnlimited = form[type].toString() === "";
+      // const empty = newVal.toString() === "";
+      // if (hasUnlimited) {
+      //   if (empty) {
+      //     return;
+      //   } else {
+      //     newVal = newVal.filter((v) => v);
+      //   }
+      // } else if (newVal.includes("") || empty) {
+      //   newVal = [];
+      // }
+      // setForm({
+      //   ...form,
+      //   [type]: newVal,
+      // });
+    },
+    [form]
+  );
 
-  }
   //勾选公司
   const handleSelectCompany = (val) => {
     setCheckedList(val);
@@ -219,6 +239,7 @@ const SideBar = function(props) {
                     title={item.name}
                     itemMap={item.options}
                     multiple={true}
+                    onChange={(val) => handleConditionChange(item.type, val)}
                   >
                   </CheckTag>)
                 })

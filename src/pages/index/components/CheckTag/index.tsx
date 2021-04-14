@@ -89,6 +89,7 @@ const CheckTagGroup: React.SFC<IProps> = function(props) {
         let newIndexArr = indexArr.concat();
         setIndexArr(newIndexArr);
       }
+      onChange(h.value);
     }
     else{
       if(index===i) return;

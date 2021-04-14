@@ -22,7 +22,7 @@ const Index = (props) => {
   //搜索关键字
   const [key,setKey] = useState('')
   //侧边栏显示状态
-  const [SideBarShow,setSideBarShow] = useState(true);
+  const [SideBarShow,setSideBarShow] = useState(false);
 
   const {data, hasData, pageIndex} = useSelector(state => state.list);
   //获取产品列表数据
@@ -46,8 +46,13 @@ const Index = (props) => {
   height: `calc(${currentHeight}px - 130px)`,
   };
 
-  //点击搜索
+  //显示侧边筛选栏
   function onActionClick () {
+    setSideBarShow(true);
+  }
+
+  //键盘搜索
+  function onkeydown(e){
     const postData = {
       name: key,
       pageIndex,
@@ -60,7 +65,6 @@ const Index = (props) => {
       console.log(res);
     })
   }
-
   //ScrollView滚动到底部触发
   const onScrollToLower = () => {
     if (!hasData) {
@@ -77,9 +81,10 @@ const Index = (props) => {
           value={key}
           placeholder="搜索产品"
           showActionButton
-          actionName="搜索"
+          actionName="筛选"
           onChange={ (value)=>{setKey(value)} }
           onActionClick={onActionClick}
+          onConfirm={onkeydown}
         >
         </AtSearchBar>
 
