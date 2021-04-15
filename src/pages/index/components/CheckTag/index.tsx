@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useImperativeHandle } from "react"
 import { View, Text } from '@tarojs/components'
 
 import './index.scss'
@@ -8,18 +8,22 @@ interface IProps {
   value?: any,
   itemMap: Item[];
   /** 是否多选 */
-  multiple?: boolean
+  multiple?: boolean,
+  /** isCompanyEmpty参数仅用于公司选中样式判断 */
+  isCompanyEmpty?:boolean,
   /** 点击 item 就触发 */
   onClick?: (opt: Item, index: number) => void
   /** 针对值改变 */
   onChange?: (val: any) => void
   isChecked?: (i:number) => boolean
+  /** 重置 */
+  reset?:() => void
 }
 
 interface Item {
   label: string;
   value: any;
-  checked?: boolean
+  checked?: boolean;
 }
 
 export const CheckTagItem: React.SFC<{label: string; checked?: boolean; onClick?: () => void}> = function(props) {
@@ -37,7 +41,12 @@ export const CheckTagItem: React.SFC<{label: string; checked?: boolean; onClick?
 }
 
 
-const CheckTagGroup: React.SFC<IProps> = function(props) {
+const CheckTagGroup: React.SFC<IProps> = React.forwardRef((props,ref) => {
+  useImperativeHandle(ref, () => {
+    return {
+      reset: reset,
+    };
+  });
   const {
     title,
     itemMap,
@@ -46,22 +55,18 @@ const CheckTagGroup: React.SFC<IProps> = function(props) {
     onClick = () => {},
     onChange = () => {},
     multiple,
+    isCompanyEmpty
   } = props
 
   //（单选）选中下标状态
   const [index,setIndex] = useState(0);
   //（多选）选中下标列表状态
   const [indexArr,setIndexArr] = useState([0]);
-
-  //单选列表副作用
-  useEffect(() => {
-    
-  },[index])
-  //多选列表副作用
-  useEffect(() => {
-    
-  },[indexArr])
-
+  //重置选中状态
+  const reset = () =>{
+    setIndex(0);
+    setIndexArr([0]);
+  }
   //点击列表项
   const handleClick = (h,i)=>{
     if(multiple){
@@ -92,8 +97,11 @@ const CheckTagGroup: React.SFC<IProps> = function(props) {
       onChange(h.value);
     }
     else{
+      if(value==='companyId'){
+        onChange(value);
+      }
       if(index===i) return;
-      onChange(h.value)
+      onChange(h.value);
       setIndex(i);
     }
   }
@@ -122,7 +130,7 @@ const CheckTagGroup: React.SFC<IProps> = function(props) {
               key={h.value}
               label={h.label}
               onClick={() => handleClick(h, i)}
-              checked={isChecked(i)}
+              checked={ value==='companyId' ? !isCompanyEmpty : isChecked(i) }
             />
           ))
         }
@@ -130,6 +138,6 @@ const CheckTagGroup: React.SFC<IProps> = function(props) {
       </View>
     </View>
   )
-}
+})
 
 export default CheckTagGroup

@@ -1,4 +1,4 @@
-import { Component,  useState, useCallback, useEffect } from 'react'
+import { Component,  useState, useCallback, useEffect, useRef } from 'react'
 import { View, Text, Image, ScrollView } from '@tarojs/components'
 import React from 'react';
 import { useDispatch } from "react-redux";
@@ -21,32 +21,36 @@ import './index.scss';
 const SideBar = function(props) {
   const { onClose } = props;
   const dispatch = useDispatch();
-  //产品总数
-  const [totalProducts, setTotalProducts] = useState(0);
-  //公司列表
-  const [companyList, setCompanyList] = useState([]);
-  //选中公司列表
-  const [checkedList, setCheckedList] = useState([]);
-  //险种类目状态
-  const [typeKey,setTypeKey] = useState(0);
-  //投保年龄状态
-  const [age,setAge] = useState(0);
-  //公司列表弹窗状态
-  const [showFloat, setShowFloat] = useState(false);
-
   let handler;  //防抖定时器
+
   //默认表单
   const initialForm = {
     type: "", //险种类目
     companyId: [],  //保险公司id
     ageId: "",  //投保年龄
-    insProductTagIds: [], //保障期间
+    insProductTagIds: [], //保障期限
     tagName: [],  //产品特色
   };
+
   //表单状态
-  const [form, setForm] = useState({
-    ...initialForm
-  });
+  const [form, setForm] = useState({...initialForm});
+  //险种类目
+  const [typeKey,setTypeKey] = useState(0);
+  //选中公司
+  const [checkedList, setCheckedList] = useState([]);
+  //投保年龄
+  const [age,setAge] = useState(0);
+  //产品特色
+  const [tagName,setTagName] = useState([]);
+  //保障期限
+  const [insProductTagIds,setInsProductTagIds] = useState([]);
+
+  //产品总数
+  const [totalProducts, setTotalProducts] = useState(0);
+  //公司列表
+  const [companyList, setCompanyList] = useState([]);
+  //公司列表弹窗状态
+  const [showFloat, setShowFloat] = useState(false);
 
   //获取筛选参数
   const getFilterParam = useCallback(() => {
@@ -72,8 +76,8 @@ const SideBar = function(props) {
 
     const { data: res } = await filterProductList(data);
     if (res.code === 0) {
-      console.log(res);
       setTotalProducts(res.total);
+      console.log(res);
     }
   }, [getFilterParam]);
 
@@ -112,15 +116,19 @@ const SideBar = function(props) {
   }, [companyList]);
   //关闭公司列表弹窗
   const handleClose = useCallback(() => {
+    //选中公司，但是未按确定提交时，清空已经勾选的公司
+    if(form.companyId.length===0){
+      setCheckedList([]);
+    }
     setShowFloat(false);
-  }, []);
+  }, [form]);
 
   //关闭侧边栏
   function closeSideBar(){
     onClose();
   }
   //改变通用筛选条件
-  function handleFilterChange(type, value) {
+  const handleFilterChange = useCallback((type, value) => {
     switch(type){
       case 'type':
         setTypeKey(value);
@@ -142,31 +150,42 @@ const SideBar = function(props) {
           ageId:value
         });
         break;
+      case 'companyId':
+        setCheckedList([]);
+        setForm({
+          ...form,
+          companyId:[]
+        })
+        break;
     }
-  }
+  },[form])
 
   //改变险种个性化筛选
   const handleConditionChange = useCallback(
     (type, newVal) => {
-      // console.log('type:'+type)
-      // console.log('newVal:'+newVal)
-      // const hasUnlimited = form[type].toString() === "";
-      // const empty = newVal.toString() === "";
-      // if (hasUnlimited) {
-      //   if (empty) {
-      //     return;
-      //   } else {
-      //     newVal = newVal.filter((v) => v);
-      //   }
-      // } else if (newVal.includes("") || empty) {
-      //   newVal = [];
-      // }
-      // setForm({
-      //   ...form,
-      //   [type]: newVal,
-      // });
+      let temp;
+      switch(type){
+        case 'tagName':
+          if(tagName.includes(newVal)){
+            temp = tagName.filter((v)=> v!=newVal);
+          } else{
+            tagName.push(newVal);
+            temp = [...tagName];
+          }
+          setTagName(temp);
+          break;
+        case 'insProductTagIds':
+          if(insProductTagIds.includes(newVal)){
+            temp = insProductTagIds.filter((v)=> v!=newVal);
+          } else{
+            insProductTagIds.push(newVal);
+            temp = [...insProductTagIds];
+          }
+          setInsProductTagIds(temp);
+          break;
+      }
     },
-    [form]
+    [form,tagName,insProductTagIds]
   );
 
   //勾选公司
@@ -176,17 +195,29 @@ const SideBar = function(props) {
   //确定选中公司
   const handleConfirmCompany = useCallback(() => {
     setShowFloat(false);
-    if (checkedList.length === 0) {
-      setForm({
-        ...form,
-        companyId: checkedList,
-      });
-    }
     setForm({
       ...form,
       companyId: checkedList,
     });
   }, [checkedList, form]);
+
+  //重置表单
+  let CheckTagRef = [useRef(),useRef(),useRef(),useRef()];
+  const resetForm = useCallback(() => {
+    setForm({...initialForm});
+    setCheckedList([]);
+    setTypeKey(0);
+    setAge(0);
+    //重置CheckTag组件状态
+    CheckTagRef.forEach((item)=>{
+      item.current.reset();
+    })
+  },[form])
+
+  //确认筛选
+  function comfirmFilter() {
+
+  }
 
   return (
     <View className="sidebar-container">
@@ -202,19 +233,21 @@ const SideBar = function(props) {
             >
               {/* 通用筛选 */}
               {
-                filterList.map((item)=>{
+                filterList.map((item,i)=>{
                   return (<CheckTag
                     key={item.type}
-                    value={item.value}
+                    value={item.type}
                     title={item.name}
                     itemMap={item.options}
                     onChange={(val) => handleFilterChange(item.type, val)}
+                    ref={CheckTagRef[i]}
+                    isCompanyEmpty={checkedList.length>0}
                   >
                     {item.type==="companyId"&& (
                       <View style='display: flex;'>
                         {!!checkedList.length && (
                           <CheckTagItem
-                            checked
+                            checked={checkedList.length>0}
                             label={`已选中 ${checkedList.length} 家保险公司`}
                             onClick={showPopup}
                           />
@@ -234,20 +267,21 @@ const SideBar = function(props) {
               { 
                 conditionMap[typeKey].map((item)=>{
                   return (<CheckTag
-                    key={item.type}
+                    key={item.type+typeKey}
                     value={item.type}
                     title={item.name}
                     itemMap={item.options}
                     multiple={true}
                     onChange={(val) => handleConditionChange(item.type, val)}
+                    ref={CheckTagRef[3]}
                   >
                   </CheckTag>)
                 })
               }
             </ScrollView>
             <View className="fixed-btn">
-              <AtButton className="reset-btn" size="small" type="secondary">重置</AtButton>
-            <AtButton className="submit-btn" size="small" type="primary">查看{totalProducts}款产品</AtButton>
+              <AtButton className="reset-btn" size="small" type="secondary" onClick={resetForm}>重置</AtButton>
+            <AtButton className="submit-btn" size="small" type="primary" onClick={comfirmFilter}>查看{totalProducts}款产品</AtButton>
             </View>
           </View>
         </View>

@@ -68,7 +68,9 @@
         text-align: center;
         color: #4379FE;
         width: 50PX;
-        padding: 5px 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 10px;
         background-color: #dee6ff63;
       }
