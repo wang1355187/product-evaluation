@@ -1,0 +1,30 @@
+.u-component-card{
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 20px;
+  &-title{
+    position: relative;
+    height: 90px;
+    line-height: 90px;
+    font-size: 30px;
+    font-weight: bold;
+    text-indent: 30px;
+    color: #333;
+    &::before{
+      content: '';
+      display: block;
+      position: absolute;
+      height: 35px;
+      width: 8px;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      background-color: #2873ff;
+    }
+  }
+  &-content{
+    //padding: 0 20px;
+    font-size: initial;
+  }
+}

@@ -1,9 +1,18 @@
 
+$bg_color:      #F7F7F7 !default; //背景色
+$btn_color:     #6190E8 !default; //按钮背景色
+$title_color:   #333 !default;//标题颜色
+
 //弹性布局默认水平垂直居中
 @mixin flex ($row:center,$column:center) {
   display: flex;
   justify-content: $row;
   align-items: $column;
+}
+@mixin middle() {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 // 清除浮动

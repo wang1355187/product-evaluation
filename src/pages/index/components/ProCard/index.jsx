@@ -1,18 +1,15 @@
 import { Component } from 'react'
 import { View, Text, Image } from '@tarojs/components'
 import React from 'react';
-import { AtIcon } from 'taro-ui';
-
+import Taro,{ getCurrentInstance } from '@tarojs/taro'
+import { AtFloatLayout } from "taro-ui"
 import { common } from "@/assets/images";
 import './index.scss';
 
 export default class ProCard extends Component {
-
   componentWillMount () { }
 
-  componentDidMount () { 
-    
-  }
+  componentDidMount () { }
 
   componentWillUnmount () { }
 
@@ -20,12 +17,19 @@ export default class ProCard extends Component {
 
   componentDidHide () { }
   //去往详情页面
-  goToDetail (id) {
-
+  goToDetail () {
+    const { router } =  getCurrentInstance();
+    if(router.path.includes('detail/index')){
+      return;
+    }
+    Taro.navigateTo({
+      url: `/pages/detail/index?id=791320753263575040`,
+    });
   }
+
   render () {
     return (
-      <View className="card-container">
+      <View className="card-container" onClick={this.goToDetail}>
         <View className="pro-img-box">
           <View className="pro-img-tag">平安健康</View>
           <Image src={common.product}  className="pro-img"></Image>
@@ -63,6 +67,10 @@ export default class ProCard extends Component {
               <View className="pro-condition-item">
                 <View className="pro-condition-item-content">1次/不分组</View>
                 <View className="pro-condition-item-title">重疾赔付</View>
+                {/* 投保须知底部弹出框打开按钮 */}
+                {this.props.isModal &&
+                  (<View className="iconfont icon-xiangyou" onClick={this.props.showModal}></View>)
+                }
               </View>
             </View>
           </View>

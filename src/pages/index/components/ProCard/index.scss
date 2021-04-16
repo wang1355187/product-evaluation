@@ -4,8 +4,9 @@
   display: flex;
   box-sizing: border-box;
   overflow: hidden;
-  padding: 20px 15px 20px 10px;
-  border-bottom:1px solid rgba(221,221,221,0.45);
+  padding: 20px;
+  margin: 12px 0;
+  background-color: #ffffff;
   .pro-img-box{
     position: relative;
     .pro-img-tag{
@@ -90,11 +91,23 @@
         margin-top: 15px;
         display:flex;
         justify-content: space-between;
+        align-items: center;
         &-item{
+          position: relative;
           font-size: 24px;
           text-align: center;
           &-title{
             color:#454545a1;
+          }
+          .iconfont{
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6190E8;
+          }
+          &:last-child{
+            padding-right: 35px;
           }
         }
       }

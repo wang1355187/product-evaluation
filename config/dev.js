@@ -6,6 +6,15 @@ module.exports = {
   },
   mini: {},
   h5: {
-    esnextModules: ['taro-ui']
+    esnextModules: ['taro-ui'],
+    proxy:{
+      '/api':{
+        target:'https://pingce.planplus.cn',
+        changeOrigin:true,
+        pathRewrite:{
+          '/api':''
+        }
+      }
+    }
   }
 }

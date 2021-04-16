@@ -1,4 +1,7 @@
 @import "~taro-ui/dist/style/components/icon.scss";
+@import "./assets/scss/base.scss";
+@import "http://at.alicdn.com/t/font_2492086_ehwtutqdbuv.css";
 .layout-box {
   padding-top: 92px;
+  background-color: $bg_color;
 }

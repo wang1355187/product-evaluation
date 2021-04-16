@@ -43,7 +43,7 @@ const Index = (props) => {
   const currentHeight =
   document.documentElement.clientHeight || document.body.clientHeight;
   const scrollStyle = {
-  height: `calc(${currentHeight}px - 130px)`,
+  height: `calc(${currentHeight}px)`,
   };
 
   //显示侧边筛选栏
