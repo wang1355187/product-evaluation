@@ -1,8 +1,9 @@
 import { View, Text, ScrollView } from '@tarojs/components'
-import { AtSearchBar, AtIcon, } from 'taro-ui';
+import Taro from '@tarojs/taro'
+import { AtSearchBar } from 'taro-ui';
 import React,{ useState, useEffect, useCallback } from 'react';
 import SideBar from './components/SideBar/index'
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ProCard from './components/ProCard/index'
 
 import './index.scss'
@@ -20,7 +21,7 @@ const PRO_TYPE = {
 const Index = (props) => {
   const dispatch = useDispatch();
   //搜索关键字
-  const [key,setKey] = useState('')
+  const [key,setKey] = useState('');
   //侧边栏显示状态
   const [SideBarShow,setSideBarShow] = useState(false);
 
@@ -53,16 +54,24 @@ const Index = (props) => {
 
   //键盘搜索
   function onkeydown(e){
-    const postData = {
-      name: key,
-      pageIndex,
-      pageSize: 10
-    }
-    dispatch({
-      type: 'list/searchList',
-      payload: {...postData}
-    }).then(res => {
-      console.log(res);
+    if(key=='') return;
+    Taro.request({
+      method: 'POST',
+      url: '/api/search_product_by_name',
+      data: {
+        name: key,
+        lek: {}
+      },
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then((res) => {
+      dispatch({
+        type: "list/setData",
+        payload: {
+          data: res.data.data.items
+        }
+      })
     })
   }
   //ScrollView滚动到底部触发
@@ -97,7 +106,7 @@ const Index = (props) => {
           >
             { data.map((item)=>{
                 return (<ProCard
-                  isNew={true}
+                  is_redefined={true}
                   productName={item.productName}
                   insType={PRO_TYPE[item.insType]}
                   key={item.id}

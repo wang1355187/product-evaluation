@@ -12,7 +12,7 @@ const SectionCard = function (props) {
       <View className='u-component-card-title'>
         <Text>{props.title}</Text>
       </View>
-      <View className='u-component-card-content' style={style}>
+      <View className='u-component-card-content'>
         {props.children}
       </View>
     </View>

@@ -2,7 +2,7 @@ import { Component,  useState, useCallback, useEffect, useRef } from 'react'
 import { View, Text, Image, ScrollView } from '@tarojs/components'
 import React from 'react';
 import { useDispatch } from "react-redux";
-import { AtIcon, AtTabBar, AtButton, AtFloatLayout, AtCheckbox } from 'taro-ui';
+import { AtIcon, AtTabBar, AtButton, AtFloatLayout, AtCheckbox, AtSearchBar } from 'taro-ui';
 import Cover from '@/components/Cover/index'
 import CheckTag,{ CheckTagItem } from '../CheckTag/index'
 import { filterList, conditionMap, Filter } from "../../config/index";
@@ -51,7 +51,8 @@ const SideBar = function(props) {
   const [companyList, setCompanyList] = useState([]);
   //公司列表弹窗状态
   const [showFloat, setShowFloat] = useState(false);
-
+  //公司搜索关键词
+  const [companyValue, setCompanyValue] = useState('');
   //获取筛选参数
   const getFilterParam = useCallback(() => {
     let data = {
@@ -97,6 +98,20 @@ const SideBar = function(props) {
   function goToDetail (id) {
 
   }
+  //搜索公司
+  const handleSearchChange = async () => {
+    if (!companyValue) return;
+    const { data: res } = await companyNameByList(companyValue);
+    if (res.code === 0) {
+      const copMap = res.data.map((c) => {
+        return {
+          value: c.id,
+          label: c.name,
+        };
+      });
+      setCompanyList(copMap);
+    }
+  };
   //打开公司筛选栏
   const showPopup = useCallback(async () => {
     if (!companyList || companyList.length === 0) {
@@ -114,6 +129,7 @@ const SideBar = function(props) {
     setShowFloat(true);
     return;
   }, [companyList]);
+
   //关闭公司列表弹窗
   const handleClose = useCallback(() => {
     //选中公司，但是未按确定提交时，清空已经勾选的公司
@@ -291,7 +307,7 @@ const SideBar = function(props) {
           isOpened={showFloat}
           onClose={handleClose}
         >
-          {/* <View className='search_company'>
+          <View className='search_company'>
             <View className='search_company-fixed'>
               <AtSearchBar
                 value={companyValue}
@@ -300,7 +316,7 @@ const SideBar = function(props) {
                 onActionClick={handleSearchChange}
               />
             </View>
-          </View> */}
+          </View>
           <View className='scroll_company'>
             <AtCheckbox
               options={companyList}

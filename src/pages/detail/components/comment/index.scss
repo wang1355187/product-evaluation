@@ -1,0 +1,43 @@
+.point-container{
+  border-bottom: 1px solid #e2e2e2;
+  font-size: 26px;
+  padding: 20px 0px 32px;
+  .logo-title{
+    width: 125px;
+    height: 50px;
+    line-height: 50px;
+    margin: 10px 0px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: orange;
+    color: #ffffff;
+    border-radius: 6px;
+    .iconfont{
+      vertical-align: middle;
+      font-size: 42px;
+      color: #ffffff;
+      margin-right: 5px;
+    }
+  }
+  .title{
+    font-weight: bold;
+    font-size: 27px;
+    height: 65px;
+    line-height: 65px;
+    .iconfont{
+      vertical-align: middle;
+      font-size: 18PX;
+      margin-right: 15px;
+      color: blue;
+    }
+  }
+  .content{
+    &-item{
+      margin-bottom: 10px;
+    }
+    &-item:last-child{
+      margin-bottom: 0;
+    }
+  }
+}

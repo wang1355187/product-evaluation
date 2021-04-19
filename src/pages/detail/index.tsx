@@ -3,8 +3,9 @@ import Taro, { getCurrentInstance } from '@tarojs/taro'
 import ProCard from '../index/components/ProCard'
 import {Text, View} from '@tarojs/components';
 import request from '@/services/index';
-import { AtTabs, AtTabsPane, AtFloatLayout } from 'taro-ui'
+import { AtTabs, AtTabsPane, AtFloatLayout, AtButton } from 'taro-ui'
 import SectionCard from "@/components/SectionCard";
+import Comment from "./components/comment/index"
 import Count from "./components/Count"
 import './index.scss';
 
@@ -29,8 +30,10 @@ export default class extends React.Component<IState, any> {
   state = {
     detailData: {} as any,
     current: 0,
-    isModalShow: false
+    isModalShow: false,
+    isLoading: true
   }
+  
   componentDidMount () {
     if (window.scrollTo) {
       window.scrollTo(0,0);
@@ -47,15 +50,37 @@ export default class extends React.Component<IState, any> {
 
   //获取产品详情数据
   getData = async (id: string)=>{
-    const {data, isSuccess} = await request.get({
-      url: `/product/info/${id}`,
-      isLoading: true
+    Taro.request({
+      method: 'GET',
+      url: `/api/product?id=${id}`,
+      header: {
+        'content-type': 'application/json'
+      }
+    }).then((res) => {
+      const data = res.data;
+      if(data.code===0){
+        this.setState({
+          detailData: data.data
+        });
+        this.setState({
+          isLoading: false
+        })
+        console.log(this.state.detailData);
+      }
     })
-    if(isSuccess){
-      this.setState({
-        detailData:data.data
-      });
-    }
+    // const {data, isSuccess} = await request.get({
+    //   url: `/product/info/${id}`,
+    //   isLoading: true
+    // })
+    // if(isSuccess){
+    //   this.setState({
+    //     detailData: data.data
+    //   });
+    //   this.setState({
+    //     isLoading: false
+    //   })
+    //   console.log(this.state.detailData);
+    // }
   }
 
   //切换保障内容的Tab
@@ -78,7 +103,7 @@ export default class extends React.Component<IState, any> {
   }
 
   render () {
-    const tabList = [{ title: '保什么' }, { title: '不保什么' }, { title: '病种' },{ title: '投保规则' }]
+    const tabList = [{ title: '保什么' }, { title: '不保什么' }, { title: '病种' },{ title: '投保规则' }];
     return (
       <View className="detail-container">
         {/* 产品信息卡片 */}
@@ -122,12 +147,22 @@ export default class extends React.Component<IState, any> {
 
         {/* 谱蓝君点评模块 */}
         <SectionCard title="谱蓝君点评">
-
+          {!this.state.isLoading &&
+            <Comment detailData={this.state.detailData}></Comment>          
+          }
         </SectionCard>        
 
         {/* 保险条款模块 */}
         <SectionCard title="保险条款">
-
+          {!this.state.isLoading && this.state.detailData.policies.map((item) => {
+            return (
+              <View className="policies-box" key={item.key}>
+                <Text className="policies-name">{item.key}</Text>
+                <Text className="iconfont icon-youjiantou-copy"></Text>
+              </View>  
+            )
+          })        
+          }
         </SectionCard> 
 
         {/* 保险公司模块 */}
@@ -138,7 +173,13 @@ export default class extends React.Component<IState, any> {
         {/* 同类产品模块 */}
         <SectionCard title="同类产品">
 
-        </SectionCard> 
+        </SectionCard>
+
+        <View className="fixed-btn">
+          <AtButton size="small" type="secondary" className="btn-share">分享给客户</AtButton>
+          <AtButton size="small" type="primary" className="btn-contrast">加入对比</AtButton>
+        </View>
+        <View className="footer">*以上内容仅供参考，产品详情信息以产品条款约定内容为准</View>
       </View>
     )
   }

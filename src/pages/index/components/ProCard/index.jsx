@@ -23,7 +23,7 @@ export default class ProCard extends Component {
       return;
     }
     Taro.navigateTo({
-      url: `/pages/detail/index?id=791320753263575040`,
+      url: `/pages/detail/index?id=718128926693658624`,
     });
   }
 
@@ -37,7 +37,7 @@ export default class ProCard extends Component {
         <View className="content-box">
           <View className="row-1">
             <View className="pro-name">
-              {this.props.isNew
+              {this.props.is_redefined
                 ?<Text className="new">新定义</Text>
                 :<Text className="old">旧定义</Text>
               }

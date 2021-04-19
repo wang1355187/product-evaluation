@@ -9,7 +9,7 @@ import request from "../../services";
  */
 export function searchProductList(postData: object) {
   return request.post({
-    url: '/product/list/name',
+    url: '/search_product_by_name',
     data: {...postData},
     isLoading: true,
   })

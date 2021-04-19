@@ -72,5 +72,9 @@ export default {
       const res = action.payload;
       return { ...state, currentKeyword: res };
     },
+    setData(state, { payload }) {
+      const { data } = payload;
+      return {...state, data}
+    }
   },
 };
