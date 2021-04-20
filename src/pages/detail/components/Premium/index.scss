@@ -1,0 +1,58 @@
+.premium-container{
+  padding-bottom: 80px;
+  .has-premium{
+    .premium-desc{
+      font-size: 26px;
+      color: #999;
+      line-height: 40px;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+//表格组件样式
+.table-container{
+  .table-th{
+    display: flex;
+    text-align: center;
+    color: #ffffff;
+    font-size: 28px;
+    &-td{
+      background-color: #6190E8;
+      flex: 1;
+      padding: 20px 0px;
+      margin-right: 3px;
+    }
+    &-td:first-child{
+      flex: 0;
+      flex-basis: 120px;
+    }
+    &-td:last-child{
+      margin-right: 0;
+    }
+  }
+  .table-th:first-child{
+    margin-bottom: 3px;
+  }
+  .table-tbody{
+    .table-tr{
+      display: flex;
+      text-align: center;
+      font-size: 28px;
+      color: #333;
+      background-color: #dee6fd70;
+      &-td{
+        flex: 1;
+        height: 60px;
+        line-height: 60px;
+      }
+      &-td:first-child{
+        flex: 0;
+        flex-basis: 120px;
+      }
+    }
+    .table-tr:nth-child(odd){
+      background-color: #f9fefd;
+    }
+  }
+}

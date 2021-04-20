@@ -23,7 +23,7 @@ export default class ProCard extends Component {
       return;
     }
     Taro.navigateTo({
-      url: `/pages/detail/index?id=718128926693658624`,
+      url: `/pages/detail/index?id=119090218110758601`,
     });
   }
 

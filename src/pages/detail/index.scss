@@ -5,14 +5,21 @@
   .layout-header{
     text-align: center;
   }
+  // 保险条款
   .policies-box{
     position: relative;
     font-size: 26px;
     height: 50px;
     line-height: 50px;
     margin-bottom: 25px;
+    padding-right: 50px;
+    display: flex;
     .policies-name{
-
+      flex: 1;
+      width: 0;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
     .iconfont{
       position: absolute;
@@ -21,7 +28,56 @@
       color: #999;
     }
   }
-
+  // 保险公司
+  .company-box{
+    position: relative;
+    .company-name{
+      font-size: 32px;
+      font-weight: 600;
+    }
+    .company-desc,.company-phone{
+      font-size: 28px;
+      line-height: 50px;
+      margin: 20px 0px 30px;
+      .register-time{
+        margin-right: 250px;
+      }
+    }
+    .more{
+      position: absolute;
+      top: 30px;
+      right: 15px;
+      font-size: 26px;
+      color: #6190E8;
+      .iconfont{
+        font-size: 24px;
+      }
+    }
+  }
+  // 相似产品
+  .similar-pro{
+    height: 120px;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 28px;
+    border-bottom: 1px solid #e2e2e291;
+    position: relative;
+    .contrast-btn{
+      position: absolute;
+      top: 40px;
+      right: 20px;
+      height: 45px;
+      width: 140px;
+      line-height: 45px;
+      text-align: center;
+      font-size: 28px;
+      color: #ffffff;
+      background-color: #6190E8;
+    }
+  }
+  // 底部固定按钮
   .fixed-btn{
     position: fixed;
     bottom: 0;

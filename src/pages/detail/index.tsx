@@ -1,12 +1,12 @@
 import React from "react";
-import Taro, { getCurrentInstance } from '@tarojs/taro'
+import Taro, { getCurrentInstance, connectSocket } from '@tarojs/taro'
 import ProCard from '../index/components/ProCard'
 import {Text, View} from '@tarojs/components';
-import request from '@/services/index';
+import { connect } from "react-redux";
 import { AtTabs, AtTabsPane, AtFloatLayout, AtButton } from 'taro-ui'
 import SectionCard from "@/components/SectionCard";
 import Comment from "./components/comment/index"
-import Count from "./components/Count"
+import Premium from "./components/Premium/index"
 import './index.scss';
 
 export interface IState {
@@ -25,7 +25,8 @@ const PRO_TYPE = {
   6: "防癌险",
 };
 
-export default class extends React.Component<IState, any> {
+
+class Detail extends React.Component {
   
   state = {
     detailData: {} as any,
@@ -65,7 +66,9 @@ export default class extends React.Component<IState, any> {
         this.setState({
           isLoading: false
         })
-        console.log(this.state.detailData);
+        this.props.setProductDetail({
+          product_detail: this.state.detailData
+        })
       }
     })
     // const {data, isSuccess} = await request.get({
@@ -142,7 +145,9 @@ export default class extends React.Component<IState, any> {
 
         {/* 保费测算模块 */}
         <SectionCard title="保费测算">
-          <Count detailData={this.state.detailData}></Count>        
+          {!this.state.isLoading &&
+            <Premium detailData={this.state.detailData}></Premium>
+          }  
         </SectionCard>
 
         {/* 谱蓝君点评模块 */}
@@ -166,13 +171,31 @@ export default class extends React.Component<IState, any> {
         </SectionCard> 
 
         {/* 保险公司模块 */}
-        <SectionCard title="保险公司">
-
+        <SectionCard title="保险公司" className="company-box">
+          <View className="company-name">{this.state.detailData.companyName}</View>
+          <View className="company-desc">
+            <Text className="register-time">注册时间：</Text>
+            <Text>总部：</Text>
+          </View>
+          <View className="company-phone">理赔电话：</View>
+          <View className="more">
+            <Text>查看更多</Text>
+            <Text className="iconfont icon-xiangyou"></Text>
+          </View>
         </SectionCard> 
 
         {/* 同类产品模块 */}
         <SectionCard title="同类产品">
-
+          {!this.state.isLoading && this.state.detailData.similars.map((item) => {
+            return (
+              <View className="similar-pro" key={item.id}>
+                <View className="pro-name">产品：{item.name}</View>
+                <View  className="company-name">公司：{item.corp}</View>
+                <View className="contrast-btn">一键对比</View>
+              </View>
+            )
+          })
+          }
         </SectionCard>
 
         <View className="fixed-btn">
@@ -184,3 +207,12 @@ export default class extends React.Component<IState, any> {
     )
   }
 }
+
+const mapStateToProps = ({detail}) => ({
+  detail
+})
+const mapDispatchToProps = {
+  setProductDetail: (payload) => ({type: 'detail/setProductDetail',payload}),
+  setCompanyDetail: (payload) => ({type: 'detail/setCompanyDetail',payload})
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Detail)
