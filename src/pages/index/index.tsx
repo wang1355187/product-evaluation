@@ -66,6 +66,7 @@ const Index = (props) => {
         'content-type': 'application/json'
       }
     }).then((res) => {
+      console.log(res);
       dispatch({
         type: "list/setData",
         payload: {

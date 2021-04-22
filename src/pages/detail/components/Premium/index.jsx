@@ -8,7 +8,24 @@ const PremiumTable = function (props) {
     th,
     premium_table
   } = props;
-  console.log(premium_table);
+
+  const conditions = [];  //表头条件
+  const rows = [];  //条件模块
+  const age = []; //年龄列
+
+  //格式化premium_table
+  function formatTable(data) {
+    data.map((item) => {
+      conditions.push(item.conditions);
+      rows.push(item.premium);
+    })
+  }
+  formatTable(premium_table);
+  //获取年龄列
+  rows[0].forEach((item)=>{
+    age.push(item.age);
+  })
+
   return (
     <View className="table-container">
       {
@@ -27,14 +44,33 @@ const PremiumTable = function (props) {
         })
       }
       <View className="table-tbody">
+        <View className="row-age">
+          {
+            age.map((item) => {
+              return (
+                <View key={item} className="td">{item}</View>
+              )
+            })
+          }
+        </View>
         {
-          premium_table[0].premium.map((tr,index) => {
+          rows.map((item,index) => {
             return (
-              <View className="table-tr" key={index}>
+              <View className="condition-module" key={index}>
                 {
-                  (Object.keys(tr)).map((key) => {
+                  item.map((_item,_index) => {
                     return (
-                      <View className="table-tr-td" key={key}>{tr[key]}</View>
+                      <View className="condition-module-tr" key={_index}>
+                        {_item.fee!=undefined
+                        ?
+                          <View className="condition-module-tr-td td">{_item.fee}</View>
+                        :
+                          <React.Fragment>
+                            <View className="condition-module-tr-td td">{_item.male}</View>
+                            <View className="condition-module-tr-td td">{_item.female}</View>
+                          </React.Fragment>
+                        }
+                      </View>
                     )
                   })
                 }
@@ -48,6 +84,7 @@ const PremiumTable = function (props) {
 }
 
 const Premium = function (props) {
+  const isPremium = Object.keys(props.detailData.premium).length >0 ? true : false;
   const { standard, premium_table } = props.detailData.premium;
   const { insType } = props.detailData;
   const PRO_TYPE = {
@@ -68,17 +105,22 @@ const Premium = function (props) {
   }
   return (
     <View className="premium-container">
-      <View className="has-premium">
-        { standard.map((item) => {
-            return (
-              <View className="premium-desc" key={item.key}>{item.key}：{item.value}</View>
-            )
-          })
-        }
-        <View className="premium-table">
-          <PremiumTable th={premiumMap[insType]} premium_table={premium_table}></PremiumTable>
-        </View>
-      </View>
+      {isPremium
+        ?
+          <View className="has-premium">
+            { standard.map((item) => {
+                return (
+                  <View className="premium-desc" key={item.key}>{item.key}：{item.value}</View>
+                )
+              })
+            }
+            <View className="premium-table">
+              <PremiumTable th={premiumMap[insType]} premium_table={premium_table}></PremiumTable>
+            </View>
+          </View>
+        :
+          <View>nodata</View>
+      }
     </View>
   )
 }

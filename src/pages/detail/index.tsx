@@ -7,6 +7,7 @@ import { AtTabs, AtTabsPane, AtFloatLayout, AtButton } from 'taro-ui'
 import SectionCard from "@/components/SectionCard";
 import Comment from "./components/comment/index"
 import Premium from "./components/Premium/index"
+import TabPanel from './components/TabPanel/index'
 import './index.scss';
 
 export interface IState {
@@ -71,19 +72,6 @@ class Detail extends React.Component {
         })
       }
     })
-    // const {data, isSuccess} = await request.get({
-    //   url: `/product/info/${id}`,
-    //   isLoading: true
-    // })
-    // if(isSuccess){
-    //   this.setState({
-    //     detailData: data.data
-    //   });
-    //   this.setState({
-    //     isLoading: false
-    //   })
-    //   console.log(this.state.detailData);
-    // }
   }
 
   //切换保障内容的Tab
@@ -106,7 +94,14 @@ class Detail extends React.Component {
   }
 
   render () {
-    const tabList = [{ title: '保什么' }, { title: '不保什么' }, { title: '病种' },{ title: '投保规则' }];
+    const tabList = {
+      1:[{ title: '保什么', type: 'covers'}, { title: '不保什么', type: 'excludes'}, { title: '病种', type:'diseases'},{ title: '投保规则', type:'diseases'}],
+      2:[{ title: '保什么', type: 'covers' }, { title: '不保什么', type: 'excludes' }, { title: '投保规则', type:'diseases' }],
+      3:[{ title: '保什么' }, { title: '不保什么' }, { title: '投保规则' }],
+      4:[{ title: '保什么' }, { title: '不保什么' }, { title: '投保规则' }],
+      5:[{ title: '保什么' }, { title: '不保什么' }],
+      6:[{ title: '保什么' }, { title: '不保什么' }, { title: '病种' },{ title: '投保规则' }]
+    }
     return (
       <View className="detail-container">
         {/* 产品信息卡片 */}
@@ -126,21 +121,38 @@ class Detail extends React.Component {
           onClose={this.closeModal}
           className="modal"
         >
-            <View>投保须知</View>
+          {!this.state.isLoading &&
+          <View className="modal-content">
+            <View>
+              <View className="tag-age">{this.state.detailData.productSiPatch.insuredAge}</View>
+              <View>投保年龄</View>
+            </View>
+            <View>
+              <View className="tag-require">{this.state.detailData.productSiPatch.insuredJobType}</View>
+              <View>职业要求</View>
+            </View>
+            <View>
+              <View className="tag-pay">{this.state.detailData.productSiPatch.reparationTimes}/{this.state.detailData.productSiPatch.groups}</View>
+              <View>重疾赔付</View>
+            </View>
+          </View>}
         </AtFloatLayout>
 
         {/* 保障内容模块 */}
         <SectionCard title="保障内容">
-          <AtTabs tabList={tabList} current={this.state.current} onClick={this.changeTab}>
-            {/* 保什么 */}
-            <AtTabsPane current={this.state.current} index={0}>1</AtTabsPane>
-            {/* 不保什么 */}
-            <AtTabsPane current={this.state.current} index={1}>2</AtTabsPane>
-            {/* 病种 */}
-            <AtTabsPane current={this.state.current} index={2}>3</AtTabsPane>
-            {/* 投保规则 */}
-            <AtTabsPane current={this.state.current} index={3}>4</AtTabsPane>
-          </AtTabs>
+          {!this.state.isLoading &&
+            <AtTabs tabList={tabList[this.state.detailData.insType]} current={this.state.current} onClick={this.changeTab}>
+              {
+                tabList[this.state.detailData.insType].map((item,index) => {
+                  return  (
+                    <AtTabsPane current={this.state.current} index={index} key={item.title}>
+                      <TabPanel data={this.state.detailData[item.type]} type={item.type} details={this.state.detailData.details}></TabPanel>
+                    </AtTabsPane>
+                  )
+                })
+              }
+            </AtTabs>             
+          }
         </SectionCard>
 
         {/* 保费测算模块 */}

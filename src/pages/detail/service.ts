@@ -13,3 +13,17 @@ export function getProductDetail(id: string) {
     isLoading: true,
   })
 }
+
+/**
+ * 获取产品详情信息
+ *
+ * @export
+ * @param {string} name
+ * @returns
+ */
+export function getCompanyDetail(id: string) {
+  return request.get({
+    url: `/company?id=${id}`,
+    isLoading: true,
+  })
+}

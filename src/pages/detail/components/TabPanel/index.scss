@@ -1,0 +1,110 @@
+.tab-panel-container{
+  position: relative;
+  .limit{
+    max-height: 350PX;
+  }
+  .tab-panel-content{
+    margin-top: 40px;
+    overflow: hidden;
+  }
+  .tab-footer{
+    width: 100%;
+    &-box{
+      height: 80px;
+      line-height: 80px;
+      display: flex;
+      justify-content: space-around;
+      font-size: 26px;
+      color: #4379FE;
+      .iconfont{
+        margin-left: 5px;
+        font-size: 14PX;
+      }
+    }
+  }
+}
+
+//保什么（详细）、投保规则的表格样式
+.table-container{
+  .table-tr{
+    display: flex;
+    min-height: 90px;
+    line-height: 90px;
+    font-size: 26px;
+    margin-bottom: 2px;
+    background-color: #dee6fd70;
+    .table-title{
+      flex-basis: 150px;
+      background-color: #6190E8;
+      color: #ffffff;
+      line-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .table-content{
+      flex: 1;
+      line-height: 30px;
+      display: flex;
+      align-items: center;
+      text-align: left;
+      box-sizing: border-box;
+      padding: 0px 10px;
+    }
+  }
+  .table-tr:nth-child(odd){
+    background-color: #f9fefd;
+  }
+}
+
+// 保什么（详细）
+.details-container{
+  .details-content{
+    .detail-box{
+      display: flex;
+      margin-bottom: 3px;
+      .detail-class{
+        flex-basis: 100px;
+        color: white;
+        background-color: #6190E8;
+        writing-mode: vertical-lr;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .item-box{
+        font-size: 26px;
+        flex: 1;
+        .flex-box{
+          display: flex;
+          height: 70px;
+          line-height: 70px;
+          text-indent: 20px;
+          .item-key,.item-value{
+            color: #333;
+            box-sizing: border-box;
+            border: 1px solid #edf5ff;
+            flex: 1;
+          }
+        }
+      }
+    }
+  }
+}
+
+//不保什么
+.excludes-container{
+  .excludes-content{
+    background-color: #edf5ff;
+    .exclude-item{
+      padding: 15px 5px;
+      font-size: 26px;
+      border-bottom: 1px solid #cfe2dea8;
+      color: #333;
+    }
+    .exclude-item:last-child{
+      border-bottom: none;
+    }
+  }
+}

@@ -1,9 +1,32 @@
 .detail-container{
   .modal{
-
-  }
-  .layout-header{
-    text-align: center;
+    .at-float-layout__container{
+      height: 380px !important;
+      min-height: 380px !important;
+    }
+    .layout-body{
+      min-height: 380px !important;
+      height: 380px !important;
+    }
+    .layout-body__content{
+      height: 380px !important;
+      min-height: 380px !important;
+    }
+    .layout-header__title{
+      text-align: center;
+      text-indent: 60px;
+    }
+    .modal-content{
+      display: flex;
+      justify-content: space-around;
+      text-align: center;
+      font-size: 24px;
+      color: #999;
+      .tag-age,.tag-require,.tag-pay{
+        font-size: 26px;
+        color: #333;
+      }
+    }
   }
   // 保险条款
   .policies-box{
