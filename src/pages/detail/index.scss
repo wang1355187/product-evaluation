@@ -62,9 +62,8 @@
       font-size: 28px;
       line-height: 50px;
       margin: 20px 0px 30px;
-      .register-time{
-        margin-right: 250px;
-      }
+      display: flex;
+      justify-content: space-between;
     }
     .more{
       position: absolute;

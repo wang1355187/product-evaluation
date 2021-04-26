@@ -108,3 +108,34 @@
     }
   }
 }
+
+//病种
+.diseases-container{
+  .table-tr{
+    display: flex;
+    font-size: 26px;
+    margin-bottom: 2px;
+    background-color: #dee6fd70;
+    .table-title{
+      flex-basis: 150px;
+      background-color: #6190E8;
+      color: #ffffff;
+      line-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .table-content{
+      flex: 1;
+      box-sizing: border-box;
+      padding: 10px;
+      .diseases-item{
+        margin-right: 12px;
+      }
+    }
+  }
+  .table-tr:nth-child(odd){
+    background-color: #f9fefd;
+  }
+}
