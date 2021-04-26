@@ -1,0 +1,84 @@
+.company-container{
+  font-size: 28px;
+  margin-top: 10px;
+  .company-desc{
+    padding: 20px 20px 60px 20px;
+    background-color: #ffffff;
+    &-name{
+      font-size: 36px;
+      font-weight: 600;
+    }
+    &-website{
+      a{
+        color: blue;
+      }
+    }
+    &-ratio{
+      margin-top: 20px;
+      color: #999;
+      font-size: 26px;
+      text-indent: 10px;
+      padding: 20px;
+      line-height: 40px;
+      background-color: #d9d9d940;
+    }
+  }
+  .company-basic-info{
+    background-color: #ffffff;
+    margin-top: 20px;
+    padding: 10px;
+    .company-tab{
+      &-info{
+        margin-right: 50px;
+      }
+      .active{
+        color: #5757eb;
+      }
+      height: 80px;
+      line-height: 80px;
+      display: flex;
+      font-size: 30px;
+      font-weight: 600;
+      color: #333;
+      border-bottom: 1px solid #e2e2e291;
+    }
+    .info-content{
+      .flex-box{
+        display: flex;
+        font-size: 28px;
+        margin-bottom: 10px;
+        .info-content-title{
+          flex-basis: 150px;
+          color: #999;
+        }
+        .info-content-value{
+          flex: 1;
+          color: #333;
+          font-size: 26px;
+        }
+      }
+      .company-manage{
+        display: flex;
+        font-size: 28px;
+        padding: 0px 0px 50px;
+        .info-content-title{
+          flex-basis: 250px;
+          color: #999;
+        }
+        .info-content-value{
+          flex: 1;
+          color: #333;
+        }
+      }
+    }
+  }
+  .footer{
+    font-size: 26px;
+    color: #999;
+    padding: 30px 0px 80px;
+    .toLast{
+      margin-top: 50px;
+      text-align: center;
+    }
+  }
+}
