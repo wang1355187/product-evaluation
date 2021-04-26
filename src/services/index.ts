@@ -7,7 +7,7 @@ export const IS_DEV = process.env.NODE_ENV === "development";
 
 // 开发时本地可自己开启NeteaseCloudMusicApi服务(https://binaryify.github.io/NeteaseCloudMusicApi/#/)
 // export const BASE_URL = IS_DEV ? 'https://moment.planplus.cn/product-analysis' : 'https://www.jungaweb.club'
-export const BASE_URL = "https://moment.planplus.cn/product-analysis";
+export const BASE_URL = "https://pingce.planplus.cn";
 // 微信相关模块接口域名
 export const WE_CATH_BASE_URL = "https://wx.planplus.cn";
 
@@ -88,16 +88,15 @@ export default {
       contentType,
       ...rest
     } = options;
-
     return new Promise((resolve, reject) => {
       if (isLoading) {
         Tips.loding("加载中");
       }
       Taro.request({
         method: method || "GET",
-        url: `${weChatDomain ? WE_CATH_BASE_URL : BASE_URL}${url}`,
+        url: `${url}`,
         header: {
-          "content-type": contentType || "application/x-www-form-urlencoded",
+          "content-type": "application/json",
           ...headers,
         },
         ...rest,
@@ -127,7 +126,7 @@ export default {
     return this.request({
       method: "POST",
       ...options,
-      data: qs.stringify(options.data),
+      data: options.data,
     });
   },
   put(options: IOptions) {

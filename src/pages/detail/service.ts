@@ -9,13 +9,13 @@ import request from "../../services";
  */
 export function getProductDetail(id: string) {
   return request.get({
-    url: `/product?id=${id}`,
+    url: `/api/product?id=${id}`,
     isLoading: true,
   })
 }
 
 /**
- * 获取产品详情信息
+ * 获取公司详情信息
  *
  * @export
  * @param {string} name
@@ -23,7 +23,7 @@ export function getProductDetail(id: string) {
  */
 export function getCompanyDetail(id: string) {
   return request.get({
-    url: `/company?id=${id}`,
+    url: `/api/company?id=${id}`,
     isLoading: true,
   })
 }

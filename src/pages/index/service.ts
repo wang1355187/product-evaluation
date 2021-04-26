@@ -9,8 +9,8 @@ import request from "../../services";
  */
 export function searchProductList(postData: object) {
   return request.post({
-    url: '/search_product_by_name',
-    data: {...postData},
+    url: '/api/search_product_by_name',
+    data: postData,
     isLoading: true,
   })
 }
