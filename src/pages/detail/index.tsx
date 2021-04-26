@@ -1,19 +1,20 @@
 import React from "react";
-import Taro, { getCurrentInstance, connectSocket } from '@tarojs/taro'
-import ProCard from '../index/components/ProCard'
+import Taro, { getCurrentInstance, connectSocket } from '@tarojs/taro';
+import ProCard from '../index/components/ProCard';
 import {Text, View} from '@tarojs/components';
 import { connect } from "react-redux";
-import { AtTabs, AtTabsPane, AtFloatLayout, AtButton } from 'taro-ui'
+import { AtTabs, AtTabsPane, AtFloatLayout, AtButton } from 'taro-ui';
 import SectionCard from "@/components/SectionCard";
-import Comment from "./components/comment/index"
-import Premium from "./components/Premium/index"
-import TabPanel from './components/TabPanel/index'
+import Comment from "./components/comment/index";
+import Premium from "./components/Premium/index";
+import TabPanel from './components/TabPanel/index';
 import './index.scss';
 
 export interface IState {
   detailData: any,
   current: number,
-  isModalShow: boolean
+  isModalShow: boolean,
+  companyData: any,
 }
 
 //保险类型
@@ -26,6 +27,15 @@ const PRO_TYPE = {
   6: "防癌险",
 };
 
+const mapStateToProps = ({detail}) => ({
+  detail
+})
+const mapDispatchToProps = {
+  setProductDetail: (payload) => ({type: 'detail/setProductDetail',payload}),
+  setCompanyDetail: (payload) => ({type: 'detail/setCompanyDetail',payload}),
+  getProductDetail: (payload) => ({type: 'detail/getProductDetail',payload}),
+  getCompanyDetail: (payload) => ({type: 'detail/getCompanyDetail',payload}),
+};
 
 class Detail extends React.Component {
   
@@ -33,7 +43,8 @@ class Detail extends React.Component {
     detailData: {} as any,
     current: 0,
     isModalShow: false,
-    isLoading: true
+    isLoading: true,
+    companyData: {} as any,
   }
   
   componentDidMount () {
@@ -41,7 +52,21 @@ class Detail extends React.Component {
       window.scrollTo(0,0);
     }
     const params =  getCurrentInstance().router.params;
-    this.getData(params.id);
+    // this.getData(params.id);
+    this.props.getProductDetail({
+      id:params.id
+    }).then((res)=> {
+      this.setState({
+        isLoading: false,
+        detailData: res
+      })
+      this.props.getCompanyDetail({id:res.companyId}).then((_res)=>{
+        this.setState({
+          isLoading: false,
+          companyData: _res
+        })
+      })
+    })
   }
 
   componentDidShow () {}
@@ -50,29 +75,48 @@ class Detail extends React.Component {
 
   componentDidCatchError () {}
 
+  //获取公司详情数据
+  // getCompany = async (corp_id: string) => {
+  //   Taro.request({
+  //     method: 'GET',
+  //     url: `/api/company?id=${corp_id}`,
+  //     header: {
+  //       'content-type': 'application/json'
+  //     }
+  //   }).then((res) => {
+  //     const data = res.data;
+  //     if(data.code===0){
+  //       this.setState({
+  //         companyData: data.data
+  //       });
+  //       this.props.setCompanyDetail({
+  //         company_detail: this.state.companyData
+  //       })
+  //     }
+  //   })
+  // }
+
   //获取产品详情数据
-  getData = async (id: string)=>{
-    Taro.request({
-      method: 'GET',
-      url: `/api/product?id=${id}`,
-      header: {
-        'content-type': 'application/json'
-      }
-    }).then((res) => {
-      const data = res.data;
-      if(data.code===0){
-        this.setState({
-          detailData: data.data
-        });
-        this.setState({
-          isLoading: false
-        })
-        this.props.setProductDetail({
-          product_detail: this.state.detailData
-        })
-      }
-    })
-  }
+  // getData = async (id: string)=>{
+  //   Taro.request({
+  //     method: 'GET',
+  //     url: `/api/product?id=${id}`,
+  //     header: {
+  //       'content-type': 'application/json'
+  //     }
+  //   }).then((res) => {
+  //     const data = res.data;
+  //     if(data.code===0){
+  //       this.setState({
+  //         isLoading: false,
+  //         detailData: data.data
+  //       })
+  //       this.props.setProductDetail({
+  //         product_detail: this.state.detailData
+  //       })
+  //     }
+  //   })
+  // }
 
   //切换保障内容的Tab
   changeTab = (value) => {
@@ -93,26 +137,33 @@ class Detail extends React.Component {
     })
   }
 
+  //跳转公司详情页面
+  toCompanyDetail = () => {
+    Taro.navigateTo({
+      url: `/pages/company/index?id=${this.state.detailData.companyId}`,
+    })
+  }
+  
   render () {
     const tabList = {
-      1:[{ title: '保什么', type: 'covers'}, { title: '不保什么', type: 'excludes'}, { title: '病种', type:'diseases'},{ title: '投保规则', type:'diseases'}],
-      2:[{ title: '保什么', type: 'covers' }, { title: '不保什么', type: 'excludes' }, { title: '投保规则', type:'diseases' }],
-      3:[{ title: '保什么' }, { title: '不保什么' }, { title: '投保规则' }],
-      4:[{ title: '保什么' }, { title: '不保什么' }, { title: '投保规则' }],
-      5:[{ title: '保什么' }, { title: '不保什么' }],
-      6:[{ title: '保什么' }, { title: '不保什么' }, { title: '病种' },{ title: '投保规则' }]
+      1:[{ title: '保什么', type: 'covers'}, { title: '不保什么', type: 'excludes'}, { title: '病种', type:'diseases'},{ title: '投保规则',  type:'rules'}],
+      2:[{ title: '保什么', type: 'covers' }, { title: '不保什么', type: 'excludes' }, { title: '投保规则',  type:'rules' }],
+      3:[{ title: '保什么', type: 'covers'  }, { title: '不保什么', type: 'excludes' }, { title: '投保规则', type:'rules' }],
+      4:[{ title: '保什么', type: 'covers'  }, { title: '不保什么', type: 'excludes' }, { title: '投保规则', type:'rules'  }],
+      5:[{ title: '保什么', type: 'covers'  }, { title: '不保什么', type: 'excludes' }],
+      6:[{ title: '保什么', type: 'covers'  }, { title: '不保什么', type: 'excludes' }, { title: '病种', type:'diseases' },{ title: '投保规则', type:'rules'  }]
     }
     return (
       <View className="detail-container">
         {/* 产品信息卡片 */}
-        <ProCard
-          isNew={true}
-          productName={this.state.detailData.productName}
-          insType={PRO_TYPE[this.state.detailData.insType]}
-          isModal={true}
-          showModal={this.showModal}
-        >
-        </ProCard>
+        {!this.state.isLoading &&
+          <ProCard
+            product={this.state.detailData}
+            isModal={true}
+            showModal={this.showModal}
+          >
+          </ProCard>
+        }
 
         {/* 投保须知底部弹出层 */}
         <AtFloatLayout
@@ -123,7 +174,7 @@ class Detail extends React.Component {
         >
           {!this.state.isLoading &&
           <View className="modal-content">
-            <View>
+            {/* <View>
               <View className="tag-age">{this.state.detailData.productSiPatch.insuredAge}</View>
               <View>投保年龄</View>
             </View>
@@ -134,7 +185,7 @@ class Detail extends React.Component {
             <View>
               <View className="tag-pay">{this.state.detailData.productSiPatch.reparationTimes}/{this.state.detailData.productSiPatch.groups}</View>
               <View>重疾赔付</View>
-            </View>
+            </View> */}
           </View>}
         </AtFloatLayout>
 
@@ -186,15 +237,15 @@ class Detail extends React.Component {
         <SectionCard title="保险公司" className="company-box">
           <View className="company-name">{this.state.detailData.companyName}</View>
           <View className="company-desc">
-            <Text className="register-time">注册时间：</Text>
-            <Text>总部：</Text>
+            <Text>注册时间：{this.state.companyData.register_time}</Text>
+            <Text>总部：{this.state.companyData.headquarter}</Text>
           </View>
-          <View className="company-phone">理赔电话：</View>
-          <View className="more">
+          <View className="company-phone">理赔电话：{this.state.companyData.hot_line}</View>
+          <View className="more" onClick={this.toCompanyDetail}>
             <Text>查看更多</Text>
             <Text className="iconfont icon-xiangyou"></Text>
           </View>
-        </SectionCard> 
+        </SectionCard>
 
         {/* 同类产品模块 */}
         <SectionCard title="同类产品">
@@ -220,11 +271,4 @@ class Detail extends React.Component {
   }
 }
 
-const mapStateToProps = ({detail}) => ({
-  detail
-})
-const mapDispatchToProps = {
-  setProductDetail: (payload) => ({type: 'detail/setProductDetail',payload}),
-  setCompanyDetail: (payload) => ({type: 'detail/setCompanyDetail',payload})
-};
 export default connect(mapStateToProps, mapDispatchToProps)(Detail)

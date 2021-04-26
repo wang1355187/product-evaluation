@@ -46,10 +46,12 @@ export default {
       });
       if (res.code === 0) {
         const {data} = res
-        const list = proList.concat(data);
+        const list = proList.concat(data.items);
         yield put({
-          type: "setList",
-          payload: list,
+          type: "setData",
+          payload: {
+            data: list
+          },
         });
         return data
       }

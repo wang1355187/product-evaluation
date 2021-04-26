@@ -5,12 +5,34 @@ import "./index.scss";
 const Table = function (props) {
   return (
     <View className="table-container">
-      {
+      {props.data &&
         props.data.map((item) => {
           return (
             <View className="table-tr" key={item.key}>
               <View className="table-title">{item.key}</View>
               <View className="table-content">{item.value}</View>
+            </View>
+          )
+        })
+      }
+    </View>
+  )
+}
+const Diseases = function (props) {
+  return (
+    <View className="diseases-container">
+      {props.data &&
+        props.data.map((item) => {
+          return (
+            <View className="table-tr" key={item.key}>
+              <View className="table-title">{item.key}</View>
+              <View className="table-content">
+                {item.value.map((_item, index) => {
+                  return (
+                    <Text className="diseases-item" key={index}>{_item}</Text>
+                  )
+                })}
+              </View>
             </View>
           )
         })
@@ -76,7 +98,7 @@ class TabPanel extends React.Component {
   componentDidMount () {
     //根据type不同，渲染不同组件
     switch(this.props.type){
-      case 'diseases':
+      case 'rules':
       case 'covers':
         this.setState({
           component: <Table data={this.props.data}></Table>
@@ -85,6 +107,11 @@ class TabPanel extends React.Component {
       case 'excludes':
         this.setState({
           component: <Excludes data={this.props.data}></Excludes>
+        })
+        break;
+      case 'diseases':
+        this.setState({
+          component: <Diseases data={this.props.data}></Diseases>
         })
         break;
     }

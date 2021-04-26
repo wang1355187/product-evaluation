@@ -24,17 +24,26 @@ const Index = (props) => {
   const [key,setKey] = useState('');
   //侧边栏显示状态
   const [SideBarShow,setSideBarShow] = useState(false);
-
-  const {data, hasData, pageIndex} = useSelector(state => state.list);
-  //获取产品列表数据
-  const getList = useCallback((isNext: boolean = false,) => {
+  
+  const {data, hasData} = useSelector(state => state.list);
+  // 获取产品列表数据
+  const getList = useCallback(() => {
     dispatch({
-      type: "list/fetch",
+      type: "list/searchList",
       payload: {
-        isNext: !!isNext,
+        name: 'e',
+        lek: {}
       },
     });
   },[dispatch]);
+  // const getList = useCallback((isNext: boolean = false,) => {
+  //   dispatch({
+  //     type: "list/fetch",
+  //     payload: {
+  //       isNext: !!isNext,
+  //     },
+  //   });
+  // },[dispatch]);
 
   useEffect(() => {
     getList();
@@ -62,9 +71,6 @@ const Index = (props) => {
         name: key,
         lek: {}
       },
-      header: {
-        'content-type': 'application/json'
-      }
     }).then((res) => {
       console.log(res);
       dispatch({
@@ -80,7 +86,7 @@ const Index = (props) => {
     if (!hasData) {
       return;
     }
-    getList(true);
+    // getList(true);
   };
   return (
     <View className="index-container">
@@ -107,9 +113,7 @@ const Index = (props) => {
           >
             { data.map((item)=>{
                 return (<ProCard
-                  is_redefined={true}
-                  productName={item.productName}
-                  insType={PRO_TYPE[item.insType]}
+                  product={item}
                   key={item.id}
                 >
                 </ProCard>)
@@ -128,9 +132,9 @@ const Index = (props) => {
       </View>
       
       {/* 侧边筛选栏 */}
-      { SideBarShow &&
+      {/* { SideBarShow &&
         <SideBar onClose={setSideBarShow}></SideBar>
-      }
+      } */}
     </View>
   )
 }
