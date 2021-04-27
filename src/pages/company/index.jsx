@@ -18,10 +18,20 @@ const Company = (props) => {
     level: {},
     status: ''
   });
-  const [companyProduct, setCompanyProduct] = useState({});
+  const [companyProduct, setCompanyProduct] = useState({
+    items: []
+  });
   const [tabIndex, setTabIndex] = useState(0);
   const { params } = useRouter();
 
+  //滚动条复位
+  useEffect(() => {
+    if (window.scrollTo) {
+      window.scrollTo(0,0);
+    }
+  },[])
+
+  //页面数据初始化
   useEffect(() => {
     inintData();
   }, [inintData, params])
@@ -79,43 +89,39 @@ const Company = (props) => {
         </View>
 
         {/* 公司信息 */}
-        {tabIndex===0 &&
-          <View className="info-content">
-            <SectionCard title="基本信息">
-              {
-                basicInfoMap.map((item) => {
-                  return (
-                    <View className="flex-box" key={item.key}>
-                      <Text className="info-content-title">{item.title}</Text>
-                      <Text className="info-content-value">{companyData[item.key]}</Text>
-                    </View>
-                  )
-                })
-              }
-            </SectionCard>
-            <SectionCard title="经营状况">
-              <View className="company-manage">
-                <Text className="info-content-title">{companyData.status.split(':')[0]}：</Text>
-                <Text className="info-content-value">{companyData.status.split(':')[1]}</Text>
-              </View>
-            </SectionCard>
-          </View>
-        }
+        <View className="info-content" style={tabIndex===0?{display:'block'}:{display: 'none'}}>
+          <SectionCard title="基本信息">
+            {
+              basicInfoMap.map((item) => {
+                return (
+                  <View className="flex-box" key={item.key}>
+                    <Text className="info-content-title">{item.title}</Text>
+                    <Text className="info-content-value">{companyData[item.key]}</Text>
+                  </View>
+                )
+              })
+            }
+          </SectionCard>
+          <SectionCard title="经营状况">
+            <View className="company-manage">
+              <Text className="info-content-title">{companyData.status.split(':')[0]}：</Text>
+              <Text className="info-content-value">{companyData.status.split(':')[1]}</Text>
+            </View>
+          </SectionCard>
+        </View>
 
         {/* 公司相关产品 */}
-        {tabIndex===1 &&
-          <View className="relate-product">
-            <View className="relate-product-box">
-              {
-                companyProduct.items.map((item) => {
-                  return (
-                    <ProCard product={item} key={item.id}></ProCard>
-                  )
-                })
-              }
-            </View>
+        <View className="relate-product" style={tabIndex===1?{display:'block'}:{display: 'none'}}>
+          <View className="relate-product-box">
+            {
+              companyProduct.items.map((item) => {
+                return (
+                  <ProCard product={item} key={item.id}></ProCard>
+                )
+              })
+            }
           </View>
-        }
+        </View>
       </View>
 
       <View className="footer">
