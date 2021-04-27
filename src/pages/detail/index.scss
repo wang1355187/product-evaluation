@@ -99,6 +99,42 @@
       background-color: #6190E8;
     }
   }
+
+  //回到顶部按钮
+  .toTop-btn{
+    position: fixed;
+    bottom: 40%;
+    right: 6%;
+    width: 70px;
+    height: 70px;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #f4af5e;
+    font-size: 24px;
+    text-align: center;
+    line-height: 35px;
+    color: #ffffff;
+  }
+  .fixed-tab{
+    position: fixed;
+    top: 92px;
+    width: 100%;
+    font-size: 28px;
+    font-weight: 600;
+    background-color: #ffffff;
+    box-shadow: 0 3px 6px 6px #eaeaea;
+    .flex-box{
+      display: flex;
+      height: 70px;
+      line-height: 70px;
+      color:  #333;
+      .tab{
+        width: 25%;
+        text-align: center;
+      }
+    }
+  }
+  
   // 底部固定按钮
   .fixed-btn{
     position: fixed;
