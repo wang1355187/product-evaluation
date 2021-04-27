@@ -1,0 +1,24 @@
+.addConpPro-container{
+  display: flex;
+  margin: 0 6px;
+  box-sizing: border-box;
+  .noData{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    color: #333;
+    padding: 37px 60px;
+    border-radius: 10px;
+    background-color: #fff;
+    .icon-box{
+      .at-icon{
+        font-size: 26PX;
+        color: #6190E8;
+      }
+    }
+    .text{
+      font-size: 26px;
+    }
+  }
+}

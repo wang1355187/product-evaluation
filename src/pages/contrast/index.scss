@@ -1,0 +1,22 @@
+.contrast-container{
+  .contrast-header-box{
+    top: 92px;
+    width: 100%;
+    background-color: #F7F7F7;
+    margin-bottom: 10px;
+    .flex-box{
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+  .contrast-content{
+    background-color: #ffffff;
+    .contrast-sidebar{
+      .at-drawer__content{
+        height: 90%;
+        top: unset;
+        bottom: 0 !important;
+      }
+    }
+  }
+}
