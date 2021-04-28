@@ -5,10 +5,10 @@ import './index.scss';
 
 
 const SectionCard = function (props) {
-  const { className = '', children, title, noPadding} = props;
-  const style= noPadding ? {padding: 'initial'} : {};
+  const { className = '', children, title, padding} = props;
+  const style= padding?{padding: '0px 0px 30px'}:{};
   return (
-    <View className={`u-component-card ${className}`}>
+    <View className={`u-component-card ${className}`} style={style}>
       <View className='u-component-card-title'>
         <Text>{props.title}</Text>
       </View>

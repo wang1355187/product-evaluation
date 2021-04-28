@@ -82,7 +82,7 @@
         font-size: 24px;
         color: #a7a4a4;
         overflow: hidden;
-        height: 16PX;
+        height: 40px;
         &-item:nth-last-child(n+2)::after{
           content: '|';
           margin: 0 8px;
