@@ -5,11 +5,11 @@ import { View, Text } from "@tarojs/components";
 import "./index.scss";
 
 const AddConPro = (props) => {
-  const { data, canDelete, add, see, del } = props;
+  const { data, canDelete, add, see, del, openSiedBar} = props;
   return (
     <View className='addConpPro-container'>
       {data === undefined ||
-        <View className="noData">
+        <View className="noData" onClick={openSiedBar}>
           <View onClick={add} className="icon-box">
             <View className="at-icon at-icon-add-circle"></View>
           </View>

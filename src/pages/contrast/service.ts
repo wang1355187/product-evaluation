@@ -8,10 +8,23 @@ import request from "../../services";
  * @returns
  */
 export function getCompareInfo(postData: object) {
-  console.log(postData)
   return request.post({
     url: '/api/compare',
     data: postData,
+    isLoading: true,
+  })
+}
+
+/**
+ * 获取热门对比产品
+ *
+ * @export
+ * @param {string} name
+ * @returns
+ */
+export function getHotCompare() {
+  return request.get({
+    url: '/api/hot_compare',
     isLoading: true,
   })
 }
