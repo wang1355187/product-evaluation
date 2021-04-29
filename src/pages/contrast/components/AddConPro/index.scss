@@ -1,16 +1,20 @@
 .addConpPro-container{
   display: flex;
+  position: relative;
   margin: 0 6px;
   box-sizing: border-box;
+  height: 200px;
+  width: 220px;
+  border-radius: 10px;
+  background-color: #fff;
+  justify-content: center;
   .noData{
     display: flex;
+    width: 100%;
     justify-content: center;
     flex-direction: column;
     align-items: center;
     color: #333;
-    padding: 37px 60px;
-    border-radius: 10px;
-    background-color: #fff;
     .icon-box{
       .at-icon{
         font-size: 26PX;
@@ -19,6 +23,48 @@
     }
     .text{
       font-size: 26px;
+    }
+  }
+  .hasData{
+    text-align: center;
+    box-sizing: border-box;
+    padding: 30px 10px 0px;
+    .product-name{
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 35px;
+      width: 200px;
+      overflow: hidden;
+      display: -webkit-box;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+    .company-name{
+      font-size: 24px;
+      color: #999;
+      font-weight: 600;
+      line-height: 30px;
+    }
+    .detail-btn{
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      margin-left: -65px;
+      background-color: #6190E8;
+      width: 130px;
+      height: 45px;
+      color: #ffffff;
+      font-size: 24px;
+    }
+    .at-icon{
+      position: absolute;
+      top: 3px;
+      right: 2px;
+      font-size: 12PX;
+      background-color: #ffca68;
+      border-radius: 50%;
+      color: #ffffff;
     }
   }
 }
