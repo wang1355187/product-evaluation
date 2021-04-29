@@ -16,11 +16,16 @@
     }
     &-content{
       flex: 1;
-      text-indent: 10px;
       font-size: 26px;
+      padding: 10px;
       background-color: #d4e2f08a;
       display: flex;
       align-items: center;
+      justify-content: center;
+      border-right: 1px solid #dfdffa;
+    }
+    &-content:last-child{
+      border: none;
     }
   }
 

@@ -3,7 +3,9 @@ import {Text, View} from '@tarojs/components';
 import './index.scss';
 
 const FlexTable = (props) => {
-  const { titleList, contentList } = props
+  //titleList为一维数组，存放每行的行名   
+  //contentList为二维数组，存放每行的行值   [[第一行数据1，第一行数据2...],[第二行数据1，第二行数据2...]...]
+  const { titleList, contentList } = props;
   return (
     <View className="table-body">
       {
@@ -12,9 +14,22 @@ const FlexTable = (props) => {
             <View className="table-tr" key={item}>
               <View className="table-tr-title">{titleList[index]}</View>
               {
-                Array.isArray(contentList[index])
-                ?<View></View>
-                :<View className="table-tr-content">{contentList[index]}</View>
+                contentList[index].map((contentItem, _index) => {
+                  return (
+                    <View className="table-tr-content" key={_index}>
+                      {
+                        Array.isArray(contentItem)?
+                        <View>
+                          {contentItem.map((text,i)=>{
+                            return <View key={i}>{(i+1)+"、"+text}</View>
+                          })}
+                        </View>
+                        :
+                        <Text>{contentItem}</Text>
+                      }
+                    </View>
+                  )
+                })
               }
             </View>
           )
