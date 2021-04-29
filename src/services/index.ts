@@ -92,6 +92,15 @@ export default {
       if (isLoading) {
         Tips.loding("加载中");
       }
+      // Taro.request({
+      //   method: method || "GET",
+      //   url: `${weChatDomain ? WE_CATH_BASE_URL : BASE_URL}${url}`,
+      //   header: {
+      //     "content-type": contentType || "application/x-www-form-urlencoded",
+      //     ...headers,
+      //   },
+      //   ...rest,
+      // })
       Taro.request({
         method: method || "GET",
         url: `${url}`,
