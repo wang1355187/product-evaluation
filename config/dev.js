@@ -19,5 +19,20 @@ module.exports = {
         }
       }
     }
+  },
+  weapp: {
+    esnextModules: ['taro-ui'],
+    devServer: {
+      port: 10086,
+      proxy:{
+        '/api':{
+          target:'https://pingce.planplus.cn',
+          changeOrigin:true,
+          pathRewrite:{
+            '/api':''
+          }
+        }
+      }
+    }
   }
 }

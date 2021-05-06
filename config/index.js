@@ -44,6 +44,9 @@ const config = {
     }
   },
   h5: {
+    router: {
+      mode: "hash",
+    },
     publicPath: '/',
     staticDirectory: 'static',
     postcss: {
@@ -59,7 +62,19 @@ const config = {
           generateScopedName: '[name]__[local]___[hash:base64:5]'
         }
       }
-    }
+    },
+    devServer: {
+      port: 10086,
+      proxy:{
+        '/api':{
+          target:'https://pingce.planplus.cn',
+          changeOrigin:true,
+          pathRewrite:{
+            '/api':''
+          }
+        }
+      }
+    },
   },
   alias: {
     "@": path.resolve(__dirname, "..", "src"),
