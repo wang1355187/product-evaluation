@@ -49,6 +49,7 @@ class Detail extends React.Component {
     isLoading: true,
     companyData: {} as any,
     toTopBtn: false,
+    toSectionBar: false
   }
   
   componentDidMount () {
@@ -56,9 +57,9 @@ class Detail extends React.Component {
       window.scrollTo(0,0);
     }
     //页面初始化
-    const params =  getCurrentInstance().router.params;
+    const params =  getCurrentInstance().router?.params;
     this.props.getProductDetail({
-      id:params.id
+      id: params.id
     }).then((res)=> {
       this.setState({
         isLoading: false,
@@ -74,12 +75,12 @@ class Detail extends React.Component {
   }
 
   componentDidShow () {
-    //监听页面滚动
+    //监听页面滚动事件
     window.addEventListener('scroll', this.handleScroll);
   }
 
   componentDidHide () {
-    //监听页面滚动
+    //卸载页面滚动事件
     window.removeEventListener('scroll', this.handleScroll);
   }
 
@@ -124,12 +125,14 @@ class Detail extends React.Component {
         let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         if(scrollTop > 100) {
           this.setState({
-            toTopBtn: true
+            toTopBtn: true,
+            toSectionBar: true
           })
         }
         else{
           this.setState({
-            toTopBtn: false
+            toTopBtn: false,
+            toSectionBar: false
           })
         }
         timer = null;
@@ -137,9 +140,27 @@ class Detail extends React.Component {
     }
   }
 
-  //滚动到对应模块
-  scrollToTab = (str) => {
-    console.log(str);
+  //滚动至对应内容块
+  scrollToSection = (ref) => {
+    ref.scrollIntoView();
+    setTimeout(() => {
+      this.setState({
+        toSectionBar: false
+      })
+    },150)
+  }
+  //加入对比
+  addCompare = (id) => {
+    Taro.navigateTo({
+      url: `/pages/contrast/index?ids=${id}`
+    })
+  }
+  //一键对比
+  quickCompare = (id) => {
+    const ids = id + '-' + Taro.Current.router?.params.id;
+    Taro.navigateTo({
+      url: `/pages/contrast/index?ids=${ids}`
+    })
   }
 
   render () {
@@ -228,10 +249,12 @@ class Detail extends React.Component {
         <SectionCard title="保险条款">
           {!this.state.isLoading && this.state.detailData.policies.map((item) => {
             return (
-              <View className="policies-box" key={item.key}>
-                <Text className="policies-name">{item.key}</Text>
-                <Text className="iconfont icon-youjiantou-copy"></Text>
-              </View>  
+              <a style={{display: 'block', color:'#333'}} key={item.key} href={item.value} target="_blank">
+                <View className="policies-box" key={item.key}>
+                  <Text className="policies-name">{item.key}</Text>
+                  <Text className="iconfont icon-youjiantou-copy"></Text>
+                </View>  
+              </a>
             )
           })        
           }
@@ -259,7 +282,7 @@ class Detail extends React.Component {
                 <View className="similar-pro" key={item.id}>
                   <View className="pro-name">产品：{item.name}</View>
                   <View  className="company-name">公司：{item.corp}</View>
-                  <View className="contrast-btn">一键对比</View>
+                  <View className="contrast-btn" onClick={()=>{this.quickCompare(item.id)}}>一键对比</View>
                 </View>
               )
             })
@@ -268,22 +291,30 @@ class Detail extends React.Component {
         </View>
         
         {this.state.toTopBtn &&
-          <React.Fragment>
-            <View className="toTop-btn" onClick={this.toTop}>回到顶部</View>
-            <View className="fixed-tab">
-              <View className="flex-box">
-                <View className="tab" onClick={() => {this.refs.content.scrollIntoView()}}>保障内容</View>
-                <View className="tab" onClick={() => {this.refs.premium.scrollIntoView()}}>保费测算</View>
-                <View className="tab" onClick={() => {this.refs.comment.scrollIntoView()}}>谱蓝君点评</View>
-                <View className="tab" onClick={() => {this.refs.similar.scrollIntoView()}}>同类产品</View>
-              </View>
+          <View className="toTop-btn" onClick={this.toTop}>回到顶部</View>
+        }
+        
+        {this.state.toSectionBar &&
+          <View className="fixed-tab">            
+            <View className="flex-box">
+              <View className="tab" onClick={() => {this.scrollToSection(this.refs.content)}}>保障内容</View>
+              <View className="tab" onClick={() => {this.scrollToSection(this.refs.premium)}}>保费测算</View>
+              <View className="tab" onClick={() => {this.scrollToSection(this.refs.comment)}}>谱蓝君点评</View>
+              <View className="tab" onClick={() => {this.scrollToSection(this.refs.similar)}}>同类产品</View>
             </View>
-          </React.Fragment>
+          </View>
         }
 
         <View className="fixed-btn">
           <AtButton size="small" type="secondary" className="btn-share">分享给客户</AtButton>
-          <AtButton size="small" type="primary" className="btn-contrast">加入对比</AtButton>
+          <AtButton
+            size="small"
+            type="primary"
+            className="btn-contrast"
+            onClick={()=>{this.addCompare(this.state.detailData.id)}}
+          >
+            加入对比
+          </AtButton>
         </View>
         <View className="footer">*以上内容仅供参考，产品详情信息以产品条款约定内容为准</View>
       </View>

@@ -1,11 +1,11 @@
 import { View, Text, ScrollView } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { AtSearchBar } from 'taro-ui';
-import React,{ useState, useEffect, useCallback } from 'react';
-import SideBar from './components/SideBar/index'
 import { useDispatch, useSelector } from 'react-redux';
-import ProCard from './components/ProCard/index'
+import React,{ useState, useEffect, useCallback } from 'react';
 
+import SideBar from './components/SideBar/index'
+import ProCard from './components/ProCard/index'
 import './index.scss'
 
 //保险类型
