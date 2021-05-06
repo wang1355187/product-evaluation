@@ -15,6 +15,29 @@
     margin-top: 240px;
   }
   .contrast-sidebar{
+    &-desc{
+      padding: 10px 15px;
+      display: flex;
+      font-size: 28px;
+      justify-content: space-between;
+      .pro-type{
+        font-weight: 600;
+      }
+    }
+    &-content{
+      padding: 15px;
+      .pro-item{
+        font-size: 26px;
+        font-weight: 500;
+        height: 60px;
+        line-height: 60px;
+        border-bottom: 1px solid #e2e2e2;
+      }
+      .pro-item:last-child{
+        border: none;
+      }
+    }
+
     .at-drawer__content{
       height: 90%;
       top: unset;
