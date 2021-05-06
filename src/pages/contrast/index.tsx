@@ -11,16 +11,37 @@ import AddConPro from './components/AddConPro/index';
 import Footer from '@/components/Footer/index'
 import './index.scss';
 
+
+//保险类型
+const PRO_TYPE = {
+  1: "重疾险",
+  2: "寿险",
+  3: "医疗险",
+  4: "意外险",
+  5: "年金险",
+  6: "防癌险",
+};
+
 const Contrast = function (props) {
   const dispatch = useDispatch();
+  const params = useRouter().params;
   const { compare_list, compare_type, hot_compare } = useSelector( state => state.contrast);
+  const { data } = useSelector( state => state.list);
   //侧边栏状态
   const [sideShow, setSideShow] = useState(false);
   //搜索关键词
   const [key, setKey] = useState('');
-  //对比产品列表状态
-  const [prodList, setProList] = useState(['120011311563797401','120032416092256101']);
+  //选择列表产品数量
+  const [count, setCount] = useState(0);
+  
+  //初始化时将路由参数ids转换为数组
+  let initIdList = params.ids?.split('-') || [];
 
+  if(initIdList[0]===''){
+    initIdList = [];
+  }
+  //对比产品列表id状态
+  const [prodList, setProList] = useState(initIdList);
 
   useEffect(()=>{
     if(prodList.length===0){
@@ -28,6 +49,12 @@ const Contrast = function (props) {
         type: 'contrast/setCompareList',
         payload: {
           compare_list: []
+        }
+      })
+      dispatch({
+        type: 'contrast/setCompareType',
+        payload: {
+          compare_type: ''
         }
       })
       return;
@@ -38,6 +65,9 @@ const Contrast = function (props) {
         prod_list: prodList
       }
     })
+    if (window.scrollTo) {
+      window.scrollTo(0,0);
+    }
   },[prodList])
 
   useEffect(() => {
@@ -57,9 +87,11 @@ const Contrast = function (props) {
   }
   //添加热门对比
   const addHotCompare = (arr) => {
-    const temp = [];
-    temp.push(arr[0].id, arr[1].id);
-    setProList([arr[0].id, arr[1].id]);
+    const ids = arr[0].id + '-' + arr[1].id;
+    setProList([arr[0].id,arr[1].id]);
+    Taro.navigateTo({
+      url: `/pages/contrast/index?ids=${ids}`
+    })
   }
   //分享给客户
   const shareContrast = () => {
@@ -69,12 +101,27 @@ const Contrast = function (props) {
   const back = () => {
 
   }
+  //添加对比项
+  const add = (id) => {
+    const idsList = params.ids?.split('-');
+    //ids无参数时，剔除split分解出的空字符串项
+    if(params.ids===''){
+      idsList = [];
+    }
+    idsList.push(id);
+    setProList([...idsList]);
+    Taro.navigateTo({
+      url: `/pages/contrast/index?ids=${idsList?.join('-')}`
+    })
+  }
   //删除对比项
   const del = (id) => {
-    console.log(id);
-    prodList.splice(prodList.indexOf(id), 1);
-    setProList([...prodList]);
-    // setProList(prodList);
+    const idsList = params.ids?.split('-');
+    idsList.splice(idsList.indexOf(id), 1);
+    setProList([...idsList]);
+    Taro.navigateTo({
+      url: `/pages/contrast/index?ids=${idsList?.join('-')}`
+    })
   }
 
   //格式化传入FlexTable的数据
@@ -84,10 +131,10 @@ const Contrast = function (props) {
     //表行数
     let tableLength;
     if(index == -1){
-      tableLength = compare_list[0][key].length
+      tableLength = _compare_list[0][key].length
     }
     else{
-      tableLength = compare_list[0][key][index].length
+      tableLength = _compare_list[0][key][index].length
     }
     //中间转换数组
     let tempList = [];
@@ -151,7 +198,7 @@ const Contrast = function (props) {
       </View>
 
       {/* 产品对比内容 */}
-      {compare_list.length > 0 &&
+      {compare_list.length > 0 && compare_type.length !=0 &&
         <View className="contrast-content-box">
           <SectionCard title="保费测算" padding={true}>
             <FlexTable titleList={PremiumMap[compare_type]} contentList={formatContent(compare_list,'compareQuotaCalc')}></FlexTable>
@@ -199,6 +246,19 @@ const Contrast = function (props) {
             onConfirm={onkeydown}
           >
           </AtSearchBar>
+          <View className="contrast-sidebar-desc">
+            <Text className="pro-type">{ PRO_TYPE[compare_type] }</Text>
+            <Text className="pro-count">共<Text style="color: blue;">{ count }</Text>产品</Text>
+          </View>
+          <View className="contrast-sidebar-content">
+            {
+              data.map((item) => {
+                return (
+                  <View className="pro-item" onClick={() => { add(item.id) }} key={item.id}>{item.productName}</View>
+                )
+              })
+            }
+          </View>
         </AtDrawer>
       </View>
 

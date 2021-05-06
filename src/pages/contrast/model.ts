@@ -4,9 +4,10 @@ import Tips from "@/utils/tips";
 export default {
   namespace: "contrast",
   state: {
-    compare_type: '3', //对比险种类型
+    compare_type: '', //对比险种类型
     compare_list: [], //对比列表
-    hot_compare: {} //热门对比
+    hot_compare: {}, //热门对比
+    product_list: [], //产品对比选择列表
   },
   effects: {
     *getCompareInfo ({ payload }, { call, put }) {
@@ -16,6 +17,12 @@ export default {
           type: 'setCompareList',
           payload: {
             compare_list: res.data
+          }
+        })
+        yield put({
+          type: 'setCompareType',
+          payload: {
+            compare_type: res.data[0].product.insType
           }
         })
       }
@@ -33,6 +40,10 @@ export default {
     }
   },
   reducers: {
+    setCompareType (state,{ payload }) {
+      const { compare_type } = payload;
+      return {...state, compare_type}
+    },
     setCompareList (state,{ payload }) {
       const { compare_list } = payload;
       return {...state, compare_list}

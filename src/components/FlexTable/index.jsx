@@ -13,7 +13,7 @@ const FlexTable = (props) => {
           return (
             <View className="table-tr" key={item}>
               <View className="table-tr-title">{titleList[index]}</View>
-              {
+              {contentList[index] !==undefined &&
                 contentList[index].map((contentItem, _index) => {
                   return (
                     <View className="table-tr-content" key={_index}>

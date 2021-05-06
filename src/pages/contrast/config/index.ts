@@ -101,7 +101,7 @@ export const productSettingsMap = {
     {
       name: "重疾保障",
       TitleList: [
-        "种类",
+        // "种类",
         "首次赔付比例",
         "赔付次数",
         "赔付间隔",
@@ -112,7 +112,7 @@ export const productSettingsMap = {
     {
       name: "中症保障",
       TitleList: [
-        "种类",
+        // "种类",
         "首次赔付比例",
         "赔付次数",
         "赔付间隔",
@@ -123,7 +123,7 @@ export const productSettingsMap = {
     {
       name: "轻症保障",
       TitleList: [
-        "种类",
+        // "种类",
         "首次赔付比例",
         "赔付次数",
         "赔付间隔",
