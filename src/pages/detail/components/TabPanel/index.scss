@@ -79,14 +79,16 @@
         flex: 1;
         .flex-box{
           display: flex;
-          height: 70px;
-          line-height: 70px;
-          text-indent: 20px;
+          align-items: center;
+          border: 1px solid #edf5ff;
           .item-key,.item-value{
             color: #333;
             box-sizing: border-box;
-            border: 1px solid #edf5ff;
             flex: 1;
+            padding: 20px;
+          }
+          .item-value{
+            border-left: 1px solid #edf5ff;
           }
         }
       }
