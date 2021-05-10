@@ -25,29 +25,7 @@ const Index = (props) => {
   //侧边栏显示状态
   const [SideBarShow,setSideBarShow] = useState(false);
   
-  const {data, hasData} = useSelector(state => state.list);
-  // 获取产品列表数据
-  const getList = useCallback(() => {
-    dispatch({
-      type: "list/searchList",
-      payload: {
-        name: 'e',
-        lek: {}
-      },
-    });
-  },[dispatch]);
-  // const getList = useCallback((isNext: boolean = false,) => {
-  //   dispatch({
-  //     type: "list/fetch",
-  //     payload: {
-  //       isNext: !!isNext,
-  //     },
-  //   });
-  // },[dispatch]);
-
-  useEffect(() => {
-    getList();
-  }, [getList]);
+  const {data, lek, hasData} = useSelector(state => state.list);
 
   // 获取浏览器窗口的可视区域的高度
   const currentHeight =
@@ -56,6 +34,22 @@ const Index = (props) => {
   height: `calc(${currentHeight}px)`,
   };
 
+  // 获取产品列表数据
+  const getList = useCallback((nextLek) => {
+    dispatch({
+      type: "list/getList",
+      payload: {
+        lek: nextLek
+      },
+    });
+  },[dispatch]);
+
+  useEffect(() => {
+    getList(lek);
+  }, [getList]);
+
+
+
   //显示侧边筛选栏
   function onActionClick () {
     setSideBarShow(true);
@@ -63,22 +57,22 @@ const Index = (props) => {
 
   //键盘搜索
   function onkeydown(e){
-    if(key=='') return;
-    Taro.request({
-      method: 'POST',
-      url: '/api/search_product_by_name',
-      data: {
-        name: key,
-        lek: {}
-      },
-    }).then((res) => {
-      console.log(res);
+    //关键词为空，展示全部产品
+    if(key===''){
       dispatch({
-        type: "list/setData",
+        type: 'list/initList',
         payload: {
-          data: res.data.data.items
+          lek: {}
         }
       })
+      return;
+    }
+    dispatch({
+      type: 'list/searchList',
+      payload: {
+        name: key,
+        lek: {}
+      }
     })
   }
   //ScrollView滚动到底部触发
@@ -86,7 +80,7 @@ const Index = (props) => {
     if (!hasData) {
       return;
     }
-    // getList(true);
+    getList(lek);
   };
   return (
     <View className="index-container">

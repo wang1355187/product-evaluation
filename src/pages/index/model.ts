@@ -12,8 +12,57 @@ export default {
     filterParam: {},  //筛选表单参数
     productList: [],  //搜索返回的产品列表
     currentKeyword: '', //搜索关键字
+    lek: {}  //分页参数
   },
   effects: {
+    *initList({ payload }, { call, put }) {
+      const {data: res} = yield call(service.getProductList, {
+        ...payload,
+      });
+      if (res.code === 0) {
+        const {data} = res;
+        const list = data.items;
+        yield put({
+          type: "setData",
+          payload: {
+            data: list
+          },
+        });
+        yield put({
+          type: "setPageLek",
+          payload: {
+            lek: data.lek
+          }
+        })
+        return data
+      }
+      Tips.toast(res.msg)
+    },
+    //获取产品列表
+    *getList({ payload }, { select, call, put }) {
+      const proList = yield select((state)=> state.list.data) || [];
+      const {data: res} = yield call(service.getProductList, {
+        ...payload,
+      });
+      if (res.code === 0) {
+        const {data} = res;
+        const list = proList.concat(data.items);
+        yield put({
+          type: "setData",
+          payload: {
+            data: list
+          },
+        });
+        yield put({
+          type: "setPageLek",
+          payload: {
+            lek: data.lek
+          }
+        })
+        return data
+      }
+      Tips.toast(res.msg)
+    },
     //筛选产品
     *fetch({ payload }, { select, call, put }) {
       let { data, pageSize, pageIndex, filterParam } = yield select(
@@ -45,7 +94,8 @@ export default {
         ...payload,
       });
       if (res.code === 0) {
-        const {data} = res
+        const {data} = res;
+        console.log(data)
         const list = proList.concat(data.items);
         yield put({
           type: "setData",
@@ -53,6 +103,12 @@ export default {
             data: list
           },
         });
+        yield put({
+          type: "setPageLek",
+          payload: {
+            lek: data.lek
+          }
+        })
         return data
       }
       Tips.toast(res.msg)
@@ -66,17 +122,13 @@ export default {
     setFilterParam(state, { payload }) {
       return { ...state, filterParam: payload };
     },
-    setList(state, action) {
-      const res = action.payload;
-      return { ...state, productList: res };
-    },
-    setCurrentKeyword(state, action) {
-      const res = action.payload;
-      return { ...state, currentKeyword: res };
-    },
     setData(state, { payload }) {
       const { data } = payload;
       return {...state, data}
+    },
+    setPageLek(state, { payload }) {
+      const { lek } = payload;
+      return {...state, lek}
     }
   },
 };

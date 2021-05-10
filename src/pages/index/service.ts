@@ -16,6 +16,21 @@ export function searchProductList(postData: object) {
 }
 
 /**
+ * 获取产品列表
+ *
+ * @export
+ * @param {string} name
+ * @returns
+ */
+export function getProductList(postData: object) {
+  return request.post({
+    url: '/api/product_list',
+    data: postData,
+    isLoading: true,
+  })
+}
+
+/**
  * 产品过滤
  *
  * @export
