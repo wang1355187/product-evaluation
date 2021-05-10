@@ -2,12 +2,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import {Text, View} from '@tarojs/components';
 import Taro, { useRouter } from '@tarojs/taro';
-import { AtDrawer, AtSearchBar, AtDivider, AtButton } from 'taro-ui';
+import { AtDrawer, AtSearchBar, AtDivider, AtButton, AtFloatLayout } from 'taro-ui';
 
 import { PremiumMap, RulesMap, productSettingsMap, productReviewMap } from './config/index';
 import SectionCard from '@/components/SectionCard/index';
 import FlexTable from '@/components/FlexTable/index'
 import AddConPro from './components/AddConPro/index';
+import PremiumTable from './components/PremiumTable/index';
 import Footer from '@/components/Footer/index'
 import './index.scss';
 
@@ -33,7 +34,7 @@ const Contrast = function (props) {
   const [key, setKey] = useState('');
   //选择列表产品数量
   const [count, setCount] = useState(0);
-  
+
   //初始化时将路由参数ids转换为数组
   let initIdList = params.ids?.split('-') || [];
 
@@ -201,7 +202,7 @@ const Contrast = function (props) {
       {compare_list.length > 0 && compare_type.length !=0 &&
         <View className="contrast-content-box">
           <SectionCard title="保费测算" padding={true}>
-            <FlexTable titleList={PremiumMap[compare_type]} contentList={formatContent(compare_list,'compareQuotaCalc')}></FlexTable>
+            <PremiumTable compareList={compare_list} insType={compare_type} titleList={PremiumMap[compare_type]} contentList={formatContent(compare_list,'compareQuotaCalc')}></PremiumTable>
           </SectionCard>
 
           <SectionCard title="投保规则" padding={true}>
@@ -287,6 +288,7 @@ const Contrast = function (props) {
           </View>
         </View>
       }
+
       <View className="fixed-btn">
         <AtButton size="small" type="secondary" className="btn-share" onClick={back}>返回</AtButton>
         <AtButton size="small" type="primary" className="btn-contrast" onClick={shareContrast}>分享给客户</AtButton>

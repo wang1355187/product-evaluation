@@ -1,3 +1,81 @@
+//保费测算调整项
+
+export const PremiumConditionMap = {
+  1: [
+    "年龄",
+    {
+      title: "性别:",
+      type: "gender",
+      options: [
+        {label: "男", value: "0"},
+        {label: "女", value: "1"},
+      ]
+    },
+  ],
+  2: [
+    "年龄",
+    {
+      title: "性别:",
+      type: "gender",
+      options: [
+        {label: "男", value: "0"},
+        {label: "女", value: "1"},
+      ]
+    },
+    {
+      title: "保障:",
+      type: "quota", 
+      options: [
+        {label: "100万，保至60岁", value: "100"},
+        {label: "50万，保20年", value: "50"},
+      ]
+    },
+  ],
+  3: [
+    "年龄",
+    {
+      title: "性别:",
+      type: "gender",
+      options: [
+        {label: "男", value: "0"},
+        {label: "女", value: "1"},
+      ]
+    },
+    {
+      title: "社保:",
+      type: "social",
+      options: [
+        {label: "有", value: "1"},
+        {label: "无", value: "0"},
+      ]
+    },
+  ],
+  4: [
+    "年龄",
+    {
+      title: "保障计划:",
+      type: "quota", 
+      options: [
+        {label: "10万", value: "10"},
+        {label: "20万", value: "20"},
+        {label: "50万", value: "50"},
+        {label: "100万", value: "100"},
+      ]
+    },
+  ],
+  6: [
+    "年龄",
+    {
+      title: "性别:",
+      type: "gender",
+      options: [
+        {label: "男", value: "0"},
+        {label: "女", value: "1"},
+      ]
+    },
+  ],
+}
+
 //保费测算字段
 export const PremiumMap = {
   //重疾险

@@ -37,7 +37,11 @@ export default {
           }
         })
       }
-    }
+    },
+    *getPremium ({payload}, {call, put}) {
+      const res = yield call(service.getPremium, payload);
+      console.log(res);
+    },
   },
   reducers: {
     setCompareType (state,{ payload }) {

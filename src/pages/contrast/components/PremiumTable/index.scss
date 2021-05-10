@@ -1,0 +1,118 @@
+.table-body{
+  .table-tr{
+    display: flex;
+    color: #333;
+    border: 1px solid #edf5ff;
+    &-title{
+      color: #ffffff;
+      background-color: #6190E8;
+      flex-basis: 140px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 28px;
+      padding: 15px 8px;
+    }
+    &-content{
+      flex: 1;
+      font-size: 26px;
+      padding: 10px;
+      background-color: #d4e2f08a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid #dfdffa;
+    }
+    &-content.change{
+      flex-direction: column;
+      .at-icon{
+        margin-left: 8px;
+        color: #6190E8;
+        font-size: 30px;
+      }
+      .change-btn{
+        padding: 4px 12px;
+        background-color: #fea129;
+        color: #ffffff;
+        font-size: 26px;
+        height: 38px;
+        line-height: 38px;
+      }
+    }
+    &-content:last-child{
+      border: none;
+    }
+  }
+  //保费测算调整底部框
+  .premium-modal{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    z-index: 10;
+    background-color: #ffffff;
+    &-header{
+      display: flex;
+      justify-content: space-between;
+      height: 90px;
+      line-height: 90px;
+      margin-bottom: 20px;
+      .header-title{
+        font-weight: 600;
+      }
+      .premium-cost{
+        margin-left: 50px;
+        &-number{
+          color: red;
+          margin-right: 5px;
+        }
+      }
+      .at-icon-close{
+        line-height: 90px;
+        font-size: 18PX;
+      }
+    }
+    &-content{
+      padding-bottom: 80px;
+    }
+  }
+  .cover{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    background-color: rgba(73, 72, 72, 0.4);
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.check-group{
+  display: flex;
+  text-align: center;
+  &-title{
+    flex-basis: 200px;
+    color: #666;
+  }
+  &-content{
+    flex:1;
+    display: flex;
+    flex-wrap: wrap;
+    .content-item{
+      font-size: 26px;
+      padding: 8px 24px;
+      margin-right: 20px;
+      margin-bottom: 20px;
+      color: #333;
+      background: #f6f6f6;
+    }
+    .checked{
+      color: #fff;
+      background: #6190E8;
+      border: none;
+    }
+  }
+}
