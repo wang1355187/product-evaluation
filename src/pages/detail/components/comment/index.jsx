@@ -4,21 +4,22 @@ import { Text, View, Image } from "@tarojs/components";
 import "./index.scss";
 
 const CommentPoint = function (props) {
+  const { content, logoTitle, title} = props;
   return (
     <View className="point-container">
-      {props.logoTitle
+      {logoTitle
         ?<View className="logo-title" style={props.mystyle}>
           {props.children}
-          <Text>{props.title}</Text>
+          <Text>{title}</Text>
         </View>
         :<View className="title">
           {props.children}
-          <Text>{props.title}</Text>
+          <Text>{title}</Text>
         </View>
       }
       <View className="content">
-        {props.content.map( (item,index) => {
-          return (<View className="content-item" key={index}>{item}</View>)
+        {content.map( (item,index) => {
+          return (<View className="content-item" key={index}>{content.length > 1 ? (index+1)+'、' :''}{item}</View>)
         })}
       </View>
     </View>
