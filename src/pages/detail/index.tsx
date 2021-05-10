@@ -1,13 +1,15 @@
 import React from "react";
 import Taro, { getCurrentInstance, connectSocket } from '@tarojs/taro';
-import ProCard from '../index/components/ProCard';
 import {Text, View} from '@tarojs/components';
 import { connect } from "react-redux";
 import { AtTabs, AtTabsPane, AtFloatLayout, AtButton } from 'taro-ui';
+
+import ProCard from '../index/components/ProCard';
 import SectionCard from "@/components/SectionCard";
 import Comment from "./components/comment/index";
 import Premium from "./components/Premium/index";
 import TabPanel from './components/TabPanel/index';
+import { ProductPatchMap } from './config/index'
 import './index.scss';
 
 export interface IState {
@@ -193,6 +195,16 @@ class Detail extends React.Component {
         >
           {!this.state.isLoading &&
           <View className="modal-content">
+            { ProductPatchMap[this.state.detailData.insType].options.map((item) => {
+              return (
+                <View className="tag-item">
+                  <View>{this.state.detailData[ProductPatchMap[this.state.detailData.insType].key][item.key]}</View>
+                  <View className="tag-item-label">{item.label}</View>
+                </View>
+              )
+            })
+
+            }
             {/* <View>
               <View className="tag-age">{this.state.detailData.productSiPatch.insuredAge}</View>
               <View>投保年龄</View>
