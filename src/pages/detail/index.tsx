@@ -196,8 +196,18 @@ class Detail extends React.Component {
           {!this.state.isLoading &&
           <View className="modal-content">
             { ProductPatchMap[this.state.detailData.insType].options.map((item) => {
+              if(item.key == 'hasMid'){
+                return (
+                  <View className="tag-item" key={item.key}>
+                    <View>
+                      {this.state.detailData[ProductPatchMap[this.state.detailData.insType].key][item.key]==true?'有':'无'}
+                    </View>
+                    <View className="tag-item-label">{item.label}</View>
+                  </View>
+                )
+              }
               return (
-                <View className="tag-item">
+                <View className="tag-item" key={item.key}>
                   <View>{this.state.detailData[ProductPatchMap[this.state.detailData.insType].key][item.key]}</View>
                   <View className="tag-item-label">{item.label}</View>
                 </View>

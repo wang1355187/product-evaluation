@@ -15,6 +15,7 @@ export default {
     lek: {}  //分页参数
   },
   effects: {
+    //搜索为关键词空时，重置
     *initList({ payload }, { call, put }) {
       const {data: res} = yield call(service.getProductList, {
         ...payload,
@@ -23,17 +24,14 @@ export default {
         const {data} = res;
         const list = data.items;
         yield put({
-          type: "setData",
+          type: "setSearchParam",
           payload: {
-            data: list
+            data: list,
+            lek: data.lek,
+            currentKeyword: '',
+            productList: []
           },
         });
-        yield put({
-          type: "setPageLek",
-          payload: {
-            lek: data.lek
-          }
-        })
         return data
       }
       Tips.toast(res.msg)
@@ -90,23 +88,23 @@ export default {
     //搜索产品
     *searchList({ payload }, { select, call, put }) {
       const proList = yield select((state)=> state.list.productList) || [];
+      const key = yield select((state)=> state.list.currentKeyword);
       const {data: res} = yield call(service.searchProductList, {
         ...payload,
       });
       if (res.code === 0) {
         const {data} = res;
-        console.log(data)
-        const list = proList.concat(data.items);
+        let list = data.items;
+        if(key==payload.name){
+          list = proList.concat(data.items);
+        }
         yield put({
-          type: "setData",
+          type: "setSearchParam",
           payload: {
+            currentKeyword: payload.name,
+            lek: data.lek,
+            productList: list,
             data: list
-          },
-        });
-        yield put({
-          type: "setPageLek",
-          payload: {
-            lek: data.lek
           }
         })
         return data
@@ -129,6 +127,14 @@ export default {
     setPageLek(state, { payload }) {
       const { lek } = payload;
       return {...state, lek}
+    },
+    setCurrentKeyword(state, { payload }) {
+      const { currentKeyword } = payload;
+      return {...state, currentKeyword}
+    },
+    setSearchParam(state, { payload }) {
+      const { currentKeyword, lek, productList, data } = payload;
+      return {...state, currentKeyword, lek, productList, data}
     }
   },
 };

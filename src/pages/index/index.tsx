@@ -19,13 +19,15 @@ const PRO_TYPE = {
 };
 
 const Index = (props) => {
+
   const dispatch = useDispatch();
+  const {data, lek, hasData, currentKeyword} = useSelector(state => state.list);
   //搜索关键字
   const [key,setKey] = useState('');
   //侧边栏显示状态
-  const [SideBarShow,setSideBarShow] = useState(false);
-  
-  const {data, lek, hasData} = useSelector(state => state.list);
+  const [SideBarShow, setSideBarShow] = useState(false);
+  //scrollView滚动位置
+  const [scrollTop, setScrollTop] = useState(0);
 
   // 获取浏览器窗口的可视区域的高度
   const currentHeight =
@@ -44,6 +46,17 @@ const Index = (props) => {
     });
   },[dispatch]);
 
+  // 通过搜索获取列表数据，到底时触发
+  const getSearchList = useCallback((nextLek, keyword) => {
+    dispatch({
+      type: "list/searchList",
+      payload: {
+        lek: nextLek,
+        name: keyword
+      },
+    });
+  },[dispatch]);
+
   useEffect(() => {
     getList(lek);
   }, [getList]);
@@ -57,6 +70,8 @@ const Index = (props) => {
 
   //键盘搜索
   function onkeydown(e){
+    //复位滚动条
+    setScrollTop(Math.random());
     //关键词为空，展示全部产品
     if(key===''){
       dispatch({
@@ -80,7 +95,12 @@ const Index = (props) => {
     if (!hasData) {
       return;
     }
-    getList(lek);
+    if(currentKeyword!=''){
+      getSearchList(lek,currentKeyword);
+    }
+    else{
+      getList(lek);
+    }
   };
   return (
     <View className="index-container">
@@ -102,6 +122,7 @@ const Index = (props) => {
         <View className="list-box">
           <ScrollView
             scrollY={true}
+            scrollTop={scrollTop}
             onScrollToLower={onScrollToLower}
             style={scrollStyle}
           >
