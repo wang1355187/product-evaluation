@@ -10,12 +10,9 @@ module.exports = {
     devServer: {
       port: 10086,
       proxy:{
-        '/api':{
+        '/':{
           target:'https://pingce.planplus.cn',
           changeOrigin:true,
-          pathRewrite:{
-            '/api':''
-          }
         }
       }
     }
@@ -25,12 +22,9 @@ module.exports = {
     devServer: {
       port: 10086,
       proxy:{
-        '/api':{
+        '/':{
           target:'https://pingce.planplus.cn',
           changeOrigin:true,
-          pathRewrite:{
-            '/api':''
-          }
         }
       }
     }

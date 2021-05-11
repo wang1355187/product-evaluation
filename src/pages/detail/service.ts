@@ -9,7 +9,7 @@ import request from "../../services";
  */
 export function getProductDetail(id: string) {
   return request.get({
-    url: `/api/product?id=${id}`,
+    url: `/product?id=${id}`,
     isLoading: true,
   })
 }
@@ -23,7 +23,7 @@ export function getProductDetail(id: string) {
  */
 export function getCompanyDetail(id: string) {
   return request.get({
-    url: `/api/company?id=${id}`,
+    url: `/company?id=${id}`,
     isLoading: true,
   })
 }

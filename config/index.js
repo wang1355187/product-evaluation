@@ -66,12 +66,9 @@ const config = {
     devServer: {
       port: 10086,
       proxy:{
-        '/api':{
+        '/':{
           target:'https://pingce.planplus.cn',
           changeOrigin:true,
-          pathRewrite:{
-            '/api':''
-          }
         }
       }
     },

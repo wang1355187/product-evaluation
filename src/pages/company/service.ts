@@ -9,7 +9,7 @@ import request from "../../services";
  */
 export function getCompanyProduct(postData: object) {
   return request.post({
-    url: '/api/list_product_by_corp',
+    url: '/list_product_by_corp',
     data: postData,
     isLoading: true,
   })
@@ -24,7 +24,7 @@ export function getCompanyProduct(postData: object) {
  */
 export function getCompanyDetail(id: string) {
   return request.get({
-    url: `/api/company?id=${id}`,
+    url: `/company?id=${id}`,
     isLoading: true,
   })
 }

@@ -9,7 +9,7 @@ import request from "../../services";
  */
 export function getCompareInfo(postData: object) {
   return request.post({
-    url: '/api/compare',
+    url: '/compare',
     data: postData,
     isLoading: true,
   })
@@ -23,7 +23,7 @@ export function getCompareInfo(postData: object) {
  */
 export function getHotCompare() {
   return request.get({
-    url: '/api/hot_compare',
+    url: '/hot_compare',
     isLoading: true,
   })
 }
@@ -37,7 +37,7 @@ export function getHotCompare() {
  */
 export function getPremiumAge(id) {
   return request.get({
-    url: `/api/ages?id=${id}`,
+    url: `/ages?id=${id}`,
     isLoading: true,
   })
 }
@@ -58,7 +58,7 @@ export function getPremium(params) {
     social  //社保
   } = params;
   return request.get({
-    url: `/api/premium?id=${id}&quota=${quota}&gender=${gender}&age=${age}&social=${social}`,
+    url: `/premium?id=${id}&quota=${quota}&gender=${gender}&age=${age}&social=${social}`,
     isLoading: true,
   })
 }
