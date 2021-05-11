@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {Text, View} from '@tarojs/components';
+import { AtCurtain } from 'taro-ui'
 import Taro from '@tarojs/taro'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -96,6 +97,10 @@ const PremiumTable = (props) => {
   const [proIndex, setProIndex] = useState(0);
   //保费测算调整底部栏状态
   const [modalShow, setModalShow] = useState(false);
+  //保费说明内容
+  const [premiumExplain, setPremiumExplain] = useState('');
+  //保费说明容器显示状态
+  const [isShowExplain, setIsShowExplain] = useState(false);
 
   //保费测算传值参数对象
   const [params, setParams] = useState({
@@ -186,7 +191,7 @@ const PremiumTable = (props) => {
     } = params;
     Taro.request({
       type: 'GET',
-      url: `/api/premium?id=${id}&quota=${quota}&gender=${gender}&age=${age}&social=${social}`
+      url: `/premium?id=${id}&quota=${quota}&gender=${gender}&age=${age}&social=${social}`
     }).then((res) => {
       console.log(res);
       if(res.statusCode == 200) {
@@ -247,7 +252,7 @@ const PremiumTable = (props) => {
     //获取产品可选年龄列表，并打开筛选栏
     Taro.request({
       type: 'GET',
-      url: `/api/ages?id=${id}`
+      url: `/ages?id=${id}`
     }).then((res) => {
       if(res.statusCode==200) {
         setAgeList(res.data.ages);
@@ -263,6 +268,11 @@ const PremiumTable = (props) => {
       id: idsList[proIndex],
       [type]: value
     })
+  }
+
+  const showExplain = (index) => {
+    setPremiumExplain(compareList[index].description);
+    setIsShowExplain(true);
   }
 
   return (
@@ -289,7 +299,9 @@ const PremiumTable = (props) => {
                       <View className="table-tr-content change" key={_index}>
                         <View>
                           <Text>{firstPremiumList[_index]}</Text>
-                          <Text className='at-icon at-icon-help'></Text>
+                          {compareList[_index].description &&
+                            <Text className='at-icon at-icon-help' onClick={()=>{showExplain(_index)}}></Text>
+                          }
                         </View>
                         <View className="change-btn" onClick={() => {openConditionPanel(idsList[_index],_index)} }>调整方案</View>
                       </View>
@@ -346,6 +358,13 @@ const PremiumTable = (props) => {
           )
         })
       }
+      <AtCurtain isOpened={isShowExplain} closeBtnPosition="bottom" onClose={()=>{setIsShowExplain(false)}}>
+        <View className="tips-box">
+          <View className="tips-box-title">保费说明</View>
+          <View className="tips-box-content">{premiumExplain}</View>
+        </View>
+      </AtCurtain>
+
       {/* 保费测算调整底部框 */}
       {modalShow &&
         <Cover>

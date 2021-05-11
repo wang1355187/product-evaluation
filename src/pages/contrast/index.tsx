@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import {Text, View} from '@tarojs/components';
 import Taro, { useRouter } from '@tarojs/taro';
-import { AtDrawer, AtSearchBar, AtDivider, AtButton, AtFloatLayout } from 'taro-ui';
+import { AtDrawer, AtSearchBar, AtDivider, AtButton } from 'taro-ui';
 
 import { PremiumMap, RulesMap, productSettingsMap, productReviewMap } from './config/index';
 import SectionCard from '@/components/SectionCard/index';
@@ -222,6 +222,7 @@ const Contrast = function (props) {
             <FlexTable
               titleList={productReviewMap}
               contentList={formatContentComment()}
+              isVerticalCenter={true}
             >
             </FlexTable>
           </SectionCard>
