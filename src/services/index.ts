@@ -66,6 +66,7 @@ function checkSuccess(data: any, resolve) {
  */
 function throwError(error, reject) {
   if (error.errMsg) {
+    console.log(error)
     reject("服务器正在维护中!");
     throw new Error("服务器正在维护中!");
   }
@@ -103,7 +104,7 @@ export default {
       // })
       Taro.request({
         method: method || "GET",
-        url: `${url}`,
+        url: IS_DEV?`${url}`:`${weChatDomain ? WE_CATH_BASE_URL : BASE_URL}${url}`,
         header: {
           "content-type": "application/json",
           ...headers,
