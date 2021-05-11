@@ -44,6 +44,22 @@
       border: none;
     }
   }
+  //保费说明弹出框
+  .tips-box{
+    background-color: #ffffff;
+    border-radius: 30px;
+    padding: 50px;
+    &-title{
+      color: #333;
+      font-size: 28px;
+      font-weight: 600;
+    }
+    &-content{
+      color: #666;
+      font-size: 26px;
+      margin-top: 15px;
+    }
+  }
   //保费测算调整底部框
   .premium-modal{
     position: fixed;
