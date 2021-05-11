@@ -5,7 +5,7 @@ import './index.scss';
 const FlexTable = (props) => {
   //titleList为一维数组，存放每行的行名   
   //contentList为二维数组，存放每行的行值   [[第一行数据1，第一行数据2...],[第二行数据1，第二行数据2...]...]
-  const { titleList, contentList } = props;
+  const { titleList, contentList, isVerticalCenter } = props;
   return (
     <View className="table-body">
       {
@@ -16,7 +16,7 @@ const FlexTable = (props) => {
               {contentList[index] !==undefined &&
                 contentList[index].map((contentItem, _index) => {
                   return (
-                    <View className="table-tr-content" key={_index}>
+                    <View className="table-tr-content" style={isVerticalCenter?{alignItems:'flex-start'}:''} key={_index}>
                       {
                         Array.isArray(contentItem)?
                         <View>
