@@ -57,6 +57,7 @@ const Index = (props) => {
     });
   },[dispatch]);
 
+
   useEffect(() => {
     getList(lek);
   }, [getList]);
@@ -70,7 +71,7 @@ const Index = (props) => {
 
   //键盘搜索
   function onkeydown(e){
-    //复位滚动条
+    //复位滚动条（ScrollView组件设置scrollTop为0会失效，使用随机数替代）
     setScrollTop(Math.random());
     //关键词为空，展示全部产品
     if(key===''){
@@ -80,6 +81,9 @@ const Index = (props) => {
           lek: {}
         }
       })
+      return;
+    }
+    if(key===currentKeyword){
       return;
     }
     dispatch({
@@ -117,35 +121,33 @@ const Index = (props) => {
           onConfirm={onkeydown}
         >
         </AtSearchBar>
-
-        {/* 列表渲染 */}
-        <View className="list-box">
-          <ScrollView
-            scrollY={true}
-            scrollTop={scrollTop}
-            onScrollToLower={onScrollToLower}
-            style={scrollStyle}
-          >
-            { data.map((item)=>{
-                return (<ProCard
-                  product={item}
-                  key={item.id}
-                >
-                </ProCard>)
-              })
-            }
-
-            {/* 底部提示 */}
-            <View
-              className='toLast'
-              style={hasData ? { display: "none" } : { display: "block" }}
-            >
-              <Text>——到底了——</Text>
-            </View>
-          </ScrollView>
-        </View>
       </View>
-      
+      {/* 列表渲染 */}
+      <View className="list-box">
+        <ScrollView
+          scrollY={true}
+          scrollTop={scrollTop}
+          onScrollToLower={onScrollToLower}
+          style={scrollStyle}
+        >
+          { data.map((item)=>{
+              return (<ProCard
+                product={item}
+                key={item.id}
+              >
+              </ProCard>)
+            })
+          }
+
+          {/* 底部提示 */}
+          <View
+            className='toLast'
+            style={hasData ? { display: "none" } : { display: "block" }}
+          >
+            <Text>——到底了——</Text>
+          </View>
+        </ScrollView>
+      </View>      
       {/* 侧边筛选栏 */}
       {/* { SideBarShow &&
         <SideBar onClose={setSideBarShow}></SideBar>

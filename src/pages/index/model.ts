@@ -128,10 +128,6 @@ export default {
       const { lek } = payload;
       return {...state, lek}
     },
-    setCurrentKeyword(state, { payload }) {
-      const { currentKeyword } = payload;
-      return {...state, currentKeyword}
-    },
     setSearchParam(state, { payload }) {
       const { currentKeyword, lek, productList, data } = payload;
       return {...state, currentKeyword, lek, productList, data}
