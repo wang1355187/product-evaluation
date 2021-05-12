@@ -55,7 +55,9 @@ function checkSuccess(data: any, resolve) {
   if (typeof data.code === "number" && data.code === 0) {
     return resolve({ data, isSuccess: true });
   } else {
-    Tips.toast(data.msg);
+    //代理至其他服务器接口，返回数据不是自己规定的，无data.code属性，修改为直接返回data
+    return resolve({ data, isSuccess: true });
+    // Tips.toast(data.msg);
   }
 }
 

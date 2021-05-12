@@ -4,9 +4,10 @@ import { AtCurtain } from 'taro-ui'
 import Taro from '@tarojs/taro'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getPremium } from '../../service'
+import { getPremium, getPremiumAge } from '../../service'
 import Cover from '@/components/Cover/index'
 import { PremiumConditionMap } from '../../config/index'
+
 import './index.scss';
 
 export const CheckTagGroup = function(props) {
@@ -190,12 +191,10 @@ const PremiumTable = (props) => {
       age,  //年龄
       social  //社保
     } = params;
-    Taro.request({
-      type: 'GET',
-      url: `/premium?id=${id}&quota=${quota}&gender=${gender}&age=${age}&social=${social}`
-    }).then((res) => {
+
+    getPremium(params).then((res) => {
       console.log(res);
-      if(res.statusCode == 200) {
+      if(res.isSuccess) {
         let {
               insured,  //被保人
               premium,  //首年保费
@@ -251,11 +250,8 @@ const PremiumTable = (props) => {
     //设置当前被更改的产品的下标
     setProIndex(index);
     //获取产品可选年龄列表，并打开筛选栏
-    Taro.request({
-      type: 'GET',
-      url: `/ages?id=${id}`
-    }).then((res) => {
-      if(res.statusCode==200) {
+    getPremiumAge(id).then((res) => {
+      if(res.isSuccess) {
         setAgeList(res.data.ages);
         setModalShow(true);
       }

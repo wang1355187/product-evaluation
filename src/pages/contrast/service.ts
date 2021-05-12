@@ -38,7 +38,6 @@ export function getHotCompare() {
 export function getPremiumAge(id) {
   return request.get({
     url: `/ages?id=${id}`,
-    isLoading: true,
   })
 }
 
@@ -59,6 +58,5 @@ export function getPremium(params) {
   } = params;
   return request.get({
     url: `/premium?id=${id}&quota=${quota}&gender=${gender}&age=${age}&social=${social}`,
-    isLoading: true,
   })
 }
