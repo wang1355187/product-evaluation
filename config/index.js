@@ -44,6 +44,7 @@ const config = {
     }
   },
   h5: {
+    esnextModules: ['taro-ui'],
     router: {
       mode: "hash",
     },

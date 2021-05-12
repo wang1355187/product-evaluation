@@ -15,10 +15,11 @@ export const CheckTagGroup = function(props) {
     title,  //字段名
     itemList, //取值列表
     type,  //字段对应的类型     quota保额， gender性别， age年龄， social社保
-    handleChange
+    handleChange, //改变测算条件
+    initIndex=0,
   } = props;
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(initIndex);
 
   const handleClick = (item, index) => {
     setActiveIndex(index);
@@ -69,8 +70,8 @@ const PremiumTable = (props) => {
   const [personList, setPersonList] = useState(contentList[0]);
   //首年保费
   const [firstPremiumList, setFirstPremiumList] = useState(contentList[firstCostIndex[insType]]);
-  //总保费（仅重疾险才有）
-  const [totalPremiumList, setTotalPremiumList] = useState(insType==1 ? contentList[5] : []);
+  //总保费（重疾险、防癌险才有）
+  const [totalPremiumList, setTotalPremiumList] = useState((insType==1 || insType==6) ? contentList[5] : []);
   //保障期间（寿险）
   const [maxProtectTimeList, setMaxProtectTimeList] = useState(insType==2 ? contentList[1] : []);
   //保额
@@ -122,12 +123,12 @@ const PremiumTable = (props) => {
     let gender = 0;
     let age = 30;
     let quota;
-    if(contentList[0][proIndex].includes('，')){
-      age = /(?<age>\d+)/.exec(contentList[0][proIndex]).groups.age;
-      gender = contentList[0][proIndex].split('，')[0];
+    if(personList[proIndex].includes('，')){
+      age = /(?<age>\d+)/.exec(personList[proIndex]).groups.age;
+      gender = personList[proIndex].split('，')[0];
     }
     else{
-      age = /(?<age>\d+)/.exec(contentList[0][proIndex]).groups.age;
+      age = /(?<age>\d+)/.exec(personList[proIndex]).groups.age;
     }
     switch(insType) {
       case '1':
@@ -135,39 +136,39 @@ const PremiumTable = (props) => {
         setParams({
           id: idsList[proIndex],
           age,
-          gender: gender=='男' ? 0 : 1,  //性别 (男0 女1)
-          quota: undefined, //保额 int
-          social: undefined //社保  (有1 无0)
+          gender: gender=='男' ? 0 : 1,
+          quota: undefined,
+          social: undefined
         })
         break;
       case '2':
-        quota = /(?<quota>\d+)/.exec(contentList[3][proIndex]).groups.quota;
+        quota = /(?<quota>\d+)/.exec(quotaList[proIndex]).groups.quota;
         setParams({
           id: idsList[proIndex],
           age,
-          gender: gender=='男' ? 0 : 1,  //性别 (男0 女1)
-          quota, //保额 int
-          social: undefined //社保  (有1 无0)
+          gender: gender=='男' ? 0 : 1,
+          quota,
+          social: undefined
         })
         break;
       case '3':
-        let isSocial = contentList[2][proIndex].includes('有');
+        let isSocial = socialSecurityList[proIndex].includes('有');
         setParams({
           id: idsList[proIndex],
           age,
-          gender: gender=='男' ? 0 : 1,  //性别 (男0 女1)
-          quota: undefined, //保额 int
-          social: isSocial ? '1': '0' //社保  (有1 无0)
+          gender: gender=='男' ? 0 : 1,
+          quota: undefined,
+          social: isSocial ? '1': '0'
         })
         break;
       case '4':
-        quota = /(?<quota>\d+)/.exec(contentList[1][proIndex]).groups.quota;;
+        quota = /(?<quota>\d+)/.exec(quotaList[proIndex]).groups.quota;;
         setParams({
           id: idsList[proIndex],
           age,
-          gender: gender=='男' ? 0 : 1,  //性别 (男0 女1)
-          quota, //保额 int
-          social: undefined //社保  (有1 无0)
+          gender: gender=='男' ? 0 : 1,
+          quota,
+          social: undefined
         })
         break;
     }
@@ -214,8 +215,8 @@ const PremiumTable = (props) => {
         }
         personList.splice(proIndex, 1, person);
         setPersonList([...personList]);
-        //设置总保费（重疾险）
-        if(insType == 1) {
+        //设置总保费（重疾险、防癌险）
+        if(insType == 1 || insType == 6) {
           let _totalPremium = totalPremium !== null ? totalPremium + '元' : '无保费结果';
           totalPremiumList.splice(proIndex, 1, _totalPremium);
           setTotalPremiumList([...totalPremiumList]);
@@ -270,11 +271,40 @@ const PremiumTable = (props) => {
     })
   }
 
+  //查看保费说明
   const showExplain = (index) => {
     setPremiumExplain(compareList[index].description);
     setIsShowExplain(true);
   }
 
+  //获取保费测算条件的初始下标
+  const getIndex = (type, itemList) => {
+    let index = 0;
+    switch(type) {
+      case 'age':
+        ageList.forEach((item, i) => {
+          if(personList[proIndex].indexOf(ageList[i]) != -1)
+          index = i;
+        })
+        return index;
+      case 'gender':
+        while(personList[proIndex].indexOf(itemList[index].label) == -1 && index<itemList.length){
+          index++;
+        }
+        return index;
+      case 'quota':
+        while(itemList[index].label.indexOf(quotaList[proIndex]) == -1 && index<itemList.length){
+          index++;
+        }
+        return index;
+      case 'social':
+        while(socialSecurityList[proIndex].indexOf(itemList[index].label) == -1 && index<itemList.length){
+          index++;
+        }
+        return index;
+    }
+    return index;
+  }
   return (
     <View className="table-body">
       {
@@ -315,6 +345,14 @@ const PremiumTable = (props) => {
                       </View>
                     )
                   }
+                  //总保费字段(重疾险)
+                  if(insType==6 && index==5) {
+                    return (
+                      <View className="table-tr-content" key={_index}>
+                        <Text>{totalPremiumList[_index]}</Text>
+                      </View>
+                    )
+                  }                  
                   //保障期间（寿险）
                   if(insType==2 && index==1){
                     return (
@@ -386,6 +424,7 @@ const PremiumTable = (props) => {
                         itemList={ageList}
                         key={index}
                         handleChange={conditionChange}
+                        initIndex={getIndex('age')}
                       >
                       </CheckTagGroup>
                     )
@@ -397,6 +436,7 @@ const PremiumTable = (props) => {
                       type={item.type}
                       key={index}
                       handleChange={conditionChange}
+                      initIndex={getIndex(item.type, item.options)}
                     >
                     </CheckTagGroup>
                   )
