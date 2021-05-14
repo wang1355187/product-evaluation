@@ -8,6 +8,7 @@ import { currentChannel } from "./common";
 export function wxCompanyConfig(config, appConfig, readyData) {
   /** 需要使用的JS接口列表 */
   const jsApiList = ["onMenuShareAppMessage", "onMenuShareWechat"];
+  console.log('21111313123')
   wx.config({
     beta: true,
     debug: false,
@@ -38,7 +39,6 @@ const wxCompanyShareReady = (
     // 需在用户可能点击分享按钮前就先调用
     // 企业微信应用初始化签名
     const jsApiList = ["sendChatMessage", "getContext"];
-
     wx.agentConfig({
       corpid: defaultSettings[currentChannel].corpid,
       agentid: defaultSettings[currentChannel].agentid,

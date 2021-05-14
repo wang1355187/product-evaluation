@@ -6,7 +6,7 @@ module.exports = {
   },
   mini: {},
   h5: {
-    esnextModules: ['taro-ui'],
+    esnextModules: ['taro-ui','taro-skeleton'],
     devServer: {
       port: 10086,
       proxy:{

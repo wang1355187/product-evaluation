@@ -1,10 +1,12 @@
 import { Component } from 'react'
-import './app.scss'
 import RootContainer from "./components/RootContainer/index";
 import dva from "./utils/dva";
 import models from "./models/index"
 import React from 'react';
 import { Provider } from "react-redux";
+
+import 'taro-skeleton/dist/index.css'
+import './app.scss'
 
 const dvaApp = dva.createApp({
   initialState: {

@@ -1,9 +1,7 @@
-import React, { Component, useEffect } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 import 'taro-ui/dist/style/index.scss'
 import { View } from '@tarojs/components';
 import NavBar from "@/components/NavBar/index";
-import Cookies from 'js-cookie';
 
 import '../../app.scss'
 
