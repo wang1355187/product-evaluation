@@ -438,6 +438,7 @@ const PremiumTable = (props) => {
                   )
                 })
               }
+              <View style={{fontSize:'13px',color:'#999'}}>注：测试值仅供参考，具体数值以投保测算为准</View>
             </View>
           </View>
         </Cover>
