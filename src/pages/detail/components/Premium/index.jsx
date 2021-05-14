@@ -119,7 +119,10 @@ const Premium = function (props) {
             </View>
           </View>
         :
-          <View>nodata</View>
+          <View className="noData">
+            <View className="iconfont icon-zanwushuju"></View>
+            <Text>暂无数据</Text>
+          </View>
       }
     </View>
   )
