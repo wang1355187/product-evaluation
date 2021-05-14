@@ -104,7 +104,7 @@ const Contrast = function (props) {
   }
   //添加对比项
   const add = (id) => {
-    const idsList = params.ids?.split('-');
+    let idsList = params.ids?.split('-');
     //ids无参数时，剔除split分解出的空字符串项
     if(params.ids===''){
       idsList = [];
@@ -132,10 +132,11 @@ const Contrast = function (props) {
     //表行数
     let tableLength;
     if(index == -1){
-      tableLength = _compare_list[0][key].length
+      tableLength = _compare_list[0][key].length;
     }
     else{
-      tableLength = _compare_list[0][key][index].length
+      //tableLength = _compare_list[0][key][index].length
+      tableLength = productSettingsMap[compare_type][index].TitleList.length;
     }
     //中间转换数组
     let tempList = [];

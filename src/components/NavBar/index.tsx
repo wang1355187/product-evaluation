@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, Text } from '@tarojs/components';
+import { View, Image} from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import logo from '@/assets/images/common/logo.png';
 import './index.scss'
