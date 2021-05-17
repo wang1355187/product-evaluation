@@ -54,7 +54,7 @@ export function filterProductList(postData: object) {
  */
 export function getCompanyList() {
   return request.get({
-    url: "/company/list",
+    url: "/company_list",
     isLoading: true,
   });
 }

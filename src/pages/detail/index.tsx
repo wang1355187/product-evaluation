@@ -94,6 +94,11 @@ class Detail extends React.Component {
     //卸载页面滚动事件
     window.removeEventListener('scroll', this.handleScroll);
   }
+  componentWillUnmount () {
+    this.setState = () => {
+      return;
+    }
+  }
 
   componentDidUpdate () {
     //获取模块加载后距离顶部的高度
@@ -284,10 +289,10 @@ class Detail extends React.Component {
         <View ref="premium">
           <SectionCard title="保费测算">
             <Skeleton
-                row={6} 
-                avatarShape='square' 
-                rowHeight={[70,60,60,60,60,60]} 
-                loading={this.state.isLoading}
+              row={6} 
+              avatarShape='square' 
+              rowHeight={[70,60,60,60,60,60]} 
+              loading={this.state.isLoading}
             >
             </Skeleton>
             {!this.state.isLoading &&
@@ -299,10 +304,10 @@ class Detail extends React.Component {
         {/* 谱蓝君点评模块 */}
         <View ref="comment">
           <Skeleton
-                row={6} 
-                avatarShape='square' 
-                rowHeight={[70,60,60,60,60,60]} 
-                loading={this.state.isLoading}
+            row={6} 
+            avatarShape='square' 
+            rowHeight={[70,60,60,60,60,60]} 
+            loading={this.state.isLoading}
           >
           </Skeleton>
           <SectionCard title="谱蓝君点评">
@@ -315,10 +320,10 @@ class Detail extends React.Component {
         {/* 保险条款模块 */}
         <SectionCard title="保险条款">
           <Skeleton
-                row={6} 
-                avatarShape='square' 
-                rowHeight={[70,60,60,60,60,60]} 
-                loading={this.state.isLoading}
+            row={6} 
+            avatarShape='square' 
+            rowHeight={[70,60,60,60,60,60]} 
+            loading={this.state.isLoading}
           >
           </Skeleton>
           {!this.state.isLoading && this.state.detailData.policies.map((item) => {
@@ -351,23 +356,27 @@ class Detail extends React.Component {
         {/* 同类产品模块 */}
         <View ref="similar">
           <SectionCard title="同类产品">
-            {!this.state.isLoading && this.state.detailData.similars.map((item) => {
-              return (
-                <View className="similar-pro" key={item.id}>
-                  <View className="pro-name">产品：{item.name}</View>
-                  <View  className="company-name">公司：{item.corp}</View>
-                  <View className="contrast-btn" onClick={()=>{this.quickCompare(item.id)}}>一键对比</View>
-                </View>
-              )
-            })
-            }
+            <View className="similar-pro-box">
+              {!this.state.isLoading && this.state.detailData.similars.map((item) => {
+                return (
+                  <View className="similar-pro" key={item.id}>
+                    <View className="pro-name">产品：{item.name}</View>
+                    <View  className="company-name">公司：{item.corp}</View>
+                    <View className="contrast-btn" onClick={()=>{this.quickCompare(item.id)}}>一键对比</View>
+                  </View>
+                )
+              })
+              }
+            </View>
           </SectionCard>
         </View>
         
+        {/* 回到顶部按钮 */}
         {this.state.toTopBtn &&
           <View className="toTop-btn" onClick={this.toTop}>回到顶部</View>
         }
         
+        {/* 顶部定位栏 */}
         {this.state.toSectionBar &&
           <View className="fixed-tab">            
             <View className="flex-box">

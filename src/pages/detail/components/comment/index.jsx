@@ -36,7 +36,7 @@ const Comment = function (props) {
   } = props.detailData;
   return (
     <View className="comment-container">
-      <CommentPoint title="亮点" content={pros} logoTitle={true}>
+      <CommentPoint title="亮点" content={pros} logoTitle={true} mystyle={{marginTop: '-5px'}}>
         <Text className="iconfont icon-xiaolian"></Text>
       </CommentPoint>
 
