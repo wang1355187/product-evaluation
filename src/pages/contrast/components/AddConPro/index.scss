@@ -16,13 +16,14 @@
     align-items: center;
     color: #333;
     .icon-box{
+      text-align: center;
       .at-icon{
         font-size: 26PX;
         color: #6190E8;
       }
-    }
-    .text{
-      font-size: 26px;
+      .text{
+        font-size: 26px;
+      }
     }
   }
   .hasData{

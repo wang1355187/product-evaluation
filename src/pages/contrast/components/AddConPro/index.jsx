@@ -15,11 +15,11 @@ const AddConPro = (props) => {
   return (
     <View className='addConpPro-container'>
       {data === undefined ?
-        <View className="noData" onClick={openSiedBar}>
-          <View onClick={add} className="icon-box">
+        <View className="noData">
+          <View onClick={openSiedBar} className="icon-box">
             <View className="at-icon at-icon-add-circle"></View>
+            <View className="text">添加产品</View>
           </View>
-          <Text className="text">添加产品</Text>
         </View>
         :
         <View className="hasData">
