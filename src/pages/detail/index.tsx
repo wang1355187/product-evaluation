@@ -1,14 +1,16 @@
 import React from "react";
-import Taro, { getCurrentInstance, connectSocket } from '@tarojs/taro';
+import Taro, { getCurrentInstance } from '@tarojs/taro';
 import {Text, View} from '@tarojs/components';
 import { connect } from "react-redux";
 import { AtTabs, AtTabsPane, AtFloatLayout, AtButton } from 'taro-ui';
 
+import { getWorkSignature } from '@/services/weChat';
 import ProCard from '../index/components/ProCard';
 import SectionCard from "@/components/SectionCard";
 import Comment from "./components/comment/index";
 import Premium from "./components/Premium/index";
 import TabPanel from './components/TabPanel/index';
+import Skeleton from 'taro-skeleton'
 import { ProductPatchMap } from './config/index'
 import './index.scss';
 
@@ -30,7 +32,7 @@ const PRO_TYPE = {
 };
 //滚动节流定时器
 let timer = null;
-
+let sectionTop = [0,0,0,0];
 const mapStateToProps = ({detail}) => ({
   detail
 })
@@ -45,16 +47,23 @@ class Detail extends React.Component {
   
 
   state = {
-    detailData: {} as any,
-    current: 0,
-    isModalShow: false,
-    isLoading: true,
-    companyData: {} as any,
-    toTopBtn: false,
-    toSectionBar: false
+    detailData: {} as any,  //产品详情数据
+    current: 0,   //AtTabsPane组件切换下标
+    isModalShow: false, //投保须知显示
+    isLoading: true, 
+    companyData: {} as any, //公司详情数据
+    toTopBtn: false,  //回到顶部按钮显示
+    toSectionBar: false,  //section顶部tab显示
+    activeIndex: 0  //当前处于的section下标
   }
   
   componentDidMount () {
+    // getWorkSignature({
+    //   agentid: 1000004,
+    //   corpid: "wwe2fdc7d5b783e0c5",
+    //   uri: "https://protest.planplus.cn/qiankun/product-evaluation-v2/",
+    //   secret: "xwGFJ4KdbBj_Yy234eAXc5ln2WxYJLtc4-yr1_Lt2mk",
+    // }).then((res)=> {console.log(res)})
     if (window.scrollTo) {
       window.scrollTo(0,0);
     }
@@ -86,7 +95,13 @@ class Detail extends React.Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
-  componentDidCatchError () {}
+  componentDidUpdate () {
+    //获取模块加载后距离顶部的高度
+    sectionTop[0] = this.refs.content.offsetTop;
+    sectionTop[1] = this.refs.premium.offsetTop;
+    sectionTop[2] = this.refs.comment.offsetTop;
+    sectionTop[3] = this.refs.similar.offsetTop;
+  }
 
   //切换保障内容的Tab
   changeTab = (value) => {
@@ -125,6 +140,7 @@ class Detail extends React.Component {
     if(timer == null){
       timer = setTimeout(() => {
         let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        //超过100px时显示回到顶部按钮，和模块顶部Tab
         if(scrollTop > 100) {
           this.setState({
             toTopBtn: true,
@@ -136,6 +152,16 @@ class Detail extends React.Component {
             toTopBtn: false,
             toSectionBar: false
           })
+        }
+
+        //判断当前滚动到哪个模块
+        for(let i=sectionTop.length-1; i>=0; i--){
+          if(scrollTop > sectionTop[i]-150){
+            this.setState({
+              activeIndex: i
+            })
+            break;
+          }
         }
         timer = null;
       }, 100)
@@ -165,6 +191,7 @@ class Detail extends React.Component {
     })
   }
 
+
   render () {
     const tabList = {
       1:[{ title: '保什么', type: 'covers'}, { title: '不保什么', type: 'excludes'}, { title: '病种', type:'diseases'},{ title: '投保规则',  type:'rules'}],
@@ -177,6 +204,16 @@ class Detail extends React.Component {
     return (
       <View className="detail-container">
         {/* 产品信息卡片 */}
+        <Skeleton
+          row={4} 
+          avatarShape='square' 
+          avatar
+          avatarSize={150} 
+          rowHeight={[35,28,28,28]} 
+          rowWidth={['40%','100%','100%','100%']}
+          loading={this.state.isLoading}
+        >
+        </Skeleton>
         {!this.state.isLoading &&
           <ProCard
             product={this.state.detailData}
@@ -208,31 +245,25 @@ class Detail extends React.Component {
               }
               return (
                 <View className="tag-item" key={item.key}>
-                  <View>{this.state.detailData[ProductPatchMap[this.state.detailData.insType].key][item.key]}</View>
+                  <View>{this.state.detailData[ProductPatchMap[this.state.detailData.insType].key][item.key] || '无'}</View>
                   <View className="tag-item-label">{item.label}</View>
                 </View>
               )
             })
-
             }
-            {/* <View>
-              <View className="tag-age">{this.state.detailData.productSiPatch.insuredAge}</View>
-              <View>投保年龄</View>
-            </View>
-            <View>
-              <View className="tag-require">{this.state.detailData.productSiPatch.insuredJobType}</View>
-              <View>职业要求</View>
-            </View>
-            <View>
-              <View className="tag-pay">{this.state.detailData.productSiPatch.reparationTimes}/{this.state.detailData.productSiPatch.groups}</View>
-              <View>重疾赔付</View>
-            </View> */}
           </View>}
         </AtFloatLayout>
 
         {/* 保障内容模块 */}
         <View ref="content">
           <SectionCard title="保障内容">
+            <Skeleton
+              row={6} 
+              avatarShape='square' 
+              rowHeight={[70,60,60,60,60,60]} 
+              loading={this.state.isLoading}
+            >
+            </Skeleton>
             {!this.state.isLoading &&
               <AtTabs tabList={tabList[this.state.detailData.insType]} current={this.state.current} onClick={this.changeTab}>
                 {
@@ -252,6 +283,13 @@ class Detail extends React.Component {
         {/* 保费测算模块 */}
         <View ref="premium">
           <SectionCard title="保费测算">
+            <Skeleton
+                row={6} 
+                avatarShape='square' 
+                rowHeight={[70,60,60,60,60,60]} 
+                loading={this.state.isLoading}
+            >
+            </Skeleton>
             {!this.state.isLoading &&
               <Premium detailData={this.state.detailData}></Premium>
             }  
@@ -260,6 +298,13 @@ class Detail extends React.Component {
 
         {/* 谱蓝君点评模块 */}
         <View ref="comment">
+          <Skeleton
+                row={6} 
+                avatarShape='square' 
+                rowHeight={[70,60,60,60,60,60]} 
+                loading={this.state.isLoading}
+          >
+          </Skeleton>
           <SectionCard title="谱蓝君点评">
             {!this.state.isLoading &&
               <Comment detailData={this.state.detailData}></Comment>          
@@ -269,6 +314,13 @@ class Detail extends React.Component {
 
         {/* 保险条款模块 */}
         <SectionCard title="保险条款">
+          <Skeleton
+                row={6} 
+                avatarShape='square' 
+                rowHeight={[70,60,60,60,60,60]} 
+                loading={this.state.isLoading}
+          >
+          </Skeleton>
           {!this.state.isLoading && this.state.detailData.policies.map((item) => {
             return (
               <a style={{display: 'block', color:'#333'}} key={item.key} href={item.value} target="_blank">
@@ -319,10 +371,10 @@ class Detail extends React.Component {
         {this.state.toSectionBar &&
           <View className="fixed-tab">            
             <View className="flex-box">
-              <View className="tab" onClick={() => {this.scrollToSection(this.refs.content)}}>保障内容</View>
-              <View className="tab" onClick={() => {this.scrollToSection(this.refs.premium)}}>保费测算</View>
-              <View className="tab" onClick={() => {this.scrollToSection(this.refs.comment)}}>谱蓝君点评</View>
-              <View className="tab" onClick={() => {this.scrollToSection(this.refs.similar)}}>同类产品</View>
+              <View className="tab" style={this.state.activeIndex==0?{color:'#6190E8'}:{color:'#333'}} onClick={() => {this.scrollToSection(this.refs.content)}}>保障内容</View>
+              <View className="tab" style={this.state.activeIndex==1?{color:'#6190E8'}:{color:'#333'}} onClick={() => {this.scrollToSection(this.refs.premium)}}>保费测算</View>
+              <View className="tab" style={this.state.activeIndex==2?{color:'#6190E8'}:{color:'#333'}} onClick={() => {this.scrollToSection(this.refs.comment)}}>谱蓝君点评</View>
+              <View className="tab" style={this.state.activeIndex==3?{color:'#6190E8'}:{color:'#333'}} onClick={() => {this.scrollToSection(this.refs.similar)}}>同类产品</View>
             </View>
           </View>
         }
