@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import {Text, View} from '@tarojs/components';
-import Taro, { useRouter } from '@tarojs/taro';
+import Taro, { useRouter, getCurrentInstance } from '@tarojs/taro';
 import { AtDrawer, AtSearchBar, AtDivider, AtButton } from 'taro-ui';
 
 import { PremiumMap, RulesMap, productSettingsMap, productReviewMap } from './config/index';
@@ -35,29 +35,11 @@ const Contrast = function (props) {
   //选择列表产品数量
   const [count, setCount] = useState(0);
 
-  //初始化时将路由参数ids转换为数组
-  let initIdList = params.ids?.split('-') || [];
-
-  if(initIdList[0]===''){
-    initIdList = [];
-  }
   //对比产品列表id状态
-  const [prodList, setProList] = useState(initIdList);
+  const [prodList, setProList] = useState([]);
 
   useEffect(()=>{
     if(prodList.length===0){
-      dispatch({
-        type: 'contrast/setCompareList',
-        payload: {
-          compare_list: []
-        }
-      })
-      dispatch({
-        type: 'contrast/setCompareType',
-        payload: {
-          compare_type: ''
-        }
-      })
       return;
     }
     dispatch({
@@ -72,10 +54,28 @@ const Contrast = function (props) {
   },[prodList])
 
   useEffect(() => {
+    //初始化时获取热门对比列表
     dispatch({
       type: 'contrast/getHotCompare',
       payload: {}
     })
+    
+    //初始化时将路由参数ids转换为数组
+    let initIdList = params.ids?.split('-') || [];
+    if(initIdList[0]===''){
+      initIdList = [];
+    }
+    setProList(initIdList);
+
+    //跳转至其他页面时，清空对比列表
+    return () => {
+      let path = getCurrentInstance().router?.path;
+      if(!path?.includes('contrast/index')) {
+        dispatch({
+          type: 'contrast/clearCompare'
+        })
+      }
+    }
   }, [])
 
   //搜索产品
@@ -90,7 +90,7 @@ const Contrast = function (props) {
   const addHotCompare = (arr) => {
     const ids = arr[0].id + '-' + arr[1].id;
     setProList([arr[0].id,arr[1].id]);
-    Taro.navigateTo({
+    Taro.redirectTo({
       url: `/pages/contrast/index?ids=${ids}`
     })
   }
@@ -100,7 +100,7 @@ const Contrast = function (props) {
   }
   //返回
   const back = () => {
-
+    Taro.navigateBack();
   }
   //添加对比项
   const add = (id) => {
@@ -111,7 +111,8 @@ const Contrast = function (props) {
     }
     idsList.push(id);
     setProList([...idsList]);
-    Taro.navigateTo({
+    setSideShow(false);
+    Taro.redirectTo({
       url: `/pages/contrast/index?ids=${idsList?.join('-')}`
     })
   }
@@ -119,8 +120,14 @@ const Contrast = function (props) {
   const del = (id) => {
     const idsList = params.ids?.split('-');
     idsList.splice(idsList.indexOf(id), 1);
+
+    if(idsList?.length == 0){
+      dispatch({
+        type: 'contrast/clearCompare'
+      })
+    }
     setProList([...idsList]);
-    Taro.navigateTo({
+    Taro.redirectTo({
       url: `/pages/contrast/index?ids=${idsList?.join('-')}`
     })
   }

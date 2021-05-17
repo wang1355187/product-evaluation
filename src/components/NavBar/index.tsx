@@ -6,10 +6,10 @@ import './index.scss'
 
 export default function () {
   function back () {
-    Taro.navigateBack()
+    Taro.navigateBack();
   }
   function toHome () {
-    Taro.navigateTo({
+    Taro.redirectTo({
       url: '/pages/index/index'
     })
   }
