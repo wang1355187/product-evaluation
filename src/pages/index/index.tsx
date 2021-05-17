@@ -6,7 +6,9 @@ import React,{ useState, useEffect, useCallback } from 'react';
 
 import SideBar from './components/SideBar/index'
 import ProCard from './components/ProCard/index'
+import Skeleton from 'taro-skeleton'
 import './index.scss'
+import 'taro-skeleton/dist/index.css'
 
 //保险类型
 const PRO_TYPE = {
@@ -108,7 +110,6 @@ const Index = (props) => {
   };
   return (
     <View className="index-container">
-
       {/* 搜索栏 */}
       <View className="search-container">
         <AtSearchBar
@@ -130,6 +131,25 @@ const Index = (props) => {
           onScrollToLower={onScrollToLower}
           style={scrollStyle}
         >
+          {/* 骨架屏渲染 */}
+          {
+            [1,2,3,4,5].map((item) => {
+              return (
+                <Skeleton
+                  key={item}
+                  row={4} 
+                  avatarShape='square' 
+                  avatar
+                  avatarSize={150} 
+                  rowHeight={[35,28,28,28]} 
+                  rowWidth={['40%','100%','100%','100%']}
+                  loading={data.length == 0}
+                >
+                </Skeleton>
+              )
+            })
+          }
+          {/* 列表渲染 */}
           { data.map((item)=>{
               return (<ProCard
                 product={item}
