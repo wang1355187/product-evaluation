@@ -55,6 +55,11 @@ export default {
     setHotCompare (state,{ payload }) {
       const { hot_compare } = payload;
       return {...state, hot_compare}
+    },
+    clearCompare (state) {
+      const compare_list = [];
+      const compare_type = '';
+      return{...state, compare_list, compare_type}
     }
   }
 }
