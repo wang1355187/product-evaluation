@@ -4,7 +4,8 @@ import Taro from '@tarojs/taro';
 import logo from '@/assets/images/common/logo.png';
 import './index.scss'
 
-export default function () {
+export default function (props) {
+  const { justLogo } = props;
   function back () {
     Taro.navigateBack();
   }
@@ -15,12 +16,16 @@ export default function () {
   }
   return (
     <View className="navbar-container">
-      <View className="u-navbar">
-        <View className='at-icon at-icon-chevron-left' onClick={back}></View>
+      <View className="u-navbar" style={justLogo?{justifyContent:'center'}:''}>
+        {!justLogo &&
+          <View className='at-icon at-icon-chevron-left' onClick={back}></View>
+        }
         <View className='u-navbar-img'>
           <Image className='u-navbar-img-logo' src={logo}></Image>
         </View>
-        <View className='at-icon at-icon-home' onClick={toHome}></View>
+        {!justLogo &&
+          <View className='at-icon at-icon-home' onClick={toHome}></View>
+        }
       </View>
     </View>
   )
