@@ -20,7 +20,7 @@
       background-color: orange;
       color: #ffffff;
       box-sizing: border-box;
-      z-index: 9;
+      z-index: 2;
     }
     .pro-img{
       height: 160px;
@@ -66,10 +66,10 @@
         }
       }
       .pro-type{
-        font-size: 12px;
+        font-size: 24px;
         text-align: center;
         color: #4379FE;
-        width: 50PX;
+        width: 100px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -82,7 +82,7 @@
         font-size: 24px;
         color: #a7a4a4;
         overflow: hidden;
-        height: 16PX;
+        height: 40px;
         &-item:nth-last-child(n+2)::after{
           content: '|';
           margin: 0 8px;
