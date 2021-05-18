@@ -171,9 +171,9 @@ const Index = (props) => {
         </ScrollView>
       </View>      
       {/* 侧边筛选栏 */}
-      {/* { SideBarShow &&
+      { SideBarShow &&
         <SideBar onClose={setSideBarShow}></SideBar>
-      } */}
+      }
     </View>
   )
 }

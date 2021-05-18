@@ -82,16 +82,16 @@ const SideBar = function(props) {
     }
   }, [getFilterParam]);
 
-  //防抖
-  useEffect(() => {
-    if (handler) clearTimeout(handler);
-    handler = setTimeout(() => {
-      getList();
-    }, 800);
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [form, getList]);
+  // useEffect(() => {
+  //   //防抖
+  //   if (handler) clearTimeout(handler);
+  //   handler = setTimeout(() => {
+  //     getList();
+  //   }, 800);
+  //   return () => {
+  //     clearTimeout(handler);
+  //   };
+  // }, [form, getList]);
 
 
   //去往详情页面
@@ -117,7 +117,7 @@ const SideBar = function(props) {
     if (!companyList || companyList.length === 0) {
       const { data: res } = await getCompanyList();
       if (res.code === 0) {
-        const copMap = res.data.map((c) => {
+        const copMap = res.data.items.map((c) => {
           return {
             value: c.id,
             label: c.name,
