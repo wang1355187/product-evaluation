@@ -32,7 +32,10 @@ const PRO_TYPE = {
 };
 //滚动节流定时器
 let timer = null;
+//Section模块距离窗口顶部的距离
 let sectionTop = [0,0,0,0];
+//detail容器距离顶部的高度
+let detailHeight = 0;
 const mapStateToProps = ({detail}) => ({
   detail
 })
@@ -100,6 +103,8 @@ class Detail extends React.Component {
     sectionTop[1] = this.refs.premium.offsetTop;
     sectionTop[2] = this.refs.comment.offsetTop;
     sectionTop[3] = this.refs.similar.offsetTop;
+    //获取detail容器距离顶部的高度
+    detailHeight = this.refs.detail_container.offsetTop;
   }
 
   //切换保障内容的Tab
@@ -168,8 +173,9 @@ class Detail extends React.Component {
   }
 
   //滚动至对应内容块
-  scrollToSection = (ref) => {
-    ref.scrollIntoView();
+  scrollToSection = (index) => {
+    window.scrollTo(0,sectionTop[index]-detailHeight);
+    // ref.scrollIntoView();
     setTimeout(() => {
       this.setState({
         toSectionBar: false
@@ -201,7 +207,7 @@ class Detail extends React.Component {
       6:[{ title: '保什么', type: 'covers'  }, { title: '不保什么', type: 'excludes' }, { title: '病种', type:'diseases' },{ title: '投保规则', type:'rules'  }]
     }
     return (
-      <View className="detail-container">
+      <View className="detail-container" ref="detail_container">
         <NavBar></NavBar>
         {/* 产品信息卡片 */}
         <Skeleton
@@ -375,10 +381,10 @@ class Detail extends React.Component {
         {this.state.toSectionBar &&
           <View className="fixed-tab">            
             <View className="flex-box">
-              <View className="tab" style={this.state.activeIndex==0?{color:'#6190E8'}:{color:'#333'}} onClick={() => {this.scrollToSection(this.refs.content)}}>保障内容</View>
-              <View className="tab" style={this.state.activeIndex==1?{color:'#6190E8'}:{color:'#333'}} onClick={() => {this.scrollToSection(this.refs.premium)}}>保费测算</View>
-              <View className="tab" style={this.state.activeIndex==2?{color:'#6190E8'}:{color:'#333'}} onClick={() => {this.scrollToSection(this.refs.comment)}}>谱蓝君点评</View>
-              <View className="tab" style={this.state.activeIndex==3?{color:'#6190E8'}:{color:'#333'}} onClick={() => {this.scrollToSection(this.refs.similar)}}>同类产品</View>
+              <View className="tab" style={this.state.activeIndex==0?{color:'#6190E8'}:{color:'#333'}} onClick={() => {this.scrollToSection(0)}}>保障内容</View>
+              <View className="tab" style={this.state.activeIndex==1?{color:'#6190E8'}:{color:'#333'}} onClick={() => {this.scrollToSection(1)}}>保费测算</View>
+              <View className="tab" style={this.state.activeIndex==2?{color:'#6190E8'}:{color:'#333'}} onClick={() => {this.scrollToSection(2)}}>谱蓝君点评</View>
+              <View className="tab" style={this.state.activeIndex==3?{color:'#6190E8'}:{color:'#333'}} onClick={() => {this.scrollToSection(3)}}>同类产品</View>
             </View>
           </View>
         }
