@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import {Text, View} from '@tarojs/components';
-import Taro, { useRouter } from '@tarojs/taro'
-import Skeleton from 'taro-skeleton'
+import Taro, { useRouter } from '@tarojs/taro';
+import Skeleton from 'taro-skeleton';
 
-import {getCompanyProduct, getCompanyDetail} from './service'
-import SectionCard from '@/components/SectionCard/index'
-import ProCard from '@/components/ProCard'
-import './index.scss'
+import {getCompanyProduct, getCompanyDetail} from './service';
+import SectionCard from '@/components/SectionCard/index';
+import ProCard from '@/components/ProCard';
+import NavBar from '@/components/NavBar';
+import './index.scss';
 
 const Company = (props) => {
   const [companyData, setCompanyData] = useState({
@@ -72,6 +73,7 @@ const Company = (props) => {
 
   return (
     <View className="company-container">
+      <NavBar></NavBar>
       <Skeleton
         row={5} 
         rowHeight={[40,30,30,30,140]} 

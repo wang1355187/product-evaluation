@@ -1,14 +1,15 @@
-import { View, Text, ScrollView } from '@tarojs/components'
-import Taro from '@tarojs/taro'
+import { View, Text, ScrollView } from '@tarojs/components';
+import Taro from '@tarojs/taro';
 import { AtSearchBar } from 'taro-ui';
 import { useDispatch, useSelector } from 'react-redux';
 import React,{ useState, useEffect, useCallback } from 'react';
 
-import SideBar from './components/SideBar/index'
-import ProCard from './components/ProCard/index'
-import Skeleton from 'taro-skeleton'
-import './index.scss'
-import 'taro-skeleton/dist/index.css'
+import SideBar from './components/SideBar/index';
+import NavBar from "@/components/NavBar/index";
+import ProCard from './components/ProCard/index';
+import Skeleton from 'taro-skeleton';
+import './index.scss';
+import 'taro-skeleton/dist/index.css';
 
 //保险类型
 const PRO_TYPE = {
@@ -110,6 +111,7 @@ const Index = (props) => {
   };
   return (
     <View className="index-container">
+      <NavBar justLogo={true}></NavBar>
       {/* 搜索栏 */}
       <View className="search-container">
         <AtSearchBar

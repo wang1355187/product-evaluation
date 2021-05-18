@@ -10,6 +10,7 @@ import SectionCard from "@/components/SectionCard";
 import Comment from "./components/comment/index";
 import Premium from "./components/Premium/index";
 import TabPanel from './components/TabPanel/index';
+import NavBar from "@/components/NavBar/index";
 import Skeleton from 'taro-skeleton'
 import { ProductPatchMap } from './config/index'
 import './index.scss';
@@ -208,6 +209,7 @@ class Detail extends React.Component {
     }
     return (
       <View className="detail-container">
+        <NavBar></NavBar>
         {/* 产品信息卡片 */}
         <Skeleton
           row={4} 

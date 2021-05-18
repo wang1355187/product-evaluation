@@ -9,6 +9,7 @@ import SectionCard from '@/components/SectionCard/index';
 import FlexTable from '@/components/FlexTable/index'
 import AddConPro from './components/AddConPro/index';
 import PremiumTable from './components/PremiumTable/index';
+import NavBar from "@/components/NavBar/index";
 import Footer from '@/components/Footer/index'
 import './index.scss';
 
@@ -196,7 +197,7 @@ const Contrast = function (props) {
   }
   return (
     <View className="contrast-container">
-
+      <NavBar></NavBar>
       {/* 产品对比 */}
       <View className="contrast-header-box">
         <View className="flex-box">
