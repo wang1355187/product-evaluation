@@ -7,8 +7,7 @@ import { currentChannel } from "./common";
  */
 export function wxCompanyConfig(config, appConfig, readyData) {
   /** 需要使用的JS接口列表 */
-  const jsApiList = ["onMenuShareAppMessage", "onMenuShareWechat"];
-  console.log('21111313123')
+  const jsApiList = ["onMenuShareAppMessage", "onMenuShareWechat","shareWechatMessage"];
   wx.config({
     beta: true,
     debug: false,
@@ -38,7 +37,7 @@ const wxCompanyShareReady = (
   wx.ready(() => {
     // 需在用户可能点击分享按钮前就先调用
     // 企业微信应用初始化签名
-    const jsApiList = ["sendChatMessage", "getContext"];
+    const jsApiList = ["sendChatMessage", "getContext","shareWechatMessage"];
     wx.agentConfig({
       corpid: defaultSettings[currentChannel].corpid,
       agentid: defaultSettings[currentChannel].agentid,
@@ -57,9 +56,20 @@ const wxCompanyShareReady = (
         console.log("agentConfig初始化成功");
       },
       fail(res) {
+        console.log(res);
         if (res.errMsg.indexOf("function not exist") > -1) {
           alert("企业微信应用版本过低请升级");
         }
+      },
+    });
+    wx.shareWechatMessage({
+      ...data,
+      success: () => {
+        console.log("分享初始化成功");
+        // 设置成功
+      },
+      fail(res) {
+        console.log(res)
       },
     });
     wx.onMenuShareAppMessage({
