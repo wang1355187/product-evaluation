@@ -4,7 +4,7 @@ import {Text, View} from '@tarojs/components';
 import { connect } from "react-redux";
 import { AtTabs, AtTabsPane, AtFloatLayout, AtButton } from 'taro-ui';
 
-import ProCard from '../index/components/ProCard';
+import ProCard from '@/components/ProCard/index';
 import SectionCard from "@/components/SectionCard";
 import Comment from "./components/comment/index";
 import Premium from "./components/Premium/index";

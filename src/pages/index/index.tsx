@@ -6,7 +6,7 @@ import React,{ useState, useEffect, useCallback } from 'react';
 
 import SideBar from './components/SideBar/index';
 import NavBar from "@/components/NavBar/index";
-import ProCard from './components/ProCard/index';
+import ProCard from '@/components/ProCard/index';
 import Skeleton from 'taro-skeleton';
 import './index.scss';
 import 'taro-skeleton/dist/index.css';
