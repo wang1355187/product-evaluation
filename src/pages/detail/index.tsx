@@ -4,7 +4,6 @@ import {Text, View} from '@tarojs/components';
 import { connect } from "react-redux";
 import { AtTabs, AtTabsPane, AtFloatLayout, AtButton } from 'taro-ui';
 
-import { getWorkSignature } from '@/services/weChat';
 import ProCard from '../index/components/ProCard';
 import SectionCard from "@/components/SectionCard";
 import Comment from "./components/comment/index";
@@ -59,12 +58,6 @@ class Detail extends React.Component {
   }
   
   componentDidMount () {
-    // getWorkSignature({
-    //   agentid: 1000004,
-    //   corpid: "wwe2fdc7d5b783e0c5",
-    //   uri: "https://protest.planplus.cn/qiankun/product-evaluation-v2/",
-    //   secret: "xwGFJ4KdbBj_Yy234eAXc5ln2WxYJLtc4-yr1_Lt2mk",
-    // }).then((res)=> {console.log(res)})
     if (window.scrollTo) {
       window.scrollTo(0,0);
     }
@@ -391,7 +384,7 @@ class Detail extends React.Component {
         }
 
         <View className="fixed-btn">
-          <AtButton size="small" type="secondary" className="btn-share">分享给客户</AtButton>
+          <AtButton size="small" type="secondary" className="btn-share" openType="share">分享给客户</AtButton>
           <AtButton
             size="small"
             type="primary"
