@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from "react";
-import { Text, View } from "@tarojs/components";
+import { Text, View, ScrollView } from "@tarojs/components";
 import "./index.scss";
 import { set } from "lodash";
 
@@ -71,25 +71,52 @@ const Table = function (props) {
 }
 
 const Diseases = function (props) {
+  const { data } = props;
+  const [diseasesList, setDiseasesList] = useState(data[0].value);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [scrollTop, setScrollTop] = useState(0);
+  const handleClick = (index) => {
+    setActiveIndex(index);
+    setDiseasesList(data[index].value);
+    setScrollTop(Math.random());
+  }
   return (
     <View className="diseases-container">
-      {props.data &&
-        props.data.map((item) => {
-          return (
-            <View className="table-tr" key={item.key}>
-              <View className="table-title">{item.key}</View>
-              <View className="table-content">
-                {item.value.map((_item, index) => {
+      {data &&
+        <View className="content-box">
+          <View className="diseases-type-box">
+            {
+              data.map((item, index) => {
+                return (
+                  <View
+                    className={index==activeIndex?'diseases-type active':'diseases-type'}
+                    key={item.key}
+                    onClick={()=>{handleClick(index)}}
+                  >
+                    {item.key}
+                  </View>
+                )
+              })
+            }
+          </View>
+          <View className="diseases-items-box">
+            <ScrollView
+              scrollY={true}
+              className="scroll"
+              scrollTop={scrollTop}
+            >
+              {
+                diseasesList.map((item, index) => {
                   return (
-                    <Text className="diseases-item" key={index}>{_item}</Text>
+                    <View className="diseases-item" key={index}>{item}</View>
                   )
-                })}
-              </View>
-            </View>
-          )
-        })
+                })
+              }
+            </ScrollView>
+          </View>
+        </View>
       }
-      {props.data.length==0 &&
+      {data.length==0 &&
         <View className="noData">
           <View className="iconfont icon-zanwushuju"></View>
           <Text>暂无数据</Text>
