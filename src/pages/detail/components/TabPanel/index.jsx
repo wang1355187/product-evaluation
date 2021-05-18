@@ -108,7 +108,7 @@ const Diseases = function (props) {
               {
                 diseasesList.map((item, index) => {
                   return (
-                    <View className="diseases-item" key={index}>{item}</View>
+                    <View className="diseases-item" key={item}>{item}</View>
                   )
                 })
               }
