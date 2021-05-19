@@ -208,7 +208,7 @@ class Detail extends React.Component {
     }
     return (
       <View className="detail-container" ref="detail_container">
-        <NavBar></NavBar>
+        <NavBar title="产品详情"></NavBar>
         {/* 产品信息卡片 */}
         <Skeleton
           row={4} 

@@ -73,7 +73,7 @@ const Company = (props) => {
 
   return (
     <View className="company-container">
-      <NavBar></NavBar>
+      <NavBar title="公司详情"></NavBar>
       <Skeleton
         row={5} 
         rowHeight={[40,30,30,30,140]} 

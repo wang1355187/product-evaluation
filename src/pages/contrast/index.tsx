@@ -35,6 +35,8 @@ const Contrast = function (props) {
   const [key, setKey] = useState('');
   //选择列表产品数量
   const [count, setCount] = useState(0);
+  //NavBar标题
+  const [navTitle, setNavTitle] = useState(compare_type==''?'产品对比':PRO_TYPE[compare_type]+'对比');
 
   //对比产品列表id状态
   const [prodList, setProList] = useState([]);
@@ -55,12 +57,22 @@ const Contrast = function (props) {
   },[prodList])
 
   useEffect(() => {
+    //改变NavBar标题
+    if(compare_type != ''){
+      setNavTitle(PRO_TYPE[compare_type]+'对比');
+    }
+    else{
+      setNavTitle('产品对比');
+    }
+  },[compare_type])
+
+  useEffect(() => {
     //初始化时获取热门对比列表
     dispatch({
       type: 'contrast/getHotCompare',
       payload: {}
     })
-    
+
     //初始化时将路由参数ids转换为数组
     let initIdList = params.ids?.split('-') || [];
     if(initIdList[0]===''){
@@ -197,7 +209,7 @@ const Contrast = function (props) {
   }
   return (
     <View className="contrast-container">
-      <NavBar></NavBar>
+      <NavBar title={navTitle}></NavBar>
       {/* 产品对比 */}
       <View className="contrast-header-box">
         <View className="flex-box">
@@ -242,6 +254,9 @@ const Contrast = function (props) {
 
       {/* 对比产品选择侧边栏 */}
       <View className="contrast-sidebar-box">
+        <View className="close" onClick={()=>{setSideShow(false)}}>
+            <View className="at-icon at-icon-chevron-right"></View>
+        </View>
         <AtDrawer
           show={sideShow} 
           mask 
