@@ -160,7 +160,7 @@ class Detail extends React.Component {
 
         //判断当前滚动到哪个模块
         for(let i=sectionTop.length-1; i>=0; i--){
-          if(scrollTop > sectionTop[i]-150){
+          if(scrollTop > sectionTop[i]-detailHeight){
             this.setState({
               activeIndex: i
             })
