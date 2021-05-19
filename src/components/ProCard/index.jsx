@@ -98,8 +98,8 @@ const ProCard = (props) => {
           <View className="pro-name">
             {insType==1 && 
               (productDefinitionVersion == 'NEW'
-              ?<Text className="new">新定义</Text>
-              :<Text className="old">旧定义</Text>)
+              ?<Text className="new tag">新定义</Text>
+              :<Text className="old tag">旧定义</Text>)
             }
             <Text className="title">{productName}</Text>
           </View>

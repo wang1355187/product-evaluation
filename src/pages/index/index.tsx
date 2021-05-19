@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import React,{ useState, useEffect, useCallback } from 'react';
 
 import SideBar from './components/SideBar/index';
-import NavBar from "@/components/NavBar/index";
 import ProCard from '@/components/ProCard/index';
 import Skeleton from 'taro-skeleton';
 import './index.scss';
@@ -111,7 +110,6 @@ const Index = (props) => {
   };
   return (
     <View className="index-container">
-      <NavBar justLogo={true}></NavBar>
       {/* 搜索栏 */}
       <View className="search-container">
         <AtSearchBar

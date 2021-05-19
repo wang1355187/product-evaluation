@@ -72,7 +72,7 @@ const Table = function (props) {
 
 const Diseases = function (props) {
   const { data } = props;
-  const [diseasesList, setDiseasesList] = useState(data[0].value);
+  const [diseasesList, setDiseasesList] = useState(data[0]?.value || []);
   const [activeIndex, setActiveIndex] = useState(0);
   const [scrollTop, setScrollTop] = useState(0);
   const handleClick = (index) => {
@@ -82,7 +82,7 @@ const Diseases = function (props) {
   }
   return (
     <View className="diseases-container">
-      {data &&
+      {data && data.length>0 &&
         <View className="content-box">
           <View className="diseases-type-box">
             {

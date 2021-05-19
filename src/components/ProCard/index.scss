@@ -46,23 +46,22 @@
           overflow: hidden;
           text-overflow: ellipsis;
         }
-        .new{
+        .tag{
           display: block;
           height: 35px;
-          padding: 0 5px;
+          padding: 0 8px;
           line-height: 35px;
           font-size: 24px;
-          color:orange;
           margin-right: 10px;
-          background-color: #ddcbaa4d;
           font-weight: 500;
         }
         .old{
-          font-size: 24px;
           color:#666;
-          margin-right: 10px;
           background-color: #cacbca4d;
-          font-weight: 500;
+        }
+        .new{
+          background-color: #ffcd5b3d;
+          color:orange;
         }
       }
       .pro-type{
@@ -91,7 +90,6 @@
     }
     .row-3{
       .pro-condition{
-        margin-top: 15px;
         display:flex;
         justify-content: space-between;
         align-items: center;
