@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import {Text, View} from '@tarojs/components';
+import {Text, View, ScrollView} from '@tarojs/components';
 import Taro, { useRouter, getCurrentInstance } from '@tarojs/taro';
 import { AtDrawer, AtSearchBar, AtDivider, AtButton } from 'taro-ui';
 
@@ -25,6 +25,12 @@ const PRO_TYPE = {
 };
 
 const Contrast = function (props) {
+  const currentHeight =
+  document.documentElement.clientHeight || document.body.clientHeight;
+  const scrollStyle = {
+  height: `calc(${currentHeight}px - 120px)`,
+  };
+
   const dispatch = useDispatch();
   const params = useRouter().params;
   const { compare_list, compare_type, hot_compare } = useSelector( state => state.contrast);
@@ -254,9 +260,6 @@ const Contrast = function (props) {
 
       {/* 对比产品选择侧边栏 */}
       <View className="contrast-sidebar-box">
-        <View className="close" onClick={()=>{setSideShow(false)}}>
-            <View className="at-icon at-icon-chevron-right"></View>
-        </View>
         <AtDrawer
           show={sideShow} 
           mask 
@@ -265,6 +268,9 @@ const Contrast = function (props) {
           onClose={()=>{setSideShow(false)}}
           className="contrast-sidebar"
         >
+          <View className="close" onClick={()=>{setSideShow(false)}}>
+            <View className="at-icon at-icon-chevron-right"></View>
+          </View>
           <AtSearchBar
             value={key}
             placeholder="搜索产品"
@@ -277,13 +283,15 @@ const Contrast = function (props) {
             <Text className="pro-count">共<Text style="color: blue;">{ count }</Text>产品</Text>
           </View>
           <View className="contrast-sidebar-content">
-            {
-              data.map((item) => {
-                return (
-                  <View className="pro-item" onClick={() => { add(item.id) }} key={item.id}>{item.productName}</View>
-                )
-              })
-            }
+            <ScrollView scrollY={true} style={scrollStyle}>
+              {
+                data.map((item) => {
+                  return (
+                    <View className="pro-item" onClick={() => { add(item.id) }} key={item.id}>{item.productName}</View>
+                  )
+                })
+              }
+            </ScrollView>
           </View>
         </AtDrawer>
       </View>
