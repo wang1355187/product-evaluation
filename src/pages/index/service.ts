@@ -46,6 +46,21 @@ export function filterProductList(postData: object) {
 }
 
 /**
+ * 按险种类型筛选
+ *
+ * @export
+ * @param {string} postData
+ * @returns
+ */
+export function filterByType(postData: object) {
+  return request.post({
+    url: '/list_product_by_type',
+    data: { ...postData },
+    isLoading: true,
+  });
+}
+
+/**
  * 获取所有公司列表
  *
  * @export

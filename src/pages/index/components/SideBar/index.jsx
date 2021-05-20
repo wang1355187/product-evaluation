@@ -32,6 +32,9 @@ const SideBar = function(props) {
     tagName: [],  //产品特色
   };
 
+  //所有的保险公司
+  const [allCompanyList, setAllCompanyList] = useState([]);
+
   //表单状态
   const [form, setForm] = useState({...initialForm});
   //险种类目
@@ -99,18 +102,21 @@ const SideBar = function(props) {
 
   }
   //搜索公司
-  const handleSearchChange = async () => {
-    if (!companyValue) return;
-    const { data: res } = await companyNameByList(companyValue);
-    if (res.code === 0) {
-      const copMap = res.data.map((c) => {
-        return {
-          value: c.id,
-          label: c.name,
-        };
-      });
-      setCompanyList(copMap);
-    }
+  const handleSearchChange = () => {
+    const searchList = allCompanyList.filter((item) => {
+      return item.label.includes(companyValue);
+    })
+    setCompanyList(searchList);
+    // const { data: res } = await companyNameByList(companyValue);
+    // if (res.code === 0) {
+    //   const copMap = res.data.map((c) => {
+    //     return {
+    //       value: c.id,
+    //       label: c.name,
+    //     };
+    //   });
+    //   setCompanyList(copMap);
+    // }
   };
   //打开公司筛选栏
   const showPopup = useCallback(async () => {
@@ -124,6 +130,7 @@ const SideBar = function(props) {
           };
         });
         setCompanyList(copMap);
+        setAllCompanyList(copMap);
       }
     }
     setShowFloat(true);
@@ -314,6 +321,7 @@ const SideBar = function(props) {
                 placeholder='请输入关键字'
                 onChange={(val) => setCompanyValue(val)}
                 onActionClick={handleSearchChange}
+                onConfirm={handleSearchChange}
               />
             </View>
           </View>
