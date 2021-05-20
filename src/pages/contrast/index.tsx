@@ -108,7 +108,6 @@ const Contrast = function (props) {
   //添加热门对比
   const addHotCompare = (arr) => {
     const ids = arr[0].id + '-' + arr[1].id;
-    setProList([arr[0].id,arr[1].id]);
     Taro.redirectTo({
       url: `/pages/contrast/index?ids=${ids}`
     })
@@ -129,8 +128,6 @@ const Contrast = function (props) {
       idsList = [];
     }
     idsList.push(id);
-    setProList([...idsList]);
-    setSideShow(false);
     Taro.redirectTo({
       url: `/pages/contrast/index?ids=${idsList?.join('-')}`
     })
@@ -139,13 +136,11 @@ const Contrast = function (props) {
   const del = (id) => {
     const idsList = params.ids?.split('-');
     idsList.splice(idsList.indexOf(id), 1);
-
     if(idsList?.length == 0){
       dispatch({
         type: 'contrast/clearCompare'
       })
     }
-    setProList([...idsList]);
     Taro.redirectTo({
       url: `/pages/contrast/index?ids=${idsList?.join('-')}`
     })
@@ -229,7 +224,7 @@ const Contrast = function (props) {
       {compare_list.length > 0 && compare_type.length !=0 &&
         <View className="contrast-content-box">
           <SectionCard title="保费测算" padding={true}>
-            <PremiumTable compareList={compare_list} insType={compare_type} titleList={PremiumMap[compare_type]} contentList={formatContent(compare_list,'compareQuotaCalc')}></PremiumTable>
+            <PremiumTable key={compare_list.length} compareList={compare_list} insType={compare_type} titleList={PremiumMap[compare_type]} contentList={formatContent(compare_list,'compareQuotaCalc')}></PremiumTable>
           </SectionCard>
 
           <SectionCard title="投保规则" padding={true}>
