@@ -36,6 +36,14 @@ export default {
       }
       Tips.toast(res.msg)
     },
+    *getProductSimple({ payload }, { call }) {
+      const {data: res} = yield call(service.getProductSimple, payload.id);
+      if (res.code === 0) {
+        const {data} = res;
+        return data
+      }
+      Tips.toast(res.msg)
+    }
   },
   reducers: {
     setProductDetail (state, { payload }) {

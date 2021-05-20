@@ -44,6 +44,7 @@ const mapDispatchToProps = {
   setCompanyDetail: (payload) => ({type: 'detail/setCompanyDetail',payload}),
   getProductDetail: (payload) => ({type: 'detail/getProductDetail',payload}),
   getCompanyDetail: (payload) => ({type: 'detail/getCompanyDetail',payload}),
+  getProductSimple: (payload) => ({type: 'detail/getProductSimple',payload}),
 };
 
 class Detail extends React.Component {
@@ -51,13 +52,14 @@ class Detail extends React.Component {
 
   state = {
     detailData: {} as any,  //产品详情数据
+    simpleData: {},  //产品卡片用到的数据（与detailData分离开，为保证接口原子性）
     current: 0,   //AtTabsPane组件切换下标
     isModalShow: false, //投保须知显示
     isLoading: true, 
     companyData: {} as any, //公司详情数据
     toTopBtn: false,  //回到顶部按钮显示
     toSectionBar: false,  //section顶部tab显示
-    activeIndex: 0  //当前处于的section下标
+    activeIndex: 0,  //当前处于的section下标
   }
   
   componentDidMount () {
@@ -66,6 +68,16 @@ class Detail extends React.Component {
     }
     //页面初始化
     const params =  getCurrentInstance().router?.params;
+
+    this.props.getProductSimple({
+      id: params.id
+    }).then((res) => {
+      console.log(res);
+      this.setState({
+        simpleData: res
+      })
+    }).catch((err) => {console.log(err)})
+
     this.props.getProductDetail({
       id: params.id
     }).then((res)=> {
@@ -79,7 +91,7 @@ class Detail extends React.Component {
           companyData: _res
         })
       })
-    })
+    }).catch((err) => {console.log(err)})
   }
 
   componentDidShow () {
@@ -222,7 +234,7 @@ class Detail extends React.Component {
         </Skeleton>
         {!this.state.isLoading &&
           <ProCard
-            product={this.state.detailData}
+            product={this.state.simpleData}
             isModal={true}
             showModal={this.showModal}
           >
