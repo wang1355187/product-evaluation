@@ -38,13 +38,21 @@
       }
     }
     &-content{
-      padding: 15px;
+      .item-hover{
+        background-color: #88b0fa;
+        color: #ffffff;
+      }
       .pro-item{
+        text-indent: 30px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
         font-size: 26px;
         font-weight: 500;
-        height: 60px;
-        line-height: 60px;
+        height: 85px;
+        line-height: 85px;
         border-bottom: 1px solid #e2e2e2;
+        transition: all .3s;
       }
       .pro-item:last-child{
         border: none;

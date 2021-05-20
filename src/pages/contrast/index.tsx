@@ -282,7 +282,7 @@ const Contrast = function (props) {
               {
                 data.map((item) => {
                   return (
-                    <View className="pro-item" onClick={() => { add(item.id) }} key={item.id}>{item.productName}</View>
+                    <View className="pro-item" hoverClass="item-hover" onClick={() => { add(item.id) }} key={item.id}>{item.productName}</View>
                   )
                 })
               }
