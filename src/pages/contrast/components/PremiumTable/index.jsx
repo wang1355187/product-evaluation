@@ -120,81 +120,56 @@ const PremiumTable = (props) => {
 
   //设置对应产品params初始值
   useEffect(() => {
-    let gender = 0;
-    let age = 30;
-    let quota;
-    if(personList[proIndex].includes('，')){
-      age = /(?<age>\d+)/.exec(personList[proIndex])?.groups.age;
-      gender = personList[proIndex].split('，')[0];
-    }
-    else{
-      age = /(?<age>\d+)/.exec(personList[proIndex])?.groups.age;
-    }
+    /*
+      defaultParams（保费测算默认参数数组）
+      返回数组对应项如下：
+        重疾、防癌  【性别，年龄】
+        寿险  【保额、性别、年龄】
+        医疗  【性别、年龄、社保】
+        意外  【年龄、保额】
+    */
+    let defaultParams = compareList[proIndex].productCalculateDefault;
+    if(!defaultParams) return;
     switch(insType) {
       case '1':
       case '6':
         setParams({
           id: idsList[proIndex],
-          age,
-          gender: gender=='男' ? 0 : 1,
+          age: defaultParams[1],
+          gender: defaultParams[0],
           quota: undefined,
           social: undefined
         })
         break;
       case '2':
-        quota = /(?<quota>\d+)/.exec(quotaList[proIndex])?.groups.quota;
         setParams({
           id: idsList[proIndex],
-          age,
-          gender: gender=='男' ? 0 : 1,
-          quota,
+          age: defaultParams[2],
+          gender: defaultParams[1],
+          quota: defaultParams[0],
           social: undefined
         })
         break;
       case '3':
-        let isSocial = socialSecurityList[proIndex].includes('有');
         setParams({
           id: idsList[proIndex],
-          age,
-          gender: gender=='男' ? 0 : 1,
+          age: defaultParams[1],
+          gender: defaultParams[0],
           quota: undefined,
-          social: isSocial ? '1': '0'
+          social: defaultParams[2]
         })
         break;
       case '4':
-        quota = /(?<quota>\d+)/.exec(quotaList[proIndex])?.groups.quota;;
         setParams({
           id: idsList[proIndex],
-          age,
-          gender: gender=='男' ? 0 : 1,
-          quota,
+          age: defaultParams[0],
+          gender: undefined,
+          quota: defaultParams[1],
           social: undefined
         })
         break;
     }
   }, [proIndex])
-
-  // //父组件props更新，state不会自动随之更新
-  // useEffect(() => {
-  //   setPersonList(contentList[0]);
-  //   setFirstPremiumList(contentList[firstCostIndex[insType]]);
-  //   setTotalPremiumList((insType==1 || insType==6) ? contentList[5] : []);
-  //   setMaxProtectTimeList(insType==2 ? contentList[1] : []);
-  //   setSocialSecurityList(insType == 3 ? contentList[2]: []);
-
-  //   let initQuotaList;
-  //   switch(insType){
-  //     case '2':
-  //       initQuotaList = contentList[3];
-  //       break;
-  //     case '4':
-  //       initQuotaList = contentList[1];
-  //       break;
-  //     default:
-  //       initQuotaList = [];
-  //   }
-  //   setQuotaList(initQuotaList);
-  // },[contentList])
 
   const first = useRef(true); //防止首次加载发送获取保费测算请求
   //保费测试参数改变
