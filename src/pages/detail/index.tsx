@@ -2,7 +2,7 @@ import React from "react";
 import Taro, { getCurrentInstance } from '@tarojs/taro';
 import {Text, View} from '@tarojs/components';
 import { connect } from "react-redux";
-import { AtTabs, AtTabsPane, AtFloatLayout, AtButton } from 'taro-ui';
+import { AtTabs, AtTabsPane, AtFloatLayout, AtButton, AtMessage } from 'taro-ui';
 
 import ProCard from '@/components/ProCard/index';
 import SectionCard from "@/components/SectionCard";
@@ -52,7 +52,7 @@ class Detail extends React.Component {
 
   state = {
     detailData: {} as any,  //产品详情数据
-    simpleData: {},  //产品卡片用到的数据（与detailData分离开，为保证接口原子性）
+    simpleData: {} as any,  //产品卡片用到的数据（与detailData分离开，为保证接口原子性）
     current: 0,   //AtTabsPane组件切换下标
     isModalShow: false, //投保须知显示
     isLoading: true, 
@@ -72,11 +72,10 @@ class Detail extends React.Component {
     this.props.getProductSimple({
       id: params.id
     }).then((res) => {
-      console.log(res);
       this.setState({
         simpleData: res
       })
-    }).catch((err) => {console.log(err)})
+    })
 
     this.props.getProductDetail({
       id: params.id
@@ -196,6 +195,14 @@ class Detail extends React.Component {
   }
   //加入对比
   addCompare = (id) => {
+    if(this.state.detailData.insType == '5') {
+      Taro.atMessage({
+        message: '年金险无对比',
+        duration: 2000,
+        type: 'warning'
+      })
+      return;
+    }
     Taro.navigateTo({
       url: `/pages/contrast/index?ids=${id}`
     })
@@ -220,7 +227,10 @@ class Detail extends React.Component {
     }
     return (
       <View className="detail-container" ref="detail_container">
+
         <NavBar title="产品详情"></NavBar>
+        {/* 消息提示组件 */}
+        <AtMessage />
         {/* 产品信息卡片 */}
         <Skeleton
           row={4} 
@@ -234,7 +244,7 @@ class Detail extends React.Component {
         </Skeleton>
         {!this.state.isLoading &&
           <ProCard
-            product={this.state.simpleData}
+            product={this.state.detailData}
             isModal={true}
             showModal={this.showModal}
           >
@@ -350,6 +360,12 @@ class Detail extends React.Component {
             )
           })        
           }
+          {!this.state.isLoading && this.state.detailData.policies.length==0 &&
+                <View className="noData">
+                  <View className="iconfont icon-zanwushuju"></View>
+                  <Text>暂无数据</Text>
+                </View>
+          }
         </SectionCard> 
 
         {/* 保险公司模块 */}
@@ -379,6 +395,12 @@ class Detail extends React.Component {
                   </View>
                 )
               })
+              }
+              {!this.state.isLoading && this.state.detailData.similars.length==0 &&
+                <View className="noData">
+                  <View className="iconfont icon-zanwushuju"></View>
+                  <Text>暂无数据</Text>
+                </View>
               }
             </View>
           </SectionCard>

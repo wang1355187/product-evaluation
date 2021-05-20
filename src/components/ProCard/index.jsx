@@ -109,7 +109,7 @@ const ProCard = (props) => {
         </View>
         <View className="row-2">
           <View className="pro-desc">
-            {
+            {keyword &&
               keyword.split(',').map((item) => {
                 if(item.length==0) return;
                 return (
@@ -119,37 +119,39 @@ const ProCard = (props) => {
             }
           </View>
         </View>
-        <View className="row-3">
-          <View className="pro-condition">
-          {
-            Object.keys(productPatch[insType].notice).map((item, index) => {
-              if(item == 'seriousPay'){
+        {insType!='5' &&
+          <View className="row-3">
+            <View className="pro-condition">
+            {
+              Object.keys(productPatch[insType].notice).map((item, index) => {
+                if(item == 'seriousPay'){
+                  return (
+                    <View className="pro-condition-item" key={item}>
+                      <View className="pro-condition-item-content">
+                        {props.product.productSiPatch.reparationTimes || '无'}/
+                        {props.product.productSiPatch.groups || '无'}
+                      </View>
+                      <View className="pro-condition-item-title">重疾赔付</View>
+                      {props.isModal &&
+                        <View className="iconfont icon-xiangyou" onClick={props.showModal}></View>
+                      }
+                    </View>
+                  )
+                }
                 return (
                   <View className="pro-condition-item" key={item}>
-                    <View className="pro-condition-item-content">
-                      {props.product.productSiPatch.reparationTimes || '无'}/
-                      {props.product.productSiPatch.groups || '无'}
-                    </View>
-                    <View className="pro-condition-item-title">重疾赔付</View>
-                    {props.isModal &&
+                    <View className="pro-condition-item-content">{props.product[productPatch[insType].key][item] || '无'}</View>
+                    <View className="pro-condition-item-title">{productPatch[insType].notice[item]}</View>
+                    {props.isModal && index ==2 &&
                       <View className="iconfont icon-xiangyou" onClick={props.showModal}></View>
                     }
                   </View>
                 )
-              }
-              return (
-                <View className="pro-condition-item" key={item}>
-                  <View className="pro-condition-item-content">{props.product[productPatch[insType].key][item] || '无'}</View>
-                  <View className="pro-condition-item-title">{productPatch[insType].notice[item]}</View>
-                  {props.isModal && index ==2 &&
-                    <View className="iconfont icon-xiangyou" onClick={props.showModal}></View>
-                  }
-                </View>
-              )
-            })
-          }
+              })
+            }
+            </View>
           </View>
-        </View>
+        }
       </View>
     </View>
   )

@@ -1,5 +1,6 @@
 import React,{useState, useEffect} from "react";
 import { Text, View, ScrollView } from "@tarojs/components";
+import NoData from "@/components/noData/index"
 import "./index.scss";
 import { set } from "lodash";
 
@@ -61,10 +62,7 @@ const Table = function (props) {
         </React.Fragment>
       }
       {list.length==0 &&
-        <View className="noData">
-          <View className="iconfont icon-zanwushuju"></View>
-          <Text>暂无数据</Text>
-        </View>
+        <NoData></NoData>
       }
     </View>
   )
@@ -117,10 +115,7 @@ const Diseases = function (props) {
         </View>
       }
       {data.length==0 &&
-        <View className="noData">
-          <View className="iconfont icon-zanwushuju"></View>
-          <Text>暂无数据</Text>
-        </View>
+        <NoData></NoData>
       }
     </View>
   )
@@ -189,6 +184,9 @@ const Details = function (props) {
   }
   return (
     <View className="details-container">
+      {props.data.length == 0 &&
+        <NoData></NoData>
+      }
       <View className="details-content">
         {
           list.map((detail) => {

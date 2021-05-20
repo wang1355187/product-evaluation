@@ -29,7 +29,7 @@
     min-height: 90px;
     line-height: 90px;
     font-size: 26px;
-    margin-bottom: 2px;
+    border-bottom: 1px solid #cfe2dea8;
     background-color: #dee6fd70;
     .table-title{
       flex-basis: 150px;
@@ -76,7 +76,7 @@
   .details-content{
     .detail-box{
       display: flex;
-      margin-bottom: 3px;
+      border-bottom: 1px solid #cfe2dea8;
       .detail-class{
         flex-basis: 100px;
         font-size: 28px;
