@@ -110,7 +110,7 @@
       font-weight: 600;
       color: #fff;
       &.active {
-        background: #f5a825;
+        background: #6190E8;
       }
       &.default {
         background: #8e8e8e;
@@ -127,6 +127,12 @@
     top: 84px;
     width: 100%;
     z-index: 99;
+    .at-search-bar__input-cnt{
+      border-radius: 0;
+      .weui-input{
+        height: 30PX;
+      }
+    }
     .at-search-bar {
       &::after {
         border: none;
@@ -154,7 +160,7 @@
       font-weight: 500;
       color: #fff;
       text-align: center;
-      background: #f5a825;
+      background: #6190E8;
       border-radius: 50px;
     }
   }
