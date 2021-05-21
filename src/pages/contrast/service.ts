@@ -16,6 +16,20 @@ export function getCompareInfo(postData: object) {
 }
 
 /**
+ * 按险种类型筛选
+ *
+ * @export
+ * @param {string} type
+ * @returns
+ */
+export function filterByType(type: string) {
+  return request.get({
+    url: `/product_list?type=${type}`,
+    isLoading: true,
+  });
+}
+
+/**
  * 获取热门对比产品
  *
  * @export

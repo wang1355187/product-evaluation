@@ -7,7 +7,8 @@ export default {
     compare_type: '', //对比险种类型
     compare_list: [], //对比列表
     hot_compare: {}, //热门对比
-    product_list: [], //产品对比选择列表
+    product_type_list: [], //产品对比选择列表
+    count: 0,
   },
   effects: {
     *getCompareInfo ({ payload }, { call, put }) {
@@ -38,9 +39,17 @@ export default {
         })
       }
     },
-    *getPremium ({payload}, {call, put}) {
-      const res = yield call(service.getPremium, payload);
-      console.log(res);
+    *filterByType ({payload}, {call, put}) {
+      const { data: res } = yield call(service.filterByType, payload.type);
+      if(res.code == 0){
+        yield put({
+          type: 'setProTypeList',
+          payload: {
+            product_type_list: res.data.items,
+            count: res.data.count
+          }
+        })
+      }
     },
   },
   reducers: {
@@ -56,10 +65,14 @@ export default {
       const { hot_compare } = payload;
       return {...state, hot_compare}
     },
-    clearCompare (state) {
+    clearCompare (state, { payload }) {
       const compare_list = [];
       const compare_type = '';
       return{...state, compare_list, compare_type}
+    },
+    setProTypeList (state,{ payload }) {
+      const { product_type_list, count } = payload;
+      return {...state, product_type_list, count}
     }
   }
 }

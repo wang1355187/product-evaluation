@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import {Text, View, ScrollView} from '@tarojs/components';
 import Taro, { useRouter, getCurrentInstance } from '@tarojs/taro';
-import { AtDrawer, AtSearchBar, AtDivider, AtButton } from 'taro-ui';
+import { AtDrawer, AtSearchBar, AtDivider, AtButton, AtCurtain } from 'taro-ui';
 
 import { PremiumMap, RulesMap, productSettingsMap, productReviewMap } from './config/index';
 import SectionCard from '@/components/SectionCard/index';
@@ -33,19 +33,20 @@ const Contrast = function (props) {
 
   const dispatch = useDispatch();
   const params = useRouter().params;
-  const { compare_list, compare_type, hot_compare } = useSelector( state => state.contrast);
-  const { data } = useSelector( state => state.list);
+  const { compare_list, compare_type, hot_compare, product_type_list, count } = useSelector( state => state.contrast);
   //侧边栏状态
   const [sideShow, setSideShow] = useState(false);
+  //侧边栏滚动条位置
+  const [scrollTop, setScrollTop] = useState(0)
   //搜索关键词
-  const [key, setKey] = useState('');
-  //选择列表产品数量
-  const [count, setCount] = useState(0);
+  const [searchKey, setSearchKey] = useState('');
   //NavBar标题
   const [navTitle, setNavTitle] = useState(compare_type==''?'产品对比':PRO_TYPE[compare_type]+'对比');
-
+  const [proCount, setProCount] = useState(0);
   //对比产品列表id状态
   const [prodList, setProList] = useState([]);
+  //侧边栏产品列表
+  const [sideList, setSideList] = useState([]);
 
   useEffect(()=>{
     if(prodList.length===0){
@@ -63,9 +64,36 @@ const Contrast = function (props) {
   },[prodList])
 
   useEffect(() => {
-    //改变NavBar标题
+    if(product_type_list.length > 0) {
+      let List = product_type_list;
+      //当产品数量超过100时，截取前100项，防止render时间过长，后面项的通过滚动加载
+      if(product_type_list.length > 100) {
+        List = product_type_list.slice(0, 100);
+      }
+      setSideList(List);
+      setProCount(product_type_list.length);
+    }
+  }, [product_type_list])
+
+  useEffect(() => {
+    if(compare_type == ''){
+      dispatch({
+        type: 'contrast/filterByType',
+        payload: {
+          type: ''
+        }
+      })
+    }
     if(compare_type != ''){
+      //改变NavBar标题
       setNavTitle(PRO_TYPE[compare_type]+'对比');
+      //获取险种类型列表
+      dispatch({
+        type: 'contrast/filterByType',
+        payload: {
+          type: compare_type
+        }
+      })
     }
     else{
       setNavTitle('产品对比');
@@ -99,12 +127,44 @@ const Contrast = function (props) {
 
   //搜索产品
   const onkeydown = () => {
-
+    setScrollTop(Math.random());
+    if(searchKey == '') {
+      dispatch({
+        type: 'contrast/filterByType',
+        payload: {
+          type: compare_type
+        }
+      })
+      return;
+    }
+    const List = product_type_list.filter((item) => {
+      return item.productName.includes(searchKey);
+    })
+    setSideList(List);
+    setProCount(List.length);
   }
   //打开侧边栏
   const openSiedBar = () => {
     setSideShow(true);
   }
+  //侧边栏滚动触底
+  const onScrollToLower = () => {
+    if(sideList.length<product_type_list.length) {
+      Taro.showLoading({
+        title: '加载数据中',
+        mask: true,
+      });
+
+      let index = sideList.length + 100 > product_type_list.length ? product_type_list.length : sideList.length + 100;
+      const List = product_type_list.slice(0, index);
+      setSideList(List);
+
+      setTimeout(()=>{
+        Taro.hideLoading();
+      },500)
+    }
+  }
+
   //添加热门对比
   const addHotCompare = (arr) => {
     const ids = arr[0].id + '-' + arr[1].id;
@@ -267,20 +327,20 @@ const Contrast = function (props) {
             <View className="at-icon at-icon-chevron-right"></View>
           </View>
           <AtSearchBar
-            value={key}
+            value={searchKey}
             placeholder="搜索产品"
-            onChange={ (value)=>{setKey(value)} }
+            onChange={ (value)=>{setSearchKey(value)} }
             onConfirm={onkeydown}
           >
           </AtSearchBar>
           <View className="contrast-sidebar-desc">
-            <Text className="pro-type">{ PRO_TYPE[compare_type] }</Text>
-            <Text className="pro-count">共<Text style="color: blue;">{ count }</Text>产品</Text>
+              <Text className="pro-type">{ PRO_TYPE[compare_type] || '不限类型'}</Text>
+            <Text className="pro-count">共<Text style="color: blue;">{ proCount }</Text>产品</Text>
           </View>
           <View className="contrast-sidebar-content">
-            <ScrollView scrollY={true} style={scrollStyle}>
+            <ScrollView scrollY={true} style={scrollStyle} onScrollToLower={onScrollToLower}>
               {
-                data.map((item) => {
+                sideList.map((item) => {
                   return (
                     <View className="pro-item" hoverClass="item-hover" onClick={() => { add(item.id) }} key={item.id}>{item.productName}</View>
                   )
