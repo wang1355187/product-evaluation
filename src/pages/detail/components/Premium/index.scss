@@ -30,14 +30,10 @@
       background-color: #6190E8;
       flex: 1;
       padding: 20px 0px;
-      margin-right: 1px;
     }
     &-td:first-child{
       flex: 0;
       flex-basis: 120px;
-    }
-    &-td:last-child{
-      margin-right: 0;
     }
   }
   .table-th:first-child{

@@ -22,12 +22,17 @@ export const CheckTagGroup = function(props) {
 
   const [activeIndex, setActiveIndex] = useState(initIndex);
 
+  let timer = null; //防抖
   const handleClick = (item, index) => {
-    setActiveIndex(index);
-    //当选择年龄时，传入的不是对象，直接取值item
-    const value = item.value || item;
-    const _type = type || "age"
-    handleChange(_type, value);
+    if(timer !==null) clearTimeout(timer);
+    timer =setTimeout(()=>{
+      setActiveIndex(index);
+      //当选择年龄时，传入的不是对象，直接取值item
+      const value = item.value || item;
+      const _type = type || "age"
+      handleChange(_type, value);
+      timer =null;
+    },100)
   }
 
   return (

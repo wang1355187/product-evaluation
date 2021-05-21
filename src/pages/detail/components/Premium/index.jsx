@@ -9,18 +9,24 @@ const PremiumTable = function (props) {
     premium_table
   } = props;
 
-  const conditions = [];  //表头条件
-  const rows = [];  //条件模块
+  let conditions = [];  //表头条件
+  const rows = [];  //条件列数组
   const age = []; //年龄列
 
   //格式化premium_table
   function formatTable(data) {
     data.map((item) => {
-      conditions.push(item.conditions);
+      if(item.conditions!=''){
+        conditions.push(item.conditions);
+      }
       rows.push(item.premium);
     })
   }
   formatTable(premium_table);
+
+  //拼接表头行条件
+  th[0] = th[0].concat(conditions);
+
   //获取年龄列
   rows[0].forEach((item)=>{
     age.push(item.age);
@@ -95,11 +101,12 @@ const Premium = function (props) {
     5: "年金险",
     6: "防癌险",
   };
+  //测算表的表头，第一项为父条件行（根据每个险种不同，会加上险种的个性条件），第二项为子条件行
   const premiumMap = {
     1: [['年龄','首年保费（男）','首年保费（女）']],
-    2: [['保障','100万保额，保至60岁','50万保额，保20年'],['年龄','首年保费（男）','首年保费（女）','首年保费（男）','首年保费（女）']],
-    3: [['保障','有社保','无社保'],['年龄','首年保费（男）','首年保费（女）','首年保费（男）','首年保费（女）']],
-    4: [['年龄','首年保费（10万保额）','首年保费（50万保额）','首年保费（100万保额）','首年保费（200万保额）']],
+    2: [['保障'],['年龄','首年保费（男）','首年保费（女）','首年保费（男）','首年保费（女）']],
+    3: [['保障'],['年龄','首年保费（男）','首年保费（女）','首年保费（男）','首年保费（女）']],
+    4: [['年龄']],
     5: [],
     6: [['年龄','首年保费（男）','首年保费（女）']]
   }
