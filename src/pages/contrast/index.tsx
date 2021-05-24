@@ -37,7 +37,7 @@ const Contrast = function (props) {
   //侧边栏状态
   const [sideShow, setSideShow] = useState(false);
   //侧边栏滚动条位置
-  const [scrollTop, setScrollTop] = useState(0)
+  const [scrollTop, setScrollTop] = useState(0);
   //搜索关键词
   const [searchKey, setSearchKey] = useState('');
   //NavBar标题
@@ -47,6 +47,8 @@ const Contrast = function (props) {
   const [prodList, setProList] = useState([]);
   //侧边栏产品列表
   const [sideList, setSideList] = useState([]);
+  //控制搜索产品时触底不触发加载
+  const [searchFlag, setSearchFlag] = useState(false);
 
   useEffect(()=>{
     if(prodList.length===0){
@@ -128,13 +130,10 @@ const Contrast = function (props) {
   //搜索产品
   const onkeydown = () => {
     setScrollTop(Math.random());
+    setSearchFlag(true);
     if(searchKey == '') {
-      dispatch({
-        type: 'contrast/filterByType',
-        payload: {
-          type: compare_type
-        }
-      })
+      setSideList(product_type_list);
+      setProCount(product_type_list.length);
       return;
     }
     const List = product_type_list.filter((item) => {
@@ -149,6 +148,9 @@ const Contrast = function (props) {
   }
   //侧边栏滚动触底
   const onScrollToLower = () => {
+    if(searchFlag){
+      return;
+    }
     if(sideList.length<product_type_list.length) {
       Taro.showLoading({
         title: '加载数据中',
@@ -172,7 +174,7 @@ const Contrast = function (props) {
       url: `/pages/contrast/index?ids=${ids}`
     })
   }
-  //分享给客户
+  //分享给客户(非原生小程序只能通过引导提示用户点击右上角进行分享)
   const shareContrast = () => {
 
   }
@@ -338,7 +340,7 @@ const Contrast = function (props) {
             <Text className="pro-count">共<Text style="color: blue;">{ proCount }</Text>产品</Text>
           </View>
           <View className="contrast-sidebar-content">
-            <ScrollView scrollY={true} style={scrollStyle} onScrollToLower={onScrollToLower}>
+            <ScrollView scrollY={true} style={scrollStyle} onScrollToLower={onScrollToLower} scrollTop={scrollTop}>
               {
                 sideList.map((item) => {
                   return (
