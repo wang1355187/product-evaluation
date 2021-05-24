@@ -52,7 +52,7 @@ class Detail extends React.Component {
 
   state = {
     detailData: {} as any,  //产品详情数据
-    simpleData: {} as any,  //产品卡片用到的数据（与detailData分离开，为保证接口原子性）
+    similarData: [] as any,  //相似产品卡片用到的数据（与detailData分离开，为保证接口原子性）
     current: 0,   //AtTabsPane组件切换下标
     isModalShow: false, //投保须知显示
     isLoading: true, 
@@ -69,27 +69,31 @@ class Detail extends React.Component {
     //页面初始化
     const params =  getCurrentInstance().router?.params;
 
-    this.props.getProductSimple({
-      id: params.id
-    }).then((res) => {
-      this.setState({
-        simpleData: res
-      })
-    })
-
     this.props.getProductDetail({
       id: params.id
-    }).then((res)=> {
-      this.setState({
-        isLoading: false,
-        detailData: res
-      })
+    }).then(async (res)=> {
       this.props.getCompanyDetail({id:res.companyId}).then((_res)=>{
         this.setState({
           isLoading: false,
           companyData: _res
         })
       })
+      this.setState({
+        isLoading: false,
+        detailData: res
+      })
+      
+      let similarData = [];
+      let promises = res.similars.map((item) => {
+        return this.props.getProductSimple({id: item.id});
+      })
+      for(let promise of promises){
+        similarData.push(await promise);
+      }
+      this.setState({
+        similarData
+      })
+
     }).catch((err) => {console.log(err)})
   }
 
@@ -389,17 +393,33 @@ class Detail extends React.Component {
         <View ref="similar">
           <SectionCard title="同类产品">
             <View className="similar-pro-box">
-              {!this.state.isLoading && this.state.detailData.similars.map((item) => {
+              {this.state.similarData.length >0 && this.state.similarData.map((item) => {
                 return (
                   <View className="similar-pro" key={item.id}>
-                    <View className="pro-name">产品：{item.name}</View>
-                    <View  className="company-name">公司：{item.corp}</View>
+                    <View className="pro-name">
+                      {item.insType==1 && 
+                        (item.productDefinitionVersion == 'NEW'
+                        ?<Text className="new tag">新定义</Text>
+                        :<Text className="old tag">旧定义</Text>)
+                      }
+                      <Text className="title">{item.productName}</Text>
+                    </View>
+                    <View className="pro-desc">
+                      {item.keyword &&
+                        item.keyword.split(',').map((item) => {
+                          if(item.length==0) return;
+                          return (
+                            <Text className="pro-desc-item" key={item}>{item}</Text>
+                          )
+                        })
+                      }
+                    </View>
                     <View className="contrast-btn" onClick={()=>{this.quickCompare(item.id)}}>一键对比</View>
                   </View>
                 )
               })
               }
-              {!this.state.isLoading && this.state.detailData.similars.length==0 &&
+              {!this.state.isLoading && this.state.similarData.length==0 &&
                 <View className="noData">
                   <View className="iconfont icon-zanwushuju"></View>
                   <Text>暂无数据</Text>

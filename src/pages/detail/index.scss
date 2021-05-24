@@ -86,6 +86,7 @@
     margin-top: -10px;
     .similar-pro{
       height: 120px;
+      padding: 10px 0px;
       display: flex;
       justify-content: center;
       flex-direction: column;
@@ -93,14 +94,54 @@
       border-bottom: 1px solid #e2e2e291;
       position: relative;
       .pro-name{
-        text-overflow: ellipsis;
+        display: flex;
+        width: 550px;
+        align-items: center;
+        .title{
+          flex: 1;
+          width: 0;
+          font-size: 27px;
+          font-weight: 600;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .tag{
+          display: block;
+          height: 35px;
+          padding: 0 8px;
+          line-height: 35px;
+          font-size: 24px;
+          margin-right: 10px;
+          font-weight: 500;
+        }
+        .old{
+          color:#666;
+          background-color: #cacbca4d;
+        }
+        .new{
+          background-color: #ffcd5b3d;
+          color:orange;
+        }
+      }
+      .pro-desc{
+        margin-top: 10px;
+        font-size: 24px;
+        color: #a7a4a4;
         overflow: hidden;
+        height: 40px;
+        width: 550px;
+        overflow: hidden;
+        text-overflow: ellipsis;
         white-space: nowrap;
-        width: 500px;
+        &-item:nth-last-child(n+2)::after{
+          content: '|';
+          margin: 0 8px;
+        }
       }
       .contrast-btn{
         position: absolute;
-        top: 40px;
+        top: 45px;
         right: 20px;
         height: 45px;
         width: 140px;
