@@ -81,6 +81,8 @@ const ProCard = (props) => {
   const goToDetail = () => {
     const { router } =  getCurrentInstance();
     if(router.path.includes('detail/index')){
+      //处于详情页面时，点击则打开投保须知底部框
+      props.showModal();
       return;
     }
     Taro.navigateTo({
@@ -143,7 +145,7 @@ const ProCard = (props) => {
                     <View className="pro-condition-item-content">{props.product[productPatch[insType].key][item] || '无'}</View>
                     <View className="pro-condition-item-title">{productPatch[insType].notice[item]}</View>
                     {props.isModal && index ==2 &&
-                      <View className="iconfont icon-xiangyou" onClick={props.showModal}></View>
+                      <View className="iconfont icon-xiangyou"></View>
                     }
                   </View>
                 )

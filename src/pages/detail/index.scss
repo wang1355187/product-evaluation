@@ -92,6 +92,12 @@
       font-size: 28px;
       border-bottom: 1px solid #e2e2e291;
       position: relative;
+      .pro-name{
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 500px;
+      }
       .contrast-btn{
         position: absolute;
         top: 40px;
