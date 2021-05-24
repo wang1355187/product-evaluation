@@ -214,7 +214,10 @@ class Detail extends React.Component {
       url: `/pages/contrast/index?ids=${ids}`
     })
   }
+  //分享给客户(非原生小程序只能通过引导提示用户点击右上角进行分享)
+  share = () => {
 
+  }
 
   render () {
     const tabList = {
@@ -424,7 +427,7 @@ class Detail extends React.Component {
         }
 
         <View className="fixed-btn">
-          <AtButton size="small" type="secondary" className="btn-share" openType="share">分享给客户</AtButton>
+          <AtButton size="small" type="secondary" className="btn-share" openType="share" onClick={this.share}>分享给客户</AtButton>
           <AtButton
             size="small"
             type="primary"

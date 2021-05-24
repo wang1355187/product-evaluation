@@ -20,7 +20,7 @@
 
 
 //表格组件样式
-.table-container{
+.premium-table-container{
   .table-th{
     display: flex;
     text-align: center;
@@ -30,6 +30,7 @@
       background-color: #6190E8;
       flex: 1;
       padding: 20px 0px;
+      border-left: 1px solid #ffffff;
     }
     &-td:first-child{
       flex: 0;
@@ -37,7 +38,7 @@
     }
   }
   .table-th:first-child{
-    margin-bottom: 1px;
+    border-bottom: 1px solid #ffffff;
   }
   .table-tbody{
     display: flex;

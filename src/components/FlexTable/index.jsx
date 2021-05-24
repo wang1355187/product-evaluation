@@ -7,7 +7,7 @@ const FlexTable = (props) => {
   //contentList为二维数组，存放每行的行值   [[第一行数据1，第一行数据2...],[第二行数据1，第二行数据2...]...]
   const { titleList, contentList, isVerticalCenter } = props;
   return (
-    <View className="table-body">
+    <View className="flex-table-body">
       {
         titleList.map((item, index) => {
           return (

@@ -1,8 +1,8 @@
-.table-body{
+.flex-table-body{
   .table-tr{
     display: flex;
     color: #333;
-    border: 1px solid #edf5ff;
+    border-bottom: 1px solid #ffffff;
     &-title{
       color: #ffffff;
       background-color: #6190E8;
@@ -22,7 +22,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-right: 1px solid #dfdffa;
+      border-right: 1px solid #ffffff;
     }
     &-content:last-child{
       border: none;

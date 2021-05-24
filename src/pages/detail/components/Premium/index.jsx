@@ -33,7 +33,7 @@ const PremiumTable = function (props) {
   })
 
   return (
-    <View className="table-container">
+    <View className="premium-table-container">
       {
         th.map((th_item) => {
           return (
