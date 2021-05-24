@@ -22,7 +22,7 @@
   }
 }
 
-//保什么（详细）、投保规则的表格样式
+//保什么（简单）、投保规则的表格样式
 .table-container{
   .table-tr{
     display: flex;
@@ -48,7 +48,7 @@
       align-items: center;
       text-align: left;
       box-sizing: border-box;
-      padding: 0px 10px;
+      padding: 10px;
     }
   }
   .table-tr:nth-child(odd){
