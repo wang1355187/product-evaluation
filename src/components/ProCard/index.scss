@@ -5,7 +5,7 @@
   box-sizing: border-box;
   overflow: hidden;
   padding: 20px;
-  margin: 12px 0;
+  margin: 20px 0;
   background-color: #ffffff;
   .pro-img-box{
     position: relative;
@@ -93,8 +93,8 @@
         display:flex;
         justify-content: space-between;
         align-items: center;
-        background-color: #f6f6f6;
-        padding:12px;
+        background-color: rgba(246,246,246,0.8);
+        padding: 12px;
         &-item{
           position: relative;
           font-size: 24px;
@@ -109,9 +109,9 @@
             transform: translateY(-50%);
             color: #6190E8;
           }
-          &:last-child{
-            padding-right: 35px;
-          }
+          // &:last-child{
+          //   padding-right: 35px;
+          // }
         }
       }
     }

@@ -134,9 +134,9 @@ const ProCard = (props) => {
                         {props.product.productSiPatch.groups || '无'}
                       </View>
                       <View className="pro-condition-item-title">重疾赔付</View>
-                      {props.isModal &&
+                      {/* {props.isModal &&
                         <View className="iconfont icon-xiangyou" onClick={props.showModal}></View>
-                      }
+                      } */}
                     </View>
                   )
                 }
@@ -144,9 +144,9 @@ const ProCard = (props) => {
                   <View className="pro-condition-item" key={item}>
                     <View className="pro-condition-item-content">{props.product[productPatch[insType].key][item] || '无'}</View>
                     <View className="pro-condition-item-title">{productPatch[insType].notice[item]}</View>
-                    {props.isModal && index ==2 &&
+                    {/* {props.isModal && index ==2 &&
                       <View className="iconfont icon-xiangyou"></View>
-                    }
+                    } */}
                   </View>
                 )
               })

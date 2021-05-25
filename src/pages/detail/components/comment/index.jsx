@@ -53,7 +53,7 @@ const Comment = function (props) {
       </CommentPoint>
 
       <CommentPoint title="综合点评" content={comments} logoTitle={false}>
-        <Text className="iconfont icon-dianping"></Text>
+        <Text className="iconfont icon-dianping1"></Text>
       </CommentPoint>
     </View>
   )

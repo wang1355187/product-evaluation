@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {Text, View} from '@tarojs/components';
-import { AtCurtain } from 'taro-ui'
+import { AtCurtain, AtButton } from 'taro-ui'
 import Taro from '@tarojs/taro'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -434,7 +434,9 @@ const PremiumTable = (props) => {
                   )
                 })
               }
-              <View style={{fontSize:'13px',color:'#999'}}>注：测试值仅供参考，具体数值以投保测算为准</View>
+              <View style={{fontSize:'12PX',color:'#999'}}>注：测试值仅供参考，具体数值以投保测算为准</View>
+              <AtButton className="confirm-btn" type="primary" onClick={()=>{setModalShow(false)}}>确定</AtButton>
+              <View></View>
             </View>
           </View>
         </Cover>

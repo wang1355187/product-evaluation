@@ -28,7 +28,7 @@ const Contrast = function (props) {
   const currentHeight =
   document.documentElement.clientHeight || document.body.clientHeight;
   const scrollStyle = {
-  height: `calc(${currentHeight}px - 120px)`,
+  height: `calc(${currentHeight}px)`,
   };
 
   const dispatch = useDispatch();
