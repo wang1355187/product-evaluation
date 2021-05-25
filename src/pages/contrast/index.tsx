@@ -341,6 +341,7 @@ const Contrast = function (props) {
             placeholder="搜索产品"
             onChange={ (value)=>{setSearchKey(value)} }
             onConfirm={onkeydown}
+            onActionClick={onkeydown}
           >
           </AtSearchBar>
           <View className="contrast-sidebar-desc">

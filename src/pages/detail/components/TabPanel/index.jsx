@@ -192,7 +192,7 @@ const Details = function (props) {
           list.map((detail) => {
             return (
               <View className="detail-box" key={detail.class}>
-                <View className="detail-class">{detail.class}</View>
+                <View className="th-detail-class">{detail.class}</View>
                 <View className="item-box">
                   {
                     detail.items.map((item) => {
