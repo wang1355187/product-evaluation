@@ -72,7 +72,7 @@ const Index = (props) => {
   }
 
   //键盘搜索
-  function onkeydown(e){
+  function onkeydown(){
     //复位滚动条（ScrollView组件设置scrollTop为0会失效，使用随机数替代）
     setScrollTop(Math.random());
     //关键词为空，展示全部产品
