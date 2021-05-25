@@ -325,7 +325,9 @@ const PremiumTable = (props) => {
                             <Text className='at-icon at-icon-help' onClick={()=>{showExplain(_index)}}></Text>
                           }
                         </View>
-                        <View className="change-btn" onClick={() => {openConditionPanel(idsList[_index],_index)} }>调整方案</View>
+                        {firstPremiumList[_index] !='无' &&
+                          <View className="change-btn" onClick={() => {openConditionPanel(idsList[_index],_index)} }>调整方案</View>
+                        }
                       </View>
                     )
                   }
