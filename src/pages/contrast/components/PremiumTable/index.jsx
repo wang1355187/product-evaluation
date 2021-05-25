@@ -298,7 +298,7 @@ const PremiumTable = (props) => {
     return index;
   }
   return (
-    <View className="table-body">
+    <View className="contrast-premium-table">
       {
         titleList.map((item, index) => {
           return (

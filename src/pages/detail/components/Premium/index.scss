@@ -51,7 +51,7 @@
     .row-age{
       flex-basis: 120px;
       .td{
-        background-color: #dee6fd70;
+        background-color: rgba(222,230,253,0.44);
       }
       .td:nth-child(odd){
         background-color: #f9fefd;
@@ -61,7 +61,7 @@
       flex: 1;
       &-tr{
         display: flex;
-        background-color: #dee6fd70;
+        background-color: rgba(222,230,253,0.44);
         &-td{
           flex: 1;
         }

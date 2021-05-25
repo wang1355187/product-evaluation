@@ -41,7 +41,7 @@ const Contrast = function (props) {
 
   const dispatch = useDispatch();
   const params = useRouter().params;
-  const { compare_list, compare_type, hot_compare, product_type_list, count } = useSelector( state => state.contrast);
+  const { compare_list, compare_type, hot_compare, product_type_list} = useSelector( state => state.contrast);
   //侧边栏状态
   const [sideShow, setSideShow] = useState(false);
   //侧边栏滚动条位置
@@ -50,13 +50,12 @@ const Contrast = function (props) {
   const [searchKey, setSearchKey] = useState('');
   //NavBar标题
   const [navTitle, setNavTitle] = useState(compare_type==''?'产品对比':PRO_TYPE[compare_type]+'对比');
+  //产品数目
   const [proCount, setProCount] = useState(0);
   //对比产品列表id状态
   const [prodList, setProList] = useState([]);
   //侧边栏产品列表
   const [sideList, setSideList] = useState([]);
-  //控制搜索产品时触底不触发加载
-  const [searchFlag, setSearchFlag] = useState(false);
 
   useEffect(()=>{
     if(prodList.length===0){
@@ -134,7 +133,7 @@ const Contrast = function (props) {
       }
     }
   }, [])
-
+  
   //搜索产品
   const onkeydown = () => {
     setScrollTop(Math.random());
