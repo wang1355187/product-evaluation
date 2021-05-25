@@ -24,11 +24,19 @@ const PRO_TYPE = {
   6: "防癌险",
 };
 
+const hot_compare_style = {
+  1: {background: '#40A9FF'},
+  2: {background: '#FFA940'},
+  3: {background: '#36CFC9'},
+  4: {background: '#B37FEB'},
+  6: {background: '#F759AB'},
+}
+
 const Contrast = function (props) {
   const currentHeight =
   document.documentElement.clientHeight || document.body.clientHeight;
   const scrollStyle = {
-  height: `calc(${currentHeight}px)`,
+  height: `calc(${currentHeight}px - 90px)`,
   };
 
   const dispatch = useDispatch();
@@ -130,9 +138,13 @@ const Contrast = function (props) {
   //搜索产品
   const onkeydown = () => {
     setScrollTop(Math.random());
-    setSearchFlag(true);
     if(searchKey == '') {
-      setSideList(product_type_list);
+      let List = product_type_list;
+      //当产品数量超过100时，截取前100项，防止render时间过长，后面项的通过滚动加载
+      if(product_type_list.length > 100) {
+        List = product_type_list.slice(0, 100);
+      }
+      setSideList(List);
       setProCount(product_type_list.length);
       return;
     }
@@ -148,16 +160,13 @@ const Contrast = function (props) {
   }
   //侧边栏滚动触底
   const onScrollToLower = () => {
-    if(searchFlag){
-      return;
-    }
-    if(sideList.length<product_type_list.length) {
+    if(sideList.length < proCount) {
       Taro.showLoading({
         title: '加载数据中',
         mask: true,
       });
 
-      let index = sideList.length + 100 > product_type_list.length ? product_type_list.length : sideList.length + 100;
+      let index = sideList.length + 100 > proCount ? proCount : sideList.length + 100;
       const List = product_type_list.slice(0, index);
       setSideList(List);
 
@@ -363,6 +372,7 @@ const Contrast = function (props) {
               Object.keys(hot_compare).map((key) => {
                 return (
                   <View className="compare-li" key={key}>
+                    <View className="compare-li-tag" style={hot_compare_style[key]}>{PRO_TYPE[key]}</View>
                     { 
                       hot_compare[key].map((item) => { 
                         return (
