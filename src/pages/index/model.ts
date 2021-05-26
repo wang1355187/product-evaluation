@@ -6,9 +6,6 @@ export default {
   state: {
     data: [],
     hasData: true,
-    total: "",
-    pageIndex: 1,
-    pageSize: 10,
     filterParam: {},  //筛选表单参数
     productList: [],  //搜索返回的产品列表
     currentKeyword: '', //搜索关键字

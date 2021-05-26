@@ -31,21 +31,6 @@ export function getProductList(postData: object) {
 }
 
 /**
- * 产品过滤
- *
- * @export
- * @param {string} postData
- * @returns
- */
-export function filterProductList(postData: object) {
-  return request.post({
-    url: '/product/list/filter/simple',
-    data: { ...postData },
-    isLoading: true,
-  });
-}
-
-/**
  * 按险种类型筛选
  *
  * @export
@@ -74,8 +59,24 @@ export function getCompanyList() {
   });
 }
 
+
 /**
- * 根据公司名字查找公司
+ * 产品过滤（旧接口方法，废弃）
+ *
+ * @export
+ * @param {string} postData
+ * @returns
+ */
+export function filterProductList(postData: object) {
+  return request.post({
+    url: '/product/list/filter/simple',
+    data: { ...postData },
+    isLoading: true,
+  });
+}
+
+/**
+ * 根据公司名字查找公司（旧接口方法，废弃）
  *
  * @export
  * @returns
@@ -89,7 +90,7 @@ export function companyNameByList(name: string) {
 }
 
 /**
- * 根据类型获取特性标签
+ * 根据类型获取特性标签（旧接口方法，废弃）
  *
  * @export
  * @param {string} insType
