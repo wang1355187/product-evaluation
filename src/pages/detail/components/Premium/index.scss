@@ -31,7 +31,7 @@
       background-color: #1890ff;
       flex: 1;
       padding: 20px 0px;
-      border-left: 1px solid #ffffff;
+      border-left: 1PX solid #ffffff;
     }
     &-td:first-child{
       flex: 0;
@@ -39,7 +39,7 @@
     }
   }
   .table-th:first-child{
-    border-bottom: 1px solid #ffffff;
+    border-bottom: 1PX solid #ffffff;
   }
   .table-tbody{
     display: flex;
@@ -71,24 +71,5 @@
         background-color: #f9fefd;
       }
     }
-    // .table-tr{
-    //   display: flex;
-    //   text-align: center;
-    //   font-size: 28px;
-    //   color: #333;
-    //   background-color: #dee6fd70;
-    //   &-td{
-    //     flex: 1;
-    //     height: 60px;
-    //     line-height: 60px;
-    //   }
-    //   &-td:first-child{
-    //     flex: 0;
-    //     flex-basis: 120px;
-    //   }
-    // }
-    // .table-tr:nth-child(odd){
-    //   background-color: #f9fefd;
-    // }
   }
 }

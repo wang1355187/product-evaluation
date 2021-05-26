@@ -29,7 +29,7 @@
     min-height: 80px;
     line-height: 80px;
     font-size: 26px;
-    border-bottom: 1px solid rgba(207,226,222,0.66);
+    border-bottom: 1PX solid rgba(207,226,222,0.66);
     background-color: rgba(222,230,253,0.44);
     box-sizing: border-box;
     .table-title{
@@ -78,7 +78,7 @@
   .details-content{
     .detail-box{
       display: flex;
-      border-bottom: 1px solid rgba(207,226,222,0.66);
+      border-bottom: 1PX solid rgba(207,226,222,0.66);
       box-sizing: border-box;
       .th-detail-class{
         width: 100px;
@@ -96,7 +96,7 @@
         .flex-box{
           display: flex;
           align-items: center;
-          border-top: 1px solid rgba(207,226,222,0.66);
+          border-top: 1PX solid rgba(207,226,222,0.66);
           .item-key,.item-value{
             color: #333;
             box-sizing: border-box;
@@ -104,7 +104,7 @@
             padding: 20px;
           }
           .item-value{
-            border-left: 1px solid rgba(207,226,222,0.66);
+            border-left: 1PX solid rgba(207,226,222,0.66);
           }
         }
         .flex-box:first-child{
@@ -113,7 +113,7 @@
       }
     }
     .detail-box:first-child{
-      border-top: 1px solid rgba(207,226,222,0.66);
+      border-top: 1PX solid rgba(207,226,222,0.66);
     }
   }
   .tab-footer{
@@ -140,7 +140,7 @@
     .exclude-item{
       padding: 15px 5px;
       font-size: 26px;
-      border-bottom: 1px solid rgba(207,226,222,0.66);
+      border-bottom: 1PX solid rgba(207,226,222,0.66);
       color: #333;
     }
     .exclude-item:last-child{
@@ -181,7 +181,7 @@
         margin-right: 30px;
         text-align: center;
         box-sizing: border-box;
-        border: 1px solid #f0f0f0;
+        border: 1PX solid #cbc9c9;
         color: #333;
         transition: all .3s;
       }

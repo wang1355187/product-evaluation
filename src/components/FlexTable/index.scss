@@ -2,7 +2,7 @@
   .table-tr{
     display: flex;
     color: #333;
-    border-bottom: 1px solid #ffffff;
+    border-bottom: 1PX solid #ffffff;
     &-title{
       color: #ffffff;
       background-color: #1890ff;
@@ -22,7 +22,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-right: 1px solid #ffffff;
+      border-right: 1PX solid #ffffff;
     }
     &-content:last-child{
       border: none;
