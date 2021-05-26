@@ -49,7 +49,7 @@ const Index = (props) => {
   },[dispatch]);
 
   // 通过搜索获取列表数据，到底时触发
-  const getSearchList = useCallback((nextLek, keyword) => {
+  const getSearchList = (nextLek, keyword) => {
     dispatch({
       type: "list/searchList",
       payload: {
@@ -57,7 +57,7 @@ const Index = (props) => {
         name: keyword
       },
     });
-  },[dispatch]);
+  }
 
 
   useEffect(() => {
@@ -158,7 +158,6 @@ const Index = (props) => {
               </ProCard>)
             })
           }
-
           {/* 底部提示 */}
           <View
             className='toLast'
