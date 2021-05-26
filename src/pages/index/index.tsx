@@ -20,6 +20,9 @@ const PRO_TYPE = {
   6: "防癌险",
 };
 
+// 获取浏览器窗口的可视区域的高度
+const currentHeight = document.documentElement.clientHeight || document.body.clientHeight;
+
 const Index = (props) => {
 
   const dispatch = useDispatch();
@@ -31,11 +34,8 @@ const Index = (props) => {
   //scrollView滚动位置
   const [scrollTop, setScrollTop] = useState(0);
 
-  // 获取浏览器窗口的可视区域的高度
-  const currentHeight =
-  document.documentElement.clientHeight || document.body.clientHeight;
   const scrollStyle = {
-  height: `calc(${currentHeight}px)`,
+    height: `calc(${currentHeight}px)`,
   };
 
   // 获取产品列表数据

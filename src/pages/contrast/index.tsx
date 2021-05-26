@@ -34,11 +34,11 @@ const hot_compare_style = {
   6: {background: '#F759AB'},
 }
 
+const currentHeight = document.documentElement.clientHeight || document.body.clientHeight;
+
 const Contrast = function (props) {
-  const currentHeight =
-  document.documentElement.clientHeight || document.body.clientHeight;
   const scrollStyle = {
-  height: `calc(${currentHeight}px - 90px)`,
+    height: `calc(${currentHeight}px - 90px)`,
   };
 
   const dispatch = useDispatch();
