@@ -10,7 +10,9 @@ import FlexTable from '@/components/FlexTable/index'
 import AddConPro from './components/AddConPro/index';
 import PremiumTable from './components/PremiumTable/index';
 import NavBar from "@/components/NavBar/index";
-import Footer from '@/components/Footer/index'
+import Footer from '@/components/Footer/index';
+import shareImg from '@/assets/images/common/product.jpg';
+import { wxCompanyAppReady } from "@/utils/share";
 import './index.scss';
 
 
@@ -182,9 +184,18 @@ const Contrast = function (props) {
       url: `/pages/contrast/index?ids=${ids}`
     })
   }
-  //分享给客户(非原生小程序只能通过引导提示用户点击右上角进行分享)
+  //分享给客户
   const shareContrast = () => {
-
+    let compare_desc = [] as any;
+    compare_list.map((item)=>{
+      compare_desc.push(item.product.productName);
+    })
+    wxCompanyAppReady({
+      title: '产品对比',
+      desc: compare_desc.join('vs'),
+      link: window.location.href,
+      imgUrl: compare_list.length>0 ? compare_list[0].product.icon : shareImg,
+    });
   }
   //返回
   const back = () => {
@@ -390,8 +401,8 @@ const Contrast = function (props) {
       }
 
       <View className="fixed-btn">
-        <AtButton size="small" type="secondary" className="btn-share" onClick={back}>返回</AtButton>
-        <AtButton size="small" type="primary" className="btn-contrast" onClick={shareContrast} openType="share">分享给客户</AtButton>
+        <AtButton size="small" type="secondary" className="btn-contrast" onClick={back}>返回</AtButton>
+        <AtButton size="small" type="primary" className="btn-share" onClick={shareContrast} openType="share">分享给客户</AtButton>
       </View>
     </View>
   )

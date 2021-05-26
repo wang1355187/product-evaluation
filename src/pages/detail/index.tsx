@@ -4,6 +4,7 @@ import {Text, View} from '@tarojs/components';
 import { connect } from "react-redux";
 import { AtTabs, AtTabsPane, AtFloatLayout, AtButton, AtMessage } from 'taro-ui';
 
+import { wxCompanyAppReady } from "@/utils/share";
 import ProCard from '@/components/ProCard/index';
 import SectionCard from "@/components/SectionCard";
 import Comment from "./components/comment/index";
@@ -218,9 +219,14 @@ class Detail extends React.Component {
       url: `/pages/contrast/index?ids=${ids}`
     })
   }
-  //分享给客户(非原生小程序只能通过引导提示用户点击右上角进行分享)
+  //分享给客户
   share = () => {
-
+    wxCompanyAppReady({
+      title: this.state.detailData.productName,
+      desc: this.state.detailData.keyword,
+      link: window.location.href,
+      imgUrl: this.state.detailData.icon,
+    });
   }
 
   render () {
@@ -438,10 +444,10 @@ class Detail extends React.Component {
         {this.state.toSectionBar &&
           <View className="fixed-tab">            
             <View className="flex-box">
-              <View className="tab" style={this.state.activeIndex==0?{color:'#6190E8'}:{color:'#333'}} onClick={() => {this.scrollToSection(0)}}>保障内容</View>
-              <View className="tab" style={this.state.activeIndex==1?{color:'#6190E8'}:{color:'#333'}} onClick={() => {this.scrollToSection(1)}}>保费测算</View>
-              <View className="tab" style={this.state.activeIndex==2?{color:'#6190E8'}:{color:'#333'}} onClick={() => {this.scrollToSection(2)}}>谱蓝君点评</View>
-              <View className="tab" style={this.state.activeIndex==3?{color:'#6190E8'}:{color:'#333'}} onClick={() => {this.scrollToSection(3)}}>同类产品</View>
+              <View className="tab" style={this.state.activeIndex==0?{color:'#40a9ff'}:{color:'#333'}} onClick={() => {this.scrollToSection(0)}}>保障内容</View>
+              <View className="tab" style={this.state.activeIndex==1?{color:'#40a9ff'}:{color:'#333'}} onClick={() => {this.scrollToSection(1)}}>保费测算</View>
+              <View className="tab" style={this.state.activeIndex==2?{color:'#40a9ff'}:{color:'#333'}} onClick={() => {this.scrollToSection(2)}}>谱蓝君点评</View>
+              <View className="tab" style={this.state.activeIndex==3?{color:'#40a9ff'}:{color:'#333'}} onClick={() => {this.scrollToSection(3)}}>同类产品</View>
             </View>
           </View>
         }
