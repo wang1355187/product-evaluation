@@ -25,7 +25,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #6190E8;
+      background-color: #1890ff;
       color: #fff;
     }
     &-desc{
@@ -121,7 +121,7 @@
       width: 140px;
       line-height: 55px;
       text-align: center;
-      background-color: #6190E8;
+      background-color: #1890ff;
       color: #ffffff;
       border: none;
       border-radius: 2PX;
@@ -147,11 +147,13 @@
       display: inline-block;
       font-size: 32px;
     }
-    .btn-contrast.at-button{
+    .btn-share.at-button{
       width: 60%;
+      background-color: #1890ff;
     }
-    .btn-share{
+    .btn-contrast{
       margin-right: 4%;
+      
     }
   }
 }

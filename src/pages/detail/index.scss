@@ -21,17 +21,21 @@
       justify-content: space-around;
       flex-wrap: wrap;
       text-align: center;
-      font-size: 24px;
-      color: #666;
+      font-size: 26px;
+      color: #333;
       .tag-item{
         width: 28%;
         margin-top: 30px;
         &-label{
-          font-size: 26px;
-          color: #333;
+          font-size: 24px;
+          color: #999;
         }
       }
     }
+  }
+  //覆盖AtTabs标题颜色颜色
+  .at-tabs__item--active{
+    color: #40a9ff;
   }
   // 保险条款
   .policies-box{
@@ -75,7 +79,7 @@
       top: 10px;
       right: 15px;
       font-size: 26px;
-      color: #6190E8;
+      color: #40a9ff;
       .iconfont{
         font-size: 24px;
       }
@@ -151,7 +155,7 @@
         text-align: center;
         font-size: 28px;
         color: #ffffff;
-        background-color: #6190E8;
+        background-color: #1890ff;
       }
     }
   }
@@ -209,6 +213,7 @@
     }
     .btn-contrast.at-button{
       width: 60%;
+      background-color: #1890ff;
     }
     .btn-share{
       margin-right: 4%;
@@ -216,7 +221,7 @@
   }
   .footer{
     line-height: 100px;
-    font-size: 24px;
+    font-size: 12PX;
     color:#999;
     height: 850px;
   }

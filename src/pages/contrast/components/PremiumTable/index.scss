@@ -5,7 +5,7 @@
     border-bottom: 1px solid #ffffff;
     &-title{
       color: #ffffff;
-      background-color: #6190E8;
+      background-color: #1890ff;
       width: 140px;
       display: flex;
       justify-content: center;
@@ -93,6 +93,7 @@
     }
     .confirm-btn{
       margin-top: 30px;
+      background-color: #1890ff;
     }
   }
   .cover{
@@ -127,7 +128,7 @@
     }
     .checked{
       color: #fff;
-      background: #6190E8;
+      background: #1890ff;
       border: none;
     }
   }

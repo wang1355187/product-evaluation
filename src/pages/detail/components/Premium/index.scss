@@ -2,8 +2,9 @@
   padding-bottom: 80px;
   .has-premium{
     .premium-desc{
-      font-size: 26px;
+      font-size: 12PX;
       color: #999;
+      line-height: 32px;
     }
     .premium-table{
       margin-top: 20px;
@@ -27,7 +28,7 @@
     color: #ffffff;
     font-size: 28px;
     &-td{
-      background-color: #6190E8;
+      background-color: #1890ff;
       flex: 1;
       padding: 20px 0px;
       border-left: 1px solid #ffffff;

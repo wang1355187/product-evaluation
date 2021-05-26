@@ -28,7 +28,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #6190E8;
+      background-color: #1890ff;
       color: #fff;
     }
     .fixed-btn{
@@ -47,6 +47,7 @@
       .submit-btn{
         float: right;
         width: 250px;
+        background-color: #1890ff;
       }
     }
     .split-line-box{
@@ -110,7 +111,7 @@
       font-weight: 600;
       color: #fff;
       &.active {
-        background: #6190E8;
+        background: #1890ff;
       }
       &.default {
         background: #8e8e8e;
@@ -161,7 +162,7 @@
       font-weight: 500;
       color: #fff;
       text-align: center;
-      background: #6190E8;
+      background: #1890ff;
       border-radius: 50px;
     }
   }

@@ -13,7 +13,7 @@
       display: flex;
       justify-content: space-around;
       font-size: 26px;
-      color: #4379FE;
+      color: #40a9ff;
       .iconfont{
         margin-left: 5px;
         font-size: 14PX;
@@ -35,7 +35,7 @@
     .table-title{
       width: 130px;
       padding: 10px;
-      background-color: #6190E8;
+      background-color: #1890ff;
       color: #ffffff;
       line-height: 30px;
       display: flex;
@@ -64,7 +64,7 @@
       display: flex;
       justify-content: space-around;
       font-size: 26px;
-      color: #4379FE;
+      color: #40a9ff;
       .iconfont{
         margin-left: 5px;
         font-size: 14PX;
@@ -84,7 +84,7 @@
         width: 100px;
         font-size: 28px;
         color: white;
-        background-color: #6190E8;
+        background-color: #1890ff;
         writing-mode: vertical-lr;
         display: flex;
         justify-content: center;
@@ -124,7 +124,7 @@
       display: flex;
       justify-content: space-around;
       font-size: 26px;
-      color: #4379FE;
+      color: #40a9ff;
       .iconfont{
         margin-left: 5px;
         font-size: 14PX;
@@ -155,7 +155,7 @@
       display: flex;
       justify-content: space-around;
       font-size: 26px;
-      color: #4379FE;
+      color: #40a9ff;
       .iconfont{
         margin-left: 5px;
         font-size: 14PX;
@@ -173,6 +173,7 @@
       .diseases-type{
         font-size: 26px;
         padding: 5px 15px;
+        border-radius: 2PX;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
@@ -180,13 +181,13 @@
         margin-right: 30px;
         text-align: center;
         box-sizing: border-box;
-        border: 1px solid #4379FE;
+        border: 1px solid #f0f0f0;
         color: #333;
         transition: all .3s;
       }
       .active{
         color: #ffffff;
-        background-color: #4379FE;
+        background-color: #1890ff;
       }
     }
     .diseases-items-box{
