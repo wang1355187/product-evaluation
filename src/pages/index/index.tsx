@@ -50,6 +50,10 @@ const Index = (props) => {
 
   // 通过搜索获取列表数据，到底时触发
   const getSearchList = (nextLek, keyword) => {
+    //lek为空对象，表示无数据了
+    if(Object.keys(nextLek).length == 0){
+      return;
+    }
     dispatch({
       type: "list/searchList",
       payload: {
@@ -62,7 +66,7 @@ const Index = (props) => {
 
   useEffect(() => {
     getList(lek);
-  }, [getList]);
+  }, []);
 
 
 
@@ -101,9 +105,11 @@ const Index = (props) => {
     if (!hasData) {
       return;
     }
+    //搜索接口滚动加载
     if(currentKeyword!=''){
       getSearchList(lek,currentKeyword);
     }
+    //列表接口滚动加载
     else{
       getList(lek);
     }
