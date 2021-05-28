@@ -366,7 +366,7 @@ class Detail extends React.Component {
             return (
               <a style={{display: 'block', color:'#333'}} key={item.key} href={item.value} target="_blank">
                 <View className="policies-box" key={item.key}>
-                  <Text className="iconfont icon-wenjian"></Text>
+                  <Text className="iconfont icon-PDF"></Text>
                   <Text className="policies-name">{item.key}</Text>
                   <Text className="iconfont icon-youjiantou-copy"></Text>
                 </View>  

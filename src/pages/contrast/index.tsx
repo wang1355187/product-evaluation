@@ -401,7 +401,7 @@ const Contrast = function (props) {
       }
 
       <View className="fixed-btn">
-        <AtButton size="small" type="secondary" className="btn-contrast" onClick={back}>返回</AtButton>
+        <AtButton size="small" type="secondary" className="btn-back" onClick={back}>返回</AtButton>
         <AtButton size="small" type="primary" className="btn-share" onClick={shareContrast} openType="share">分享给客户</AtButton>
       </View>
     </View>

@@ -53,10 +53,11 @@
       overflow: hidden;
       white-space: nowrap;
     }
-    .icon-wenjian{
-      font-size: 18PX;
+    .icon-PDF{
+      font-size: 14PX;
       vertical-align: middle;
-      color: #40a9ff;
+      color: red;
+      margin-right: 8px;
     }
     .icon-youjiantou-copy{
       position: absolute;
@@ -222,6 +223,8 @@
     }
     .btn-share{
       margin-right: 4%;
+      border: 1PX solid #1890ff;
+      color: #40a9ff;
     }
   }
   .footer{
