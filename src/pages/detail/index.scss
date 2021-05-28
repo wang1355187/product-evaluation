@@ -53,7 +53,12 @@
       overflow: hidden;
       white-space: nowrap;
     }
-    .iconfont{
+    .icon-wenjian{
+      font-size: 18PX;
+      vertical-align: middle;
+      color: #40a9ff;
+    }
+    .icon-youjiantou-copy{
       position: absolute;
       right: 10px;
       font-size: 18PX;
@@ -120,7 +125,7 @@
           font-weight: 500;
         }
         .old{
-          color:#666;
+          color:#919191;
           background-color: rgba(202,202,202,0.3);
         }
         .new{
@@ -169,7 +174,7 @@
     height: 70px;
     padding: 10px;
     border-radius: 50%;
-    background-color: #f4af5e;
+    background-color: #ffa940;
     font-size: 24px;
     text-align: center;
     line-height: 35px;
